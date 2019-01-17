@@ -43,3 +43,6 @@ build/
 nbbuild/
 dist/
 nbdist/
+
+### lib ###
+node_modules/

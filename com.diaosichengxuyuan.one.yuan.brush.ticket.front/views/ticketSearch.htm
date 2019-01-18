@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票网</title>
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/ticketSearch.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/base.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/base.htm");
+    </script>
+    <div class="contentBody">
+        <div id="startPlace" class="searchConditon">出发地<input class="searchConditonClass" type="text"></div>
+        <div id="endPlace" class="searchConditon">目的地<input class="searchConditonClass" type="text"></div>
+        <div id="startDate" class="searchConditon">出发日期<input class="searchConditonClass" type="text"></div>
+        <div id="studentSelect">学生<input id="studentSelectInput" type="checkbox"></div>
+        <div id="highSpeedTrainSelect">高铁/动车<input id="highSpeedTrainSelectInput" type="checkbox"></div>
+        <div id="ticketSearchClick"><input id="ticketSearchButton" type="button" value="查询"></div>
+    </div>
+    <div id="mainContentArea"></div>
+</body>

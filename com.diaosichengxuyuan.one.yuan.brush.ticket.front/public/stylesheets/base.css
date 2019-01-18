@@ -1,0 +1,88 @@
+body {
+  overflow-x: hidden;
+  background-color: rgb(228, 239, 248);
+}
+
+div {
+  width: 1200px;
+  margin-bottom: 5px;
+  margin-left: 30px;
+}
+
+/* 上部展示栏 */
+.fixedUpperBody {
+  background-color: rgb(221, 214, 214);
+  float: left;
+}
+
+.fixedUpperBody img {
+  height: 100px;
+  width: 250px;
+  float: left;
+}
+
+.fixedUpperBody .currentDataClass {
+  float: left;
+  width: 200px;
+  font-size: 23px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#currentDailyNum {
+  margin-top: 10px;
+  margin-left: 55px;
+}
+
+#currentMembers {
+  margin-top: 60px;
+  margin-left: 10px;
+}
+
+#brushTicketOrderNum {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.fixedUpperBody .whetherOwnClass {
+  float: left;
+  width: 50px;
+  margin-top: 70px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+#whetherLoggedIn {
+  margin-left: 140px;
+  background-color: green;
+}
+
+#whetherMember {
+  margin-left: 0 px;
+  background-color: red;
+}
+
+/* 中部导航栏 */
+.fixedMiddleBody{
+  height: 30px;
+  background-color: rgb(30, 146, 255);
+  float: left;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.fixedMiddleBody a{
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+}
+
+.fixedMiddleBody .mainMenuClass{
+  margin-left: 50px;
+}
+
+#loginMenu{
+  margin-left: 310px;
+}
+
+.fixedMiddleBody .loginMenuClass{
+  margin-left: 50px;
+}

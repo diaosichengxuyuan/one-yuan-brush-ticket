@@ -12,20 +12,39 @@
     <!-- 脚本 -->
     <script src="/javascripts/jquery-3.3.1.js"></script>
     <script src="/javascripts/base.js"></script>
+    <script src="/javascripts/startDate.js"></script>
 </head>
 
 <body>
     <div id="baseBody"></div>
     <script>
-        $("#baseBody").load("/base.htm");
+        $("#baseBody").load("/html/base.htm");
     </script>
     <div class="contentBody">
         <div id="startPlace" class="searchConditon">出发地<input class="searchConditonClass" type="text"></div>
         <div id="endPlace" class="searchConditon">目的地<input class="searchConditonClass" type="text"></div>
-        <div id="startDate" class="searchConditon">出发日期<input class="searchConditonClass" type="text"></div>
+        <div id="startDate" class="searchConditon">出发日期<input id="startDateInput" class="searchConditonClass startDateInputClass"
+                type="text"></div>
         <div id="studentSelect">学生<input id="studentSelectInput" type="checkbox"></div>
         <div id="highSpeedTrainSelect">高铁/动车<input id="highSpeedTrainSelectInput" type="checkbox"></div>
-        <div id="ticketSearchClick"><input id="ticketSearchButton" type="button" value="查询"></div>
+        <div id="ticketSearchClick"><input id="ticketSearchButton" type="button" value="查询" onclick="location.href='http://localhost:3000/ticketSearchResult'"></div>
     </div>
-    <div id="mainContentArea"></div>
+    <div id="mainContentArea">
+        <script>
+            $("#startPlace .searchConditonClass").click(function () {
+                $("#mainContentArea").load("/html/startPlace.htm");
+                $.getScript("/javascripts/startPlace.js");
+            });
+            $("#endPlace .searchConditonClass").click(function () {
+                $("#mainContentArea").load("/html/endPlace.htm");
+                $.getScript("/javascripts/endPlace.js");
+            });
+            Calendar.create({
+                classN: 'startDateInputClass',
+                callBack: function (bindElem, dateObj) {
+                    $("#startDateInput").val(dateObj.year + '-' + dateObj.month + '-' + dateObj.date);
+                }
+            });
+        </script>
+    </div>
 </body>

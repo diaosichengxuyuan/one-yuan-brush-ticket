@@ -16,6 +16,8 @@
     height: 30px;
     width: 300px;
     margin-left: 15px;
+    font-size: 20px;
+    text-align: center;
 }
 
 #startPlace {
@@ -28,7 +30,7 @@
     width: 400px;
 }
 
-#startDate{
+#startDate {
     width: 420px;
 }
 
@@ -58,7 +60,7 @@
     margin-left: 5px;
 }
 
-#ticketSearchClick{
+#ticketSearchClick {
     width: 300px;
     height: 50px;
     margin-top: 150px;
@@ -66,7 +68,7 @@
 }
 
 #ticketSearchButton {
-    -webkit-appearance:none;
+    -webkit-appearance: none;
     height: 50px;
     width: 300px;
     color: black;
@@ -76,8 +78,235 @@
 
 #mainContentArea {
     float: left;
-    height: 500px;
+    height: 460px;
     width: 670px;
-    margin-top:30px;
-    background-color: red;
+    margin-top: 30px;
+    background-color: white;
+}
+
+#mainContentArea ul {
+    padding: 0;
+    margin: 0;
+    list-style-position: outside;
+    list-style: none;
+    z-index: 100;
+}
+
+#mainContentArea li {
+    padding: 2px 0 0 0;
+    margin: 0;
+    height: 25px;
+    line-height: 25px;
+    float: left;
+    cursor: pointer;
+    display: block;
+    font-size: 12px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.azTitleClass {
+    height: 28px;
+    background-color: #297ebb;
+}
+
+.azTitleClass li {
+    width: 134px;
+    color: white;
+}
+
+.azContentClass {
+    max-height: 300px;
+    height: 300px;
+    display: none;
+    overflow: scroll;
+}
+
+.azContentClass li {
+    width: 50px;
+}
+
+#azContent1 {
+    display: block;
+}
+
+.azliClass {
+    background-color: #684462;
+}
+
+.atie-calendar, .atie-calendar * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.calendar-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.atie-calendar-mask {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+}
+
+.atie-calendar {
+    float: left;
+    outline: none;
+    width: 670px;
+    height: 460px;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: white;
+    border-radius: 4px;
+    background-clip: padding-box;
+    line-height: 1.5;
+}
+
+.atie-calendar-date-panel {
+    position: relative;
+    width: 280px;
+}
+
+.atie-calendar-header {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 670px;
+    background-color: #297ebb;
+}
+
+.atie-calendar-header>div>a {
+    position: absolute;
+    top: 0;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.atie-calendar-header>div>a:hover {
+    color: #1890ff;
+}
+
+.atie-calendar-prev-year-btn {
+    left: 185px;
+}
+
+.atie-calendar-prev-month-btn {
+    left: 230px;
+}
+
+.atie-calendar-next-month-btn {
+    left: 380px;
+}
+
+.atie-calendar-next-year-btn {
+    left: 410px;
+}
+
+.atie-calendar-ym-select {
+    position: absolute;
+    font-weight: 500;
+    width: 100px;
+    left: 260px;
+}
+
+.atie-calendar-body {
+    margin-top: 20px;
+}
+
+.atie-calendar table, .atie-calendar td, .atie-calendar th {
+    border: 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+.atie-calendar table {
+    border-collapse: collapse;
+    max-width: 100%;
+    background-color: white;
+    width: 670px;
+}
+
+.atie-calendar thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.atie-calendar tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.atie-calendar tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.atie-calendar-column-header .atie-calendar-column-header-inner {
+    display: block;
+    font-weight: 400;
+}
+
+.atie-calendar-cell {
+    padding: 0px 0;
+    height: 55px;
+    cursor: pointer;
+}
+
+.atie-calendar-selected-day .atie-calendar-date {
+    background: #d1e9ff;
+}
+
+.atie-calendar-last-month-cell .atie-calendar-date, .atie-calendar-next-month-btn-day .atie-calendar-date {
+    color: rgba(0, 0, 0, .25);
+}
+
+.atie-calendar-today .atie-calendar-date {
+    font-weight: 700;
+    color: red;
+}
+
+.atie-calendar-selected-date .atie-calendar-date, .atie-calendar-selected-start-date .atie-calendar-date, .atie-calendar-selected-end-date .atie-calendar-date {
+    background: #1890ff;
+    color: #fff;
+}
+
+.atie-calendar-date {
+    display: block;
+    margin: 0 auto;
+    color: rgba(0, 0, 0, .65);
+    border-radius: 2px;
+    width: 25px;
+    height: 25px;
+    line-height: 22px;
+    padding: 0;
+    background: white;
+}
+
+.atie-calendar-footer {
+    line-height: 38px;
+    padding: 0 12px;
+    background-color: #dcf187;
+    width: 670px;
+    margin-top: 10px;
+}
+
+.atie-calendar-footer-btn {
+    display: block;
+}
+
+.atie-calendar .atie-calendar-today-btn {
+    display: inline-block;
+    color: black;
+    cursor: pointer;
 }

@@ -6,7 +6,8 @@ var logger = require('morgan');
 var ejs = require('ejs');
 
 var homePageRouter = require('./routes/homePageRouter');
-var ticketSearchRouter = require('./routes/ticketSearch');
+var ticketSearchRouter = require('./routes/ticketSearchRouter');
+var ticketSearchResultRouter = require('./routes/ticketSearchResultRouter');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', homePageRouter);
 app.use('/homePage', homePageRouter);
 app.use('/ticketSearch', ticketSearchRouter);
+app.use('/ticketSearchResult', ticketSearchResultRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -77,10 +77,11 @@
 }
 
 #mainContentArea {
-    float: left;
+    position: absolute;
     height: 460px;
     width: 670px;
-    margin-top: 30px;
+    top: 178px;
+    left: 568px;
     background-color: white;
 }
 
@@ -153,7 +154,6 @@
 }
 
 .atie-calendar {
-    float: left;
     outline: none;
     width: 670px;
     height: 460px;
@@ -167,7 +167,6 @@
 }
 
 .atie-calendar-date-panel {
-    position: relative;
     width: 280px;
 }
 

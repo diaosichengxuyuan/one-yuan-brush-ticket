@@ -134,9 +134,8 @@
             // 设置定位位置
             utils.css(this.elem_panel, {
                 "position": "absolute",
-                "z-index": 2,
-                "top": "178px",
-                "left": "568px"
+                "top": "0px",
+                "left": "-30px"
             });
 
             this.elem_container.innerHTML = "";

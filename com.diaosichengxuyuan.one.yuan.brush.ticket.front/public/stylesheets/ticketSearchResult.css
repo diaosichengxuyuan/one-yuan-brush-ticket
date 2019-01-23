@@ -1,0 +1,26 @@
+.ticketResultAreaClass{
+    float: left;
+    width: 1200px;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+.ticketResultAreaTable{
+    border-collapse: collapse;  
+}
+
+.ticketResultTh{
+    width: 200px;
+    text-align: center;
+    background-color: #297ebb;
+}
+
+.ticketResultTd{
+    width: 200px;
+    text-align: center;
+    border-bottom: 1px solid rgb(224, 194, 199);
+}
+
+.ticketResultReminder{
+    color: red;
+}

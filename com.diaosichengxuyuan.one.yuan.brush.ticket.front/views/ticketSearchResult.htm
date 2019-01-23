@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票网</title>
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/homePage.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/ticketSearchResult.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/common.js"></script>
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/base.js"></script>
+    <script src="/javascripts/ticketSearchResult.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/html/base.htm");
+    </script>
+    <div id="ticketResultArea" class="ticketResultAreaClass">
+        <script>
+            var startPlace = CommonUtils.getUrlParam("startPlace");
+            var endPlace = CommonUtils.getUrlParam("endPlace");
+            var startDate = CommonUtils.getUrlParam("startDate");
+            var isStudent = CommonUtils.getUrlParam("isStudent");
+            var isHighSpeed = CommonUtils.getUrlParam("isHighSpeed");
+
+            TicketSearch.search(startPlace, endPlace, startDate, isStudent, isHighSpeed, "ticketResultArea");
+        </script>
+    </div>
+</body>

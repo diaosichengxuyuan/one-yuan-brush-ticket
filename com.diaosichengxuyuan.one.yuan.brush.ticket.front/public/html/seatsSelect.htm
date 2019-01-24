@@ -1,0 +1,38 @@
+<form id="seatsSelectForm">
+    <div class="seatsSelectClass">
+        <input type="radio" id="secondSeat" name="seats" />
+        <label for="secondSeat">二等座</label>
+    </div>
+    <div class="seatsSelectClass">
+        <input type="radio" id="firstSeat" name="seats" />
+        <label for="firstSeat">一等座</label>
+    </div>
+    <div class="seatsSelectClass">
+        <input type="radio" id="businessSeat" name="seats" />
+        <label for="businessSeat">商务座</label>
+    </div>
+    <div class="seatsSelectClass">
+        <input type="radio" id="noSeat" name="seats" />
+        <label for="noSeat">无座</label>
+    </div>
+    <div class="seatsSelectClass">
+        <input type="radio" id="hardSeat" name="seats" />
+        <label for="hardSeat">硬座</label>
+    </div>
+    <div class="seatsSelectClass">
+        <input type="radio" id="hardSleeperSeat" name="seats" />
+        <label for="hardSleeperSeat">硬卧</label>
+    </div>
+    <div class="seatsSelectClass">
+        <input type="radio" id="softSleeperSeat" name="seats" />
+        <label for="softSleeperSeat">软卧</label>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#seatsSelectForm input").click(function () {
+            $("#seatsInput").val($(this).parent().children("label").text());
+        });
+    });
+</script>

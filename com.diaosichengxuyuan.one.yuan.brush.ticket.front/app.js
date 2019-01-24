@@ -8,6 +8,7 @@ var ejs = require('ejs');
 var homePageRouter = require('./routes/homePageRouter');
 var ticketSearchRouter = require('./routes/ticketSearchRouter');
 var ticketSearchResultRouter = require('./routes/ticketSearchResultRouter');
+var addBrushTicketTaskRouter = require('./routes/addBrushTicketTaskRouter');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use('/', homePageRouter);
 app.use('/homePage', homePageRouter);
 app.use('/ticketSearch', ticketSearchRouter);
 app.use('/ticketSearchResult', ticketSearchResultRouter);
+app.use('/addBrushTicketTask', addBrushTicketTaskRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

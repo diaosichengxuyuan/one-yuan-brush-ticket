@@ -43,11 +43,9 @@
         <script>
             $("#startPlace .searchConditonClass").click(function () {
                 $("#mainContentArea").load("/html/startPlace.htm");
-                $.getScript("/javascripts/startPlace.js");
             });
             $("#endPlace .searchConditonClass").click(function () {
                 $("#mainContentArea").load("/html/endPlace.htm");
-                $.getScript("/javascripts/endPlace.js");
             });
             Calendar.create({
                 classN: 'startDateInputClass',

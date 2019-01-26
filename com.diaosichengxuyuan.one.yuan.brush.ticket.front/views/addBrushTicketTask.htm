@@ -34,15 +34,17 @@
                 type="text"></div>
         <div id="phone" class="searchConditon">联系手机<input id="phoneInput" class="searchConditonClass" type="text"></div>
         <div id="submitBrushTicketTask"><input id="submitBrushTicketTaskButton" type="button" value="提交" onclick="submit()"></div>
-        <div id="brushTicketAgreement">点提交表示同意<a id="brushTicketAgreementLink">抢票协议</a></div>
+        <div id="brushTicketAgreement">点提交表示同意<a id="brushTicketAgreementLink" href="">抢票协议</a></div>
         <script>
             function submit() {
-                // var startPlaceVal = document.getElementById("startPlaceInput").value;
-                // var endPlaceVal = document.getElementById("endPlaceInput").value;
-                // var startDateVal = document.getElementById("startDateInput").value;
-                // var isStudent = document.getElementById("studentSelectInput").checked;
-                // var isHighSpeed = document.getElementById("highSpeedTrainSelectInput").checked;
-                // location.href = "http://localhost:3000/ticketSearchResult?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&isStudent=" + isStudent + "&isHighSpeed=" + isHighSpeed;
+                var startPlaceVal = document.getElementById("startPlaceInput").value;
+                var endPlaceVal = document.getElementById("endPlaceInput").value;
+                var startDateVal = document.getElementById("startDateInput").value;
+                var trainsVal = document.getElementById("trainsInput").value;
+                var seatsVal = document.getElementById("seatsInput").value;
+                var passengersVal = document.getElementById("passengersInput").value;
+                var phoneVal = document.getElementById("phoneInput").value;
+                location.href = "http://localhost:3000/brushTicketTaskList?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&trains=" + trainsVal + "&seats=" + seatsVal + "&passengers=" + passengersVal + "&phone=" + phoneVal;
             }
         </script>
     </div>
@@ -71,6 +73,10 @@
             });
             $("#passengersInput").click(function () {
                 Passengers.searchAndCheck("passengersInput", "mainContentArea");
+            });
+            $("#brushTicketAgreementLink").click(function () {
+                $("#mainContentArea").load("/html/brushTicketAgreement.htm");
+                return false;
             });
         </script>
     </div>

@@ -79,6 +79,14 @@
 
 #brushTicketAgreementLink {
     color: red;
+    text-decoration: none;
+}
+
+.brushTicketAgreementText{
+    font-size: 15px;
+    position: relative;
+    left: -30px;
+    width: 100%;
 }
 
 #mainContentArea {

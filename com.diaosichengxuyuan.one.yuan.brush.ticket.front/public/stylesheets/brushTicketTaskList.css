@@ -1,0 +1,53 @@
+.mainContentArea {
+    float: left;
+    width: 1200px;
+    margin-left: 60px;
+    margin-top: 30px;
+}
+
+.taskInstruction img {
+    float: left;
+    height: 300px;
+    width: 200px;
+}
+
+.taskList {
+    float: left;
+    width: 800px;
+}
+
+.taskList table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.taskList td {
+    height: 55px;
+    width: 200px;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+.taskList a {
+    color: black;
+    text-decoration: none;
+}
+
+.taskList .taskListDeleteLink{
+    color: red;
+}
+
+.AddTask {
+    position: absolute;
+    left: 580px;
+    top: 550px;
+}
+
+.AddTask input {
+    -webkit-appearance: none;
+    height: 35px;
+    width: 50px;
+    color: black;
+    background-color: #ff7300;
+    font-size: 15px;
+}

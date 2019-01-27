@@ -10,6 +10,7 @@ var ticketSearchRouter = require('./routes/ticketSearchRouter');
 var ticketSearchResultRouter = require('./routes/ticketSearchResultRouter');
 var addBrushTicketTaskRouter = require('./routes/addBrushTicketTaskRouter');
 var brushTicketTaskListRouter = require('./routes/brushTicketTaskListRouter');
+var brushTicketTaskListFinishedRouter = require('./routes/brushTicketTaskListFinishedRouter');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/ticketSearch', ticketSearchRouter);
 app.use('/ticketSearchResult', ticketSearchResultRouter);
 app.use('/addBrushTicketTask', addBrushTicketTaskRouter);
 app.use('/brushTicketTaskList', brushTicketTaskListRouter);
+app.use('/brushTicketTaskListFinished', brushTicketTaskListFinishedRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

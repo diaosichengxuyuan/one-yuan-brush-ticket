@@ -52,7 +52,6 @@
 
         },
         generateHtml: function (taskList) {
-            debugger
             var html = "";
             html += '<table>' +
                 '<tbody>';
@@ -60,7 +59,7 @@
                 for (var i = 0; i < taskList.length; i++) {
                     var task = taskList[i];
                     html += '<tr>' +
-                        '<td><a href="" onclick="BrushTicketTaskList.taskDetail(' + JSON.stringify(task).replace(/"/g, '&quot;') + ')">' + task.startPlace + '→' + task.endPlace + '</br>' + task.startDate + '</a></td>' +
+                        '<td><a onclick="BrushTicketTaskList.taskDetail(' + JSON.stringify(task).replace(/"/g, '&quot;') + ')">' + task.startPlace + '→' + task.endPlace + '</br>' + task.startDate + '</a></td>' +
                         '<td>' + task.status + '</td>' +
                         '<td><a class="taskListDeleteLink" href="" onclick="BrushTicketTaskList.deleteById(' + task.id + ')">删除</a></td>' +
                         '</tr>';
@@ -89,6 +88,28 @@
     }
 
     BrushTicketTaskList.taskDetail = function (task) {
+        debugger
+        switch (task.status) {
+            case "已停止":
+                {
+                    alert("已停止");
+                    break;
+                }
+            case "已启动":
+                {
+                    alert("已启动");
+                    break;
+                }
+            case "已结束": {
+                location.href = "http://localhost:3000/brushTicketTaskListFinished?id=" + task.id;
+                break;
+            }
+            default:
+                {
+                    alert("没有");
+                    break;
+                }
+        }
         return false;
     }
 

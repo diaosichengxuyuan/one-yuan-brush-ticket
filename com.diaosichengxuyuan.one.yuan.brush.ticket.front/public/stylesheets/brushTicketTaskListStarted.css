@@ -1,0 +1,95 @@
+.brushBody{
+    float:left;
+    width: 1200px;
+    margin-left: 60px;
+}
+
+.brushBody table {
+    border-collapse: collapse;
+}
+
+.brushBody td {
+    height: 80px;
+    width: 600px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.brushBody img{
+    height: 100%;
+    width: 40%;
+}
+
+.contentBody {
+    float: left;
+    width: 1200px;
+    margin-left: 60px;
+    margin-top: 0px;
+}
+
+.contentBody .searchConditon {
+    font-size: 15px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.contentBody .searchConditonClass {
+    height: 20px;
+    width: 300px;
+    margin-left: 15px;
+    font-size: 15px;
+    text-align: center;
+    background-color: rgb(145, 141, 141);
+}
+
+#startPlace {
+    margin-left: 366px;
+    width: 400px;
+}
+
+#endPlace {
+    margin-left: 366px;
+    width: 400px;
+}
+
+#startDate {
+    margin-left: 351px;
+    width: 420px;
+}
+
+#trains {
+    margin-left: 327px;
+    width: 420px;
+}
+
+#seats {
+    margin-left: 343px;
+    width: 420px;
+}
+
+#passengers {
+    margin-left: 314px;
+    width: 420px;
+}
+
+#phone {
+    margin-left: 355px;
+    width: 420px;
+}
+
+#stopBrushTicketTask {
+    position: absolute;
+    width: 30px;
+    height: 35px;
+    left: 850px;
+    top:550px;
+}
+
+#stopBrushTicketTaskButton {
+    -webkit-appearance: none;
+    height: 35px;
+    width: 60px;
+    color: black;
+    background-color: #ff7300;
+    font-size: 15px;
+}

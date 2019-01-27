@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票网</title>
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/brushTicketTaskListStarted.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/Common.js"></script>
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/base.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/html/base.htm");
+    </script>
+    <div class="brushBody">
+        <table>
+            <tbody>
+                <tr>
+                    <td id="trains_nosale">G101</td>
+                    <td id="trains_brushing">G102</td>
+                    <td id="trains_remaining">G103</td>
+                </tr>
+                <tr>
+                    <td><img id="jpg_nosale" src="images/nosale.jpg"></td>
+                    <td><img id="jpg_brushing" src="images/brushing.jpg"></td>
+                    <td><img id="jpg_remaining" src="images/remaining.jpg"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="contentBody">
+        <div id="startPlace" class="searchConditon">出发地<input id="startPlaceInput" class="searchConditonClass" type="text"
+                readonly="readonly"></div>
+        <div id="endPlace" class="searchConditon">目的地<input id="endPlaceInput" class="searchConditonClass" type="text"
+                readonly="readonly"></div>
+        <div id="startDate" class="searchConditon">出发日期<input id="startDateInput" class="searchConditonClass startDateInputClass"
+                type="text" readonly="readonly"></div>
+        <div id="trains" class="searchConditon">车次(可多选)<input id="trainsInput" class="searchConditonClass" type="text"
+                readonly="readonly"></div>
+        <div id="seats" class="searchConditon">坐席(单选)<input id="seatsInput" class="searchConditonClass" type="text"
+                readonly="readonly"></div>
+        <div id="passengers" class="searchConditon">乘车人(可多选)<input id="passengersInput" class="searchConditonClass"
+                type="text" readonly="readonly"></div>
+        <div id="phone" class="searchConditon">联系手机<input id="phoneInput" class="searchConditonClass" type="text"
+                readonly="readonly"></div>
+        <div id="stopBrushTicketTask"><input id="stopBrushTicketTaskButton" type="button" value="停止" onclick="stop()"></div>
+        <script>
+            function stop() {
+                var id = CommonUtils.getUrlParam("id");
+                location.href = "http://localhost:3000/brushTicketTaskListStopped?id=" + id;
+            }
+        </script>
+    </div>
+    <script>
+        var id = CommonUtils.getUrlParam("id");
+        document.getElementById("startPlaceInput").value = "北京";
+        document.getElementById("endPlaceInput").value = "上海";
+        document.getElementById("startDateInput").value = "2019年5月22日";
+        document.getElementById("trainsInput").value = "G204;G302";
+        document.getElementById("seatsInput").value = "二等座";
+        document.getElementById("passengersInput").value = "C罗;梅西";
+        document.getElementById("phoneInput").value = "13612435061";
+    </script>
+</body>

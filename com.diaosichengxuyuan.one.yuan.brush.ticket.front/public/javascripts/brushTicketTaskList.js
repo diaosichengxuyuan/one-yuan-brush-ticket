@@ -97,7 +97,7 @@
                 }
             case "已启动":
                 {
-                    alert("已启动");
+                    location.href = "http://localhost:3000/brushTicketTaskListStarted?id=" + task.id;
                     break;
                 }
             case "已结束": {

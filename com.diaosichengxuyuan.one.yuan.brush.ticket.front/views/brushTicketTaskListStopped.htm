@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票网</title>
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/brushTicketTaskListStopped.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/Common.js"></script>
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/base.js"></script>
+    <script src="/javascripts/startDate.js"></script>
+    <script src="/javascripts/ticketSearchResult.js"></script>
+    <script src="/javascripts/passengers.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/html/base.htm");
+    </script>
+    <div class="contentBody">
+        <div id="startPlace" class="searchConditon">出发地<input id="startPlaceInput" class="searchConditonClass" type="text"></div>
+        <div id="endPlace" class="searchConditon">目的地<input id="endPlaceInput" class="searchConditonClass" type="text"></div>
+        <div id="startDate" class="searchConditon">出发日期<input id="startDateInput" class="searchConditonClass startDateInputClass"
+                type="text"></div>
+        <div id="trains" class="searchConditon">车次(可多选)<input id="trainsInput" class="searchConditonClass" type="text"></div>
+        <div id="seats" class="searchConditon">坐席(单选)<input id="seatsInput" class="searchConditonClass" type="text"></div>
+        <div id="passengers" class="searchConditon">乘车人(可多选)<input id="passengersInput" class="searchConditonClass"
+                type="text"></div>
+        <div id="phone" class="searchConditon">联系手机<input id="phoneInput" class="searchConditonClass" type="text"></div>
+        <div id="startBrushTicketTask"><input id="startBrushTicketTaskButton" type="button" value="启动" onclick="start()"></div>
+        <script>
+            function start() {
+                var id = CommonUtils.getUrlParam("id");
+                location.href = "http://localhost:3000/brushTicketTaskListStarted?id=" + id;
+            }
+        </script>
+    </div>
+    <div id="mainContentArea">
+        <script>
+            $("#startPlaceInput").click(function () {
+                $("#mainContentArea").load("/html/startPlace.htm");
+            });
+            $("#endPlaceInput").click(function () {
+                $("#mainContentArea").load("/html/endPlace.htm");
+            });
+            Calendar.create({
+                classN: 'startDateInputClass',
+                callBack: function (bindElem, dateObj) {
+                    $("#startDateInput").val(dateObj.year + '-' + dateObj.month + '-' + dateObj.date);
+                }
+            });
+            $("#trainsInput").click(function () {
+                var startPlaceVal = document.getElementById("startPlaceInput").value;
+                var endPlaceVal = document.getElementById("endPlaceInput").value;
+                var startDateVal = document.getElementById("startDateInput").value;
+                TicketSearch.searchAndCheck(startPlaceVal, endPlaceVal, startDateVal, "trainsInput", "mainContentArea");
+            });
+            $("#seatsInput").click(function () {
+                $("#mainContentArea").load("/html/seatsSelect.htm");
+            });
+            $("#passengersInput").click(function () {
+                Passengers.searchAndCheck("passengersInput", "mainContentArea");
+            });
+        </script>
+    </div>
+</body>

@@ -92,7 +92,7 @@
         switch (task.status) {
             case "已停止":
                 {
-                    alert("已停止");
+                    location.href = "http://localhost:3000/brushTicketTaskListStopped?id=" + task.id;
                     break;
                 }
             case "已启动":

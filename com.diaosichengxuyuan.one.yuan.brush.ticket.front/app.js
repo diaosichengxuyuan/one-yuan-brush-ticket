@@ -13,6 +13,7 @@ var brushTicketTaskListRouter = require('./routes/brushTicketTaskListRouter');
 var brushTicketTaskListFinishedRouter = require('./routes/brushTicketTaskListFinishedRouter');
 var brushTicketTaskListStoppedRouter = require('./routes/brushTicketTaskListStoppedRouter');
 var brushTicketTaskListStartedRouter = require('./routes/brushTicketTaskListStartedRouter');
+var gotTicketListRouter = require('./routes/gotTicketListRouter');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/brushTicketTaskList', brushTicketTaskListRouter);
 app.use('/brushTicketTaskListFinished', brushTicketTaskListFinishedRouter);
 app.use('/brushTicketTaskListStopped', brushTicketTaskListStoppedRouter);
 app.use('/brushTicketTaskListStarted', brushTicketTaskListStartedRouter);
+app.use('/gotTicketList', gotTicketListRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

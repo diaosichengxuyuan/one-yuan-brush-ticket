@@ -72,7 +72,7 @@
         bindToRootElement: function (taskListHtml) {
             var rootElement = document.getElementById(this.root);
             rootElement.innerHTML = taskListHtml;
-        },
+        }
     }
 
     BrushTicketTaskList.search = function (root) {

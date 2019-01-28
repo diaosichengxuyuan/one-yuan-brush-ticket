@@ -121,28 +121,7 @@
     }
 
     GotTicketList.ticktDetail = function (task) {
-        debugger
-        switch (task.status) {
-            case "已停止":
-                {
-                    location.href = "http://localhost:3000/brushTicketticketListStopped?id=" + task.id;
-                    break;
-                }
-            case "已启动":
-                {
-                    location.href = "http://localhost:3000/brushTicketticketListStarted?id=" + task.id;
-                    break;
-                }
-            case "已结束": {
-                location.href = "http://localhost:3000/brushTicketticketListFinished?id=" + task.id;
-                break;
-            }
-            default:
-                {
-                    alert("没有");
-                    break;
-                }
-        }
+        location.href = "http://localhost:3000/gotTicketDetail?id=" + task.id + "&status=" + task.status;
         return false;
     }
 

@@ -94,7 +94,7 @@
                 for (var i = 0; i < ticketList.length; i++) {
                     var ticket = ticketList[i];
                     html += '<tr>' +
-                        '<td><a onclick="GotTicketList.ticktDetail(' + JSON.stringify(ticket).replace(/"/g, '&quot;') + ')">' + ticket.startDate + '(' + ticket.week + ')&nbsp;&nbsp;' + ticket.trains + '</br>' + ticket.startStation + '(' + ticket.startTime + '开) → ' + ticket.endStation + '(' + ticket.endTime + '到)' + '</a></td>' +
+                        '<td><a href="javascript:void(0);" onclick="GotTicketList.ticktDetail(' + JSON.stringify(ticket).replace(/"/g, '&quot;') + ')">' + ticket.startDate + '(' + ticket.week + ')&nbsp;&nbsp;' + ticket.trains + '</br>' + ticket.startStation + '(' + ticket.startTime + '开) → ' + ticket.endStation + '(' + ticket.endTime + '到)' + '</a></td>' +
                         '<td>' + ticket.status + '</td>' +
                         '</tr>';
                 }
@@ -122,7 +122,6 @@
 
     GotTicketList.ticktDetail = function (task) {
         location.href = "http://localhost:3000/gotTicketDetail?id=" + task.id;
-        return false;
     }
 
     window.GotTicketList = GotTicketList;

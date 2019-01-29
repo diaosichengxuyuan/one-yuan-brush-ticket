@@ -67,10 +67,10 @@
             html += '<div class="passengers';
 
             if (ticketDetail.status == "已支付") {
-                html += ' haspay';
+                html += ' hasPay';
             }
             else if (ticketDetail.status == "已取消") {
-                html += ' hascancel';
+                html += ' hasCancel';
             }
 
             html += '">' +

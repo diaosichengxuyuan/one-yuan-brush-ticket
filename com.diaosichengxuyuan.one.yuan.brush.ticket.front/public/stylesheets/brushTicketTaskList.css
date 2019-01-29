@@ -5,10 +5,12 @@
     margin-top: 30px;
 }
 
-.taskInstruction img {
+.taskInstruction{
     float: left;
     height: 300px;
-    width: 200px;
+    width: 190px;
+    font-size: 30px;
+    color:red;
 }
 
 .taskList {

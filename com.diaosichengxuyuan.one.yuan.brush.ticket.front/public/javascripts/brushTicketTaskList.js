@@ -88,7 +88,6 @@
     }
 
     BrushTicketTaskList.taskDetail = function (task) {
-        debugger
         switch (task.status) {
             case "已停止":
                 {
@@ -106,7 +105,7 @@
             }
             default:
                 {
-                    alert("没有");
+                    console.log("没有此种任务状态");
                     break;
                 }
         }

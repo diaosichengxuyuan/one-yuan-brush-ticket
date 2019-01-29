@@ -1,17 +1,67 @@
 <div class="fixedUpperBody">
-    <img src="/images/icon.jpg">
-    <div id="currentDailyNum" class="currentDataClass">当前日活数1000人</div>
-    <div id="currentMembers" class="currentDataClass">当前会员数681人</div>
-    <div id="brushTicketOrderNum" class="currentDataClass">抢票订单数1341个</div>
+    <img class="zhaocaiClass" src="/images/zhaocai.jpg">
+    <div id="currentDailyNum" class="currentDataClass">当前日活1000人</div>
+    <div id="currentMembers" class="currentDataClass">当前会员681人</div>
+    <div id="brushTicketOrderNum" class="currentDataClass">抢票订单1341个</div>
     <div id="whetherLoggedIn" class="whetherOwnClass">未登录</div>
     <div id="whetherMember" class="whetherOwnClass">非会员</div>
+    <img class="jinbaoClass" src="/images/jinbao.jpg">
 </div>
 <div class="fixedMiddleBody">
     <a href="http://localhost:3000/ticketSearch">车票查询</a>
     <a class="mainMenuClass" href="http://localhost:3000/addBrushTicketTask">添加抢票任务</a>
     <a class="mainMenuClass" href="http://localhost:3000/brushTicketTaskList">抢票任务列表</a>
     <a class="mainMenuClass" href="http://localhost:3000/gotTicketList">已抢到票列表</a>
-    <a id="loginMenu" href="">登录</a>
-    <a class="loginMenuClass" href="">会员</a>
+    <a id="loginMenu" href="http://localhost:3000/login">登录</a>
+    <a class="loginMenuClass" href="http://localhost:3000/member">会员</a>
     <a class="loginMenuClass" href="">个人中心</a>
 </div>
+
+<script>
+    $(document).ready(
+        function () {
+            //定时刷新网站实时数据
+            var CURRENT_DAILY_NUM = "currentDailyNum";
+            var CURRENT_MEMBERS = "currentMembers";
+            var BRUSH_TICKET_ORDER_NUM = "brushTicketOrderNum";
+            var refreshIntervalOfGetDailyData = 2000;
+
+            var currentDailyNum = function getCurrentDailyNum() {
+                return Math.ceil(Math.random() * 1000);
+            }
+            var currentMembers = function getCurrentMembers() {
+                return Math.ceil(Math.random() * 1000);
+            }
+            var brushTicketOrderNum = function getBrushTicketOrderNum() {
+                return Math.ceil(Math.random() * 1000);
+            }
+
+            function setCurrentDailyData(id, num) {
+                if (isNaN(num)) {
+                    return;
+                }
+
+                if (CURRENT_DAILY_NUM == id) {
+                    document.getElementById(id).innerText = "当前日活" + num + "人"
+                }
+                else if (CURRENT_MEMBERS == id) {
+                    document.getElementById(id).innerText = "当前会员" + num + "人"
+                    $("#" + id).text("当前会员数" + num + "人");
+                }
+                else if (BRUSH_TICKET_ORDER_NUM == id) {
+                    document.getElementById(id).innerText = "当前订单" + num + "个"
+                }
+            }
+
+            setInterval(function () {
+                setCurrentDailyData(CURRENT_DAILY_NUM, currentDailyNum());
+            }, refreshIntervalOfGetDailyData);
+            setInterval(function () {
+                setCurrentDailyData(CURRENT_MEMBERS, currentMembers());
+            }, refreshIntervalOfGetDailyData);
+            setInterval(function () {
+                setCurrentDailyData(BRUSH_TICKET_ORDER_NUM, brushTicketOrderNum());
+            }, refreshIntervalOfGetDailyData);
+        }
+    );
+</script>

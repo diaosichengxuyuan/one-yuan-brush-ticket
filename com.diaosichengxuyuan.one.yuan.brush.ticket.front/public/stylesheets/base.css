@@ -1,6 +1,6 @@
 body {
   overflow-x: hidden;
-  background-color: rgb(228, 239, 248);
+  background-color: rgb(237, 240, 224);
 }
 
 div {
@@ -11,14 +11,20 @@ div {
 
 /* 上部展示栏 */
 .fixedUpperBody {
-  background-color: rgb(221, 214, 214);
+  background-color: rgb(158, 241, 247);
   float: left;
 }
 
-.fixedUpperBody img {
+.fixedUpperBody .zhaocaiClass {
   height: 100px;
-  width: 250px;
+  width: 120px;
   float: left;
+}
+
+.fixedUpperBody .jinbaoClass {
+  height: 100px;
+  width: 120px;
+  float: right;
 }
 
 .fixedUpperBody .currentDataClass {
@@ -47,42 +53,43 @@ div {
 .fixedUpperBody .whetherOwnClass {
   float: left;
   width: 50px;
-  margin-top: 70px;
+  margin-top: 10px;
   font-family: 'Times New Roman', Times, serif;
 }
 
 #whetherLoggedIn {
-  margin-left: 140px;
-  background-color: green;
+  margin-left: 120px;
+  background-color: rgb(248, 147, 147);
 }
 
 #whetherMember {
   margin-left: 0 px;
-  background-color: red;
+  background-color: rgb(248, 147, 147);
 }
 
 /* 中部导航栏 */
-.fixedMiddleBody{
+.fixedMiddleBody {
   height: 30px;
   background-color: rgb(30, 146, 255);
   float: left;
   font-family: 'Times New Roman', Times, serif;
+  margin-top: 5px;
 }
 
-.fixedMiddleBody a{
+.fixedMiddleBody a {
   text-decoration: none;
   font-size: 20px;
   color: black;
 }
 
-.fixedMiddleBody .mainMenuClass{
+.fixedMiddleBody .mainMenuClass {
   margin-left: 50px;
 }
 
-#loginMenu{
+#loginMenu {
   margin-left: 310px;
 }
 
-.fixedMiddleBody .loginMenuClass{
+.fixedMiddleBody .loginMenuClass {
   margin-left: 50px;
 }

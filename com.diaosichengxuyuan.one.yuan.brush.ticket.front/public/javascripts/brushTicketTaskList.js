@@ -59,7 +59,7 @@
                 for (var i = 0; i < taskList.length; i++) {
                     var task = taskList[i];
                     html += '<tr>' +
-                        '<td><a onclick="BrushTicketTaskList.taskDetail(' + JSON.stringify(task).replace(/"/g, '&quot;') + ')">' + task.startPlace + '→' + task.endPlace + '</br>' + task.startDate + '</a></td>' +
+                        '<td><a href="javascript:void(0);" onclick="BrushTicketTaskList.taskDetail(' + JSON.stringify(task).replace(/"/g, '&quot;') + ')">' + task.startPlace + '→' + task.endPlace + '</br>' + task.startDate + '</a></td>' +
                         '<td>' + task.status + '</td>' +
                         '<td><a class="taskListDeleteLink" href="" onclick="BrushTicketTaskList.deleteById(' + task.id + ')">删除</a></td>' +
                         '</tr>';
@@ -109,7 +109,6 @@
                     break;
                 }
         }
-        return false;
     }
 
     window.BrushTicketTaskList = BrushTicketTaskList;

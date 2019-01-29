@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票</title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="/images/yiyuanqiangpiao.ico" type="images/x-icon">
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/homePage.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/member.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/html/base.htm");
+    </script>
+    <div id="mainLoginArea">
+        <div class="status">状态&nbsp;&nbsp;<input type="text" readonly="readonly" value="会员"></div>
+        <div class="account">账号&nbsp;&nbsp;<input type="text" readonly="readonly" value="1213xxx44@qq.com"></div>
+        <div class="period">有效期至&nbsp;&nbsp;<input type="text" readonly="readonly" value="2019-12-31"></div>
+    </div>
+</body>

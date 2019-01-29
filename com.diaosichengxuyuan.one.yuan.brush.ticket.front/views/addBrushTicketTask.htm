@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>一元抢票网</title>
+    <title>一元抢票</title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="/images/yiyuanqiangpiao.ico" type="images/x-icon">
 
     <!-- 样式 -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
@@ -12,9 +15,8 @@
     <!-- 脚本 -->
     <script src="/javascripts/Common.js"></script>
     <script src="/javascripts/jquery-3.3.1.js"></script>
-    <script src="/javascripts/base.js"></script>
     <script src="/javascripts/startDate.js"></script>
-    <script src="/javascripts/ticketSearchResult.js"></script>
+    <script src="/javascripts/ticketSearch.js"></script>
     <script src="/javascripts/passengers.js"></script>
 </head>
 
@@ -34,7 +36,7 @@
                 type="text"></div>
         <div id="phone" class="searchConditon">联系手机<input id="phoneInput" class="searchConditonClass" type="text"></div>
         <div id="submitBrushTicketTask"><input id="submitBrushTicketTaskButton" type="button" value="提交" onclick="submit()"></div>
-        <div id="brushTicketAgreement">点提交表示同意<a id="brushTicketAgreementLink" href="">抢票协议</a></div>
+        <div id="brushTicketAgreement">点提交表示同意<a id="brushTicketAgreementLink" href="javascript: void(0);">抢票协议</a></div>
         <script>
             function submit() {
                 var startPlaceVal = document.getElementById("startPlaceInput").value;
@@ -76,7 +78,6 @@
             });
             $("#brushTicketAgreementLink").click(function () {
                 $("#mainContentArea").load("/html/brushTicketAgreement.htm");
-                return false;
             });
         </script>
     </div>

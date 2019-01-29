@@ -58,7 +58,7 @@
 #submitBrushTicketTask {
     width: 300px;
     height: 35px;
-    margin-top: 43px;
+    margin-top: 30px;
     margin-left: 130px;
 }
 
@@ -82,7 +82,7 @@
     text-decoration: none;
 }
 
-.brushTicketAgreementText{
+.brushTicketAgreementText {
     font-size: 15px;
     position: relative;
     left: -30px;
@@ -91,7 +91,7 @@
 
 #mainContentArea {
     position: absolute;
-    height: 460px;
+    height: 440px;
     width: 670px;
     top: 178px;
     left: 568px;
@@ -170,7 +170,7 @@
 .atie-calendar {
     outline: none;
     width: 670px;
-    height: 460px;
+    height: 440px;
     list-style: none;
     font-size: 14px;
     text-align: left;
@@ -201,10 +201,6 @@
     top: 0;
     font-size: 20px;
     cursor: pointer;
-}
-
-.atie-calendar-header>div>a:hover {
-    color: #1890ff;
 }
 
 .atie-calendar-prev-year-btn {
@@ -309,9 +305,9 @@
 .atie-calendar-footer {
     line-height: 38px;
     padding: 0 12px;
-    background-color: #dcf187;
+    background-color: #a4a59e;
     width: 670px;
-    margin-top: 10px;
+    margin-top: -10px;
 }
 
 .atie-calendar-footer-btn {
@@ -322,6 +318,7 @@
     display: inline-block;
     color: black;
     cursor: pointer;
+    margin-left: 22px;
 }
 
 .ticketResultAreaClass {

@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>一元抢票网</title>
+    <title>一元抢票</title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="/images/yiyuanqiangpiao.ico" type="images/x-icon">
 
     <!-- 样式 -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
@@ -11,7 +14,6 @@
 
     <!-- 脚本 -->
     <script src="/javascripts/jquery-3.3.1.js"></script>
-    <script src="/javascripts/base.js"></script>
     <script src="/javascripts/startDate.js"></script>
 </head>
 
@@ -29,14 +31,14 @@
         <div id="highSpeedTrainSelect">高铁/动车<input id="highSpeedTrainSelectInput" type="checkbox"></div>
         <div id="ticketSearchClick"><input id="ticketSearchButton" type="button" value="查询" onclick="search()"></div>
         <script>
-            function search() {
+            $("#ticketSearchButton").click(function () {
                 var startPlaceVal = document.getElementById("startPlaceInput").value;
                 var endPlaceVal = document.getElementById("endPlaceInput").value;
                 var startDateVal = document.getElementById("startDateInput").value;
                 var isStudent = document.getElementById("studentSelectInput").checked;
                 var isHighSpeed = document.getElementById("highSpeedTrainSelectInput").checked;
                 location.href = "http://localhost:3000/ticketSearchResult?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&isStudent=" + isStudent + "&isHighSpeed=" + isHighSpeed;
-            }
+            });
         </script>
     </div>
     <div id="mainContentArea">
@@ -50,7 +52,7 @@
             Calendar.create({
                 classN: 'startDateInputClass',
                 callBack: function (bindElem, dateObj) {
-                    $("#startDateInput").val(dateObj.year + '-' + dateObj.month + '-' + dateObj.date);
+                    document.getElementById("startDateInput").value = dateObj.year + '-' + dateObj.month + '-' + dateObj.date;
                 }
             });
         </script>

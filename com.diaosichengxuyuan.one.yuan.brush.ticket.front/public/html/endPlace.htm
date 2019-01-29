@@ -188,12 +188,14 @@
                 var city = $.trim($(this).text());
                 $("#endPlace .searchConditonClass").val(city);
             });
+
+            function showCityContent(index) {
+                $("#azTitle li").removeClass("azliClass");
+                $("#azTitle" + index).addClass("azliClass");
+                $("#azContent" + index).show();
+            }
         }
     );
 
-    function showCityContent(index) {
-        $("#azTitle li").removeClass("azliClass");
-        $("#azTitle" + index).addClass("azliClass");
-        $("#azContent" + index).show();
-    }
+
 </script>

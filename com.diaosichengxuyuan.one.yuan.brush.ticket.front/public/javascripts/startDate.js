@@ -194,7 +194,7 @@
                 '</div>' +
                 '<div class="atie-calendar-footer">' +
                 '<span class="atie-calendar-footer-btn">' +
-                '<a class="atie-calendar-today-btn " role="button" title="' + this.dateOpt.curYear + '年' + (this.dateOpt.curMonth + 1) + '月' + this.dateOpt.curDate + '日">今天</a>' +
+                '<a class="atie-calendar-today-btn" role="button" title="' + this.dateOpt.curYear + '年' + (this.dateOpt.curMonth + 1) + '月' + this.dateOpt.curDate + '日">今天</a>' +
                 '</span>' +
                 '</div>' +
                 '</div>' +

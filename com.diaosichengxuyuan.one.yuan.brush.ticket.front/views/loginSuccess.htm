@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票</title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="/images/yiyuanqiangpiao.ico" type="images/x-icon">
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/homePage.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/loginSuccess.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/common.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/html/base.htm");
+    </script>
+    <div id="mainLoginArea">
+        <div class="instruction">已登录</div>
+        <div class="account">账号&nbsp;&nbsp;<input id="accountId" type="text" readonly="readonly"></div>
+        <div class="loginOut"><input id="loginOutId" type="button" value="退出登录"></div>
+    </div>
+    <script>
+        document.getElementById("accountId").value = CommonUtils.getUrlParam("account");
+        $("#loginOutId").click(function () {
+            location.href = "http://localhost:3000/login";
+        });
+    </script>
+</body>

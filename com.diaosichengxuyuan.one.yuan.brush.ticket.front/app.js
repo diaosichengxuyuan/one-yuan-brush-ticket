@@ -14,6 +14,11 @@ var brushTicketTaskListFinishedRouter = require('./routes/brushTicketTaskListFin
 var brushTicketTaskListStoppedRouter = require('./routes/brushTicketTaskListStoppedRouter');
 var brushTicketTaskListStartedRouter = require('./routes/brushTicketTaskListStartedRouter');
 var gotTicketListRouter = require('./routes/gotTicketListRouter');
+var gotTicketDetailRouter = require('./routes/gotTicketDetailRouter');
+var loginRouter = require('./routes/loginRouter');
+var loginFailedRouter = require('./routes/loginFailedRouter');
+var loginSuccessRouter = require('./routes/loginSuccessRouter');
+var memberRouter = require('./routes/memberRouter');
 
 var app = express();
 
@@ -38,14 +43,19 @@ app.use('/brushTicketTaskListFinished', brushTicketTaskListFinishedRouter);
 app.use('/brushTicketTaskListStopped', brushTicketTaskListStoppedRouter);
 app.use('/brushTicketTaskListStarted', brushTicketTaskListStartedRouter);
 app.use('/gotTicketList', gotTicketListRouter);
+app.use('/gotTicketDetail', gotTicketDetailRouter);
+app.use('/login', loginRouter);
+app.use('/loginFailed', loginFailedRouter);
+app.use('/loginSuccess', loginSuccessRouter);
+app.use('/member', memberRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

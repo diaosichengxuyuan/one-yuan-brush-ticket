@@ -121,7 +121,7 @@
     }
 
     GotTicketList.ticktDetail = function (task) {
-        location.href = "http://localhost:3000/gotTicketDetail?id=" + task.id + "&status=" + task.status;
+        location.href = "http://localhost:3000/gotTicketDetail?id=" + task.id;
         return false;
     }
 

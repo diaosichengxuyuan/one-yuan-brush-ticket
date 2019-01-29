@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>一元抢票</title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="/images/yiyuanqiangpiao.ico" type="images/x-icon">
+
+    <!-- 样式 -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/homePage.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/gotTicketDetail.css">
+
+    <!-- 脚本 -->
+    <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/common.js"></script>
+    <script src="/javascripts/gotTicketDetail.js"></script>
+</head>
+
+<body>
+    <div id="baseBody"></div>
+    <script>
+        $("#baseBody").load("/html/base.htm");
+    </script>
+    <div id="mainContentArea">
+        <script>
+            GotTicketDetail.search("mainContentArea", CommonUtils.getUrlParam("id"));
+        </script>
+    </div>
+</body>

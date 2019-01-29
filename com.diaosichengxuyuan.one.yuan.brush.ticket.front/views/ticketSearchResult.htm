@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>一元抢票网</title>
+    <title>一元抢票</title>
+
+    <!-- 图标 -->
+    <link rel="shortcut icon" href="/images/yiyuanqiangpiao.ico" type="images/x-icon">
 
     <!-- 样式 -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/base.css">
@@ -12,8 +15,7 @@
     <!-- 脚本 -->
     <script src="/javascripts/common.js"></script>
     <script src="/javascripts/jquery-3.3.1.js"></script>
-    <script src="/javascripts/base.js"></script>
-    <script src="/javascripts/ticketSearchResult.js"></script>
+    <script src="/javascripts/ticketSearch.js"></script>
 </head>
 
 <body>
@@ -28,7 +30,6 @@
             var startDate = CommonUtils.getUrlParam("startDate");
             var isStudent = CommonUtils.getUrlParam("isStudent");
             var isHighSpeed = CommonUtils.getUrlParam("isHighSpeed");
-
             TicketSearch.search(startPlace, endPlace, startDate, isStudent, isHighSpeed, "ticketResultArea");
         </script>
     </div>

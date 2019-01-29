@@ -1,6 +1,6 @@
 <div class="fixedUpperBody">
     <img class="zhaocaiClass" src="/images/zhaocai.jpg">
-    <div id="currentDailyNum" class="currentDataClass">当前日活1000人</div>
+    <div id="currentDailyNum" class="currentDataClass">当前活跃1000人</div>
     <div id="currentMembers" class="currentDataClass">当前会员681人</div>
     <div id="brushTicketOrderNum" class="currentDataClass">抢票订单1341个</div>
     <div id="whetherLoggedIn" class="whetherOwnClass">未登录</div>
@@ -42,11 +42,10 @@
                 }
 
                 if (CURRENT_DAILY_NUM == id) {
-                    document.getElementById(id).innerText = "当前日活" + num + "人"
+                    document.getElementById(id).innerText = "当前活跃" + num + "人"
                 }
                 else if (CURRENT_MEMBERS == id) {
                     document.getElementById(id).innerText = "当前会员" + num + "人"
-                    $("#" + id).text("当前会员数" + num + "人");
                 }
                 else if (BRUSH_TICKET_ORDER_NUM == id) {
                     document.getElementById(id).innerText = "当前订单" + num + "个"

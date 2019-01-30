@@ -105,7 +105,6 @@
             }
             default:
                 {
-                    console.log("没有此种任务状态");
                     break;
                 }
         }

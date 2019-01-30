@@ -36,26 +36,33 @@
                 type="text"></div>
         <div id="phone" class="searchConditon">联系手机<input id="phoneInput" class="searchConditonClass" type="text"></div>
         <div id="submitBrushTicketTask"><input id="submitBrushTicketTaskButton" type="button" value="提交" onclick="submit()"></div>
-        <div id="brushTicketAgreement">点提交表示同意<a id="brushTicketAgreementLink" href="javascript: void(0);">抢票协议</a></div>
+        <div id="brushTicketAgreement">点提交表示同意<a id="brushTicketAgreementLink" href="javascript: void(0);">用户协议</a></div>
         <script>
             function submit() {
-                var startPlaceVal = document.getElementById("startPlaceInput").value;
-                var endPlaceVal = document.getElementById("endPlaceInput").value;
-                var startDateVal = document.getElementById("startDateInput").value;
-                var trainsVal = document.getElementById("trainsInput").value;
-                var seatsVal = document.getElementById("seatsInput").value;
-                var passengersVal = document.getElementById("passengersInput").value;
-                var phoneVal = document.getElementById("phoneInput").value;
-                location.href = "http://localhost:3000/brushTicketTaskList?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&trains=" + trainsVal + "&seats=" + seatsVal + "&passengers=" + passengersVal + "&phone=" + phoneVal;
+                var startPlace = document.getElementById("startPlaceInput");
+                var endPlace = document.getElementById("endPlaceInput");
+                var startDate = document.getElementById("startDateInput");
+                var tains = document.getElementById("trainsInput");
+                var seats = document.getElementById("seatsInput");
+                var passengers = document.getElementById("passengersInput");
+                var phone = document.getElementById("phoneInput");
+                var isValidateSuccess = CommonUtils.validateAndPrompt([startPlace, endPlace, startDate, tains, seats, passengers, phone]);
+                if (!isValidateSuccess) {
+                    return;
+                }
+
+                location.href = "http://localhost:3000/brushTicketTaskList";
             }
         </script>
     </div>
     <div id="mainContentArea">
         <script>
             $("#startPlaceInput").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 $("#mainContentArea").load("/html/startPlace.htm");
             });
             $("#endPlaceInput").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 $("#mainContentArea").load("/html/endPlace.htm");
             });
             Calendar.create({
@@ -65,19 +72,26 @@
                 }
             });
             $("#trainsInput").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 var startPlaceVal = document.getElementById("startPlaceInput").value;
                 var endPlaceVal = document.getElementById("endPlaceInput").value;
                 var startDateVal = document.getElementById("startDateInput").value;
                 TicketSearch.searchAndCheck(startPlaceVal, endPlaceVal, startDateVal, "trainsInput", "mainContentArea");
             });
             $("#seatsInput").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 $("#mainContentArea").load("/html/seatsSelect.htm");
             });
             $("#passengersInput").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 Passengers.searchAndCheck("passengersInput", "mainContentArea");
             });
             $("#brushTicketAgreementLink").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 $("#mainContentArea").load("/html/brushTicketAgreement.htm");
+            });
+            $("#phoneInput").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
             });
         </script>
     </div>

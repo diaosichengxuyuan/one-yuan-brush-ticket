@@ -30,12 +30,15 @@
 
 #mainLoginArea .loginOut {
     width: 500px;
-    margin: auto;
     margin-top: 180px;
+    margin-left: 380px;
     text-align: center;
 }
 
 #mainLoginArea .loginOut input {
     font-size: 20px;
     background-color: #ff7300;
+    outline: none;
+    width: 300px;
+    height: 35px;
 }

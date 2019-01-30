@@ -111,6 +111,7 @@
             var _this = this;
             this.initState();
             this.bindElem.addEventListener('click', function (e) {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 _this.openPanel(this);
                 e.stopPropagation();
             }, false);
@@ -322,7 +323,6 @@
             }, false);
         },
         updateHtml: function (type) {
-            console.log('updateHtml type=>', type);
             switch (type) {
                 case 'yearChange':
                     this.elem_wrap.querySelector('.atie-calendar-year-select').innerHTML = this.dateOpt._year + '年';

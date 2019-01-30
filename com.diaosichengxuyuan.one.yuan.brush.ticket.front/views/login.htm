@@ -15,6 +15,7 @@
 
     <!-- 脚本 -->
     <script src="/javascripts/jquery-3.3.1.js"></script>
+    <script src="/javascripts/common.js"></script>
 </head>
 
 <body>
@@ -25,8 +26,9 @@
     <div id="mainLoginArea">
         <div class="instruction">请使用12306账号密码登录</div>
         <div class="accountAndPassword">账号&nbsp;&nbsp;<input id="accountId" type="text"></div>
-        <div class="accountAndPassword">密码&nbsp;&nbsp;<input type="password"></div>
-        <div class="protocal"><input type="checkbox">同意<a id="protocalLinkId" class="protocalLink" href="javascript: void(0);">用户协议</a></div>
+        <div class="accountAndPassword">密码&nbsp;&nbsp;<input id="passwordId" type="password"></div>
+        <div class="protocal"><input id="protocalBoxId" type="checkbox">同意<a id="protocalLinkId" class="protocalLink"
+                href="javascript: void(0);">用户协议</a></div>
         <div class="login"><input id="loginId" type="button" value="登录"></div>
     </div>
     <script>
@@ -42,7 +44,24 @@
         });
 
         $("#loginId").click(function () {
+            var account = document.getElementById("accountId");
+            var password = document.getElementById("passwordId");
+            var isValidateSuccess = CommonUtils.validateAndPrompt([account, password]);
+            if (!isValidateSuccess) {
+                return;
+            }
+            if (!document.getElementById("protocalBoxId").checked) {
+                return
+            }
+
             location.href = "http://localhost:3000/loginSuccess?account=" + document.getElementById("accountId").value;
+        });
+
+        $("#accountId").click(function () {
+            $(this).css("border-color", CommonUtils.getDefaultGrayColor());
+        });
+        $("#passwordId").click(function () {
+            $(this).css("border-color", CommonUtils.getDefaultGrayColor());
         });
     </script>
     <div id="protocalContentId" class="protocalContent">

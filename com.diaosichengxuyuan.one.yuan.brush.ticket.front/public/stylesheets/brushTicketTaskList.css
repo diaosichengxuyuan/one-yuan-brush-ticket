@@ -41,15 +41,16 @@
 
 .AddTask {
     position: absolute;
-    left: 580px;
+    left: 560px;
     top: 550px;
 }
 
 .AddTask input {
     -webkit-appearance: none;
     height: 35px;
-    width: 50px;
+    width: 80px;
     color: black;
     background-color: #ff7300;
-    font-size: 15px;
+    font-size: 18px;
+    outline: none;
 }

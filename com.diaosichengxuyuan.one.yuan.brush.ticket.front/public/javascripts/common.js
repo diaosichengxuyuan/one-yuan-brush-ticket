@@ -20,5 +20,29 @@
         }
     }
 
+    CommonUtils.getDefaultGrayColor = function () {
+        return "rgb(170, 164, 164)";
+    }
+
+    CommonUtils.validateAndPrompt = function (fields) {
+        var success = true;
+        for (var index in fields) {
+            var field = fields[index];
+            if (field == undefined) {
+                continue;
+            }
+
+            if (typeof (field.value) != "string") {
+                continue;
+            }
+
+            if (field.value.trim() == "") {
+                field.style["border-color"] = "red";
+                success = false;
+            }
+        }
+        return success;
+    }
+
     window.CommonUtils = CommonUtils;
 })()

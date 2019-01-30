@@ -18,6 +18,9 @@
     margin-left: 15px;
     font-size: 15px;
     text-align: center;
+    outline: none;
+    border: solid 1.4px;
+    border-color: rgb(170, 164, 164);
 }
 
 #startPlace {
@@ -64,11 +67,12 @@
 
 #startBrushTicketTaskButton {
     -webkit-appearance: none;
-    height: 35px;
-    width: 300px;
+    height: 30px;
+    width: 305px;
     color: black;
     background-color: #ff7300;
-    font-size: 20px;
+    font-size: 15px;
+    outline: none;
 }
 
 #mainContentArea {
@@ -108,13 +112,12 @@
 }
 
 .azTitleClass li {
-    width: 134px;
+    width: 111.6px;
     color: white;
 }
 
 .azContentClass {
-    max-height: 300px;
-    height: 300px;
+    height: 413px;
     display: none;
     overflow: scroll;
 }
@@ -287,7 +290,7 @@
 .atie-calendar-footer {
     line-height: 38px;
     padding: 0 12px;
-    background-color: #a4a59e;  
+    background-color: #a4a59e;
     width: 670px;
     margin-top: -10px;
 }

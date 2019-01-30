@@ -15,6 +15,7 @@
     <!-- 脚本 -->
     <script src="/javascripts/jquery-3.3.1.js"></script>
     <script src="/javascripts/startDate.js"></script>
+    <script src="/javascripts/common.js"></script>
 </head>
 
 <body>
@@ -29,24 +30,38 @@
                 type="text"></div>
         <div id="studentSelect">学生<input id="studentSelectInput" type="checkbox"></div>
         <div id="highSpeedTrainSelect">高铁/动车<input id="highSpeedTrainSelectInput" type="checkbox"></div>
-        <div id="ticketSearchClick"><input id="ticketSearchButton" type="button" value="查询" onclick="search()"></div>
+        <div id="ticketSearchClick"><input id="ticketSearchButton" type="button" value="查询"></div>
         <script>
             $("#ticketSearchButton").click(function () {
-                var startPlaceVal = document.getElementById("startPlaceInput").value;
-                var endPlaceVal = document.getElementById("endPlaceInput").value;
-                var startDateVal = document.getElementById("startDateInput").value;
-                var isStudent = document.getElementById("studentSelectInput").checked;
-                var isHighSpeed = document.getElementById("highSpeedTrainSelectInput").checked;
-                location.href = "http://localhost:3000/ticketSearchResult?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&isStudent=" + isStudent + "&isHighSpeed=" + isHighSpeed;
+                var startPlace = document.getElementById("startPlaceInput");
+                var endPlace = document.getElementById("endPlaceInput");
+                var startDate = document.getElementById("startDateInput");
+                var isStudent = document.getElementById("studentSelectInput");
+                var isHighSpeed = document.getElementById("highSpeedTrainSelectInput");
+                var isValidateSuccess = CommonUtils.validateAndPrompt([startPlace, endPlace, startDate]);
+                if (!isValidateSuccess) {
+                    return;
+                }
+
+                var startPlaceVal = startPlace.value;
+                var endPlaceVal = endPlace.value;
+                var startDateVal = startDate.value;
+                var isStudentVal = isStudent.checked;
+                var isHighSpeedVal = isHighSpeed.checked;
+                location.href = "http://localhost:3000/ticketSearchResult?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&isStudent=" + isStudentVal + "&isHighSpeed=" + isHighSpeedVal;
             });
+
+
         </script>
     </div>
     <div id="mainContentArea">
         <script>
             $("#startPlace .searchConditonClass").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 $("#mainContentArea").load("/html/startPlace.htm");
             });
             $("#endPlace .searchConditonClass").click(function () {
+                $(this).css("border-color", CommonUtils.getDefaultGrayColor());
                 $("#mainContentArea").load("/html/endPlace.htm");
             });
             Calendar.create({

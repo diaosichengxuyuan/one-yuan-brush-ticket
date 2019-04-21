@@ -10,12 +10,12 @@
       <img class="jinbaoClass" src="./assets/images/jinbao.jpg">
     </div>
     <div class="fixedMiddleBody">
-      <a href="http://localhost:3000/ticketSearch">车票查询</a>
-      <a class="mainMenuClass" href="http://localhost:3000/addBrushTicketTask">添加抢票任务</a>
-      <a class="mainMenuClass" href="http://localhost:3000/brushTicketTaskList">抢票任务列表</a>
-      <a class="mainMenuClass" href="http://localhost:3000/gotTicketList">已抢到票列表</a>
-      <a id="loginMenu" href="http://localhost:3000/login">登录</a>
-      <a class="loginMenuClass" href="http://localhost:3000/member">会员</a>
+      <a href="http://localhost:8080/ticketSearch">车票查询</a>
+      <a class="mainMenuClass" href="http://localhost:8080/addBrushTicketTask">添加抢票任务</a>
+      <a class="mainMenuClass" href="http://localhost:8080/brushTicketTaskList">抢票任务列表</a>
+      <a class="mainMenuClass" href="http://localhost:8080/gotTicketList">已抢到票列表</a>
+      <a id="loginMenu" href="http://localhost:8080/login">登录</a>
+      <a class="loginMenuClass" href="http://localhost:8080/member">会员</a>
       <a class="loginMenuClass">个人中心</a>
     </div>
     <router-view/>
@@ -25,24 +25,24 @@
 <script>
 export default {
   name: "App",
-  data(){
+  data() {
     return {
-      currentDailyNum:0,
-      currentMembers:0,
-      brushTicketOrderNum:0,
-      whetherLoggedIn:"未登录",
-      whetherMember:"非会员"
-    }
+      currentDailyNum: 0,
+      currentMembers: 0,
+      brushTicketOrderNum: 0,
+      whetherLoggedIn: "未登录",
+      whetherMember: "非会员"
+    };
   },
-  methods:{
-    calculateSiteData:function(){
+  methods: {
+    calculateSiteData: function() {
       this.currentDailyNum = Math.ceil(Math.random() * 1000);
       this.currentMembers = Math.ceil(Math.random() * 1000);
       this.brushTicketOrderNum = Math.ceil(Math.random() * 1000);
     }
   },
-  created(){
-    setInterval(this.calculateSiteData,1000);
+  created() {
+    setInterval(this.calculateSiteData, 1000);
   }
 };
 </script>

@@ -1,69 +1,50 @@
 <template>
-  <div>
+  <div v-on:click="hidePlaces">
     <div class="contentBody">
       <div id="startPlace" class="searchConditon">
         出发地
-        <input id="startPlaceInput" class="searchConditonClass" type="text" v-model="startPlaceVal" v-on:click="showPlaceAndDate(1)">
+        <input
+          id="startPlaceInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="startPlaceVal"
+          v-on:click="showPlaces(1)"
+        >
       </div>
       <div id="endPlace" class="searchConditon">
         目的地
-        <input id="endPlaceInput" class="searchConditonClass" type="text" v-model="endPlaceVal" v-on:click="showPlaceAndDate(2)">
+        <input
+          id="endPlaceInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="endPlaceVal"
+          v-on:click="showPlaces(2)"
+        >
       </div>
       <div id="startDate" class="searchConditon">
         出发日期
-        <input id="startDateInput" class="searchConditonClass startDateInputClass" type="text">
+        <input
+          id="startDateInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="startDateVal"
+        >
       </div>
       <div id="studentSelect">
         学生
-        <input id="studentSelectInput" type="checkbox">
+        <input id="studentSelectInput" type="checkbox" v-model="isStudent">
       </div>
       <div id="highSpeedTrainSelect">
         高铁/动车
-        <input id="highSpeedTrainSelectInput" type="checkbox">
+        <input id="highSpeedTrainSelectInput" type="checkbox" v-model="isHighSpeed">
       </div>
       <div id="ticketSearchClick">
-        <input id="ticketSearchButton" type="button" value="查询">
+        <input id="ticketSearchButton" type="button" value="查询" v-on:click="routeToSearchResult">
       </div>
-      <!-- <script>
-                $("#ticketSearchButton").click(function () {
-                    var startPlace = document.getElementById("startPlaceInput");
-                    var endPlace = document.getElementById("endPlaceInput");
-                    var startDate = document.getElementById("startDateInput");
-                    var isStudent = document.getElementById("studentSelectInput");
-                    var isHighSpeed = document.getElementById("highSpeedTrainSelectInput");
-                    var isValidateSuccess = CommonUtils.validateAndPrompt([startPlace, endPlace, startDate]);
-                    if (!isValidateSuccess) {
-                        return;
-                    }
-
-                    var startPlaceVal = startPlace.value;
-                    var endPlaceVal = endPlace.value;
-                    var startDateVal = startDate.value;
-                    var isStudentVal = isStudent.checked;
-                    var isHighSpeedVal = isHighSpeed.checked;
-                    location.href = "http://localhost:3000/ticketSearchResult?startPlace=" + startPlaceVal + "&endPlace=" + endPlaceVal + "&startDate=" + startDateVal + "&isStudent=" + isStudentVal + "&isHighSpeed=" + isHighSpeedVal;
-                });
-      </script>-->
     </div>
-    <div>
-      <StartPlace v-on:setStartPlaceVal="setStartPlaceVal($event)" v-show="startPlaceShow"></StartPlace>
-      <EndPlace v-on:setEndPlaceVal="setEndPlaceVal($event)" v-show="endPlaceShow"></EndPlace>
-      <!-- <script>
-                $("#startPlace .searchConditonClass").click(function () {
-                    $(this).css("border-color", CommonUtils.getDefaultGrayColor());
-                    $("#mainContentArea").load("/html/startPlace.htm");
-                });
-                $("#endPlace .searchConditonClass").click(function () {
-                    $(this).css("border-color", CommonUtils.getDefaultGrayColor());
-                    $("#mainContentArea").load("/html/endPlace.htm");
-                });
-                Calendar.create({
-                    classN: 'startDateInputClass',
-                    callBack: function (bindElem, dateObj) {
-                        document.getElementById("startDateInput").value = dateObj.year + '-' + dateObj.month + '-' + dateObj.date;
-                    }
-                });
-      </script>-->
+    <div id="placeArea">
+      <StartPlace v-on:setStartPlaceVal="setStartPlaceVal($event)" v-if="startPlaceShow"></StartPlace>
+      <EndPlace v-on:setEndPlaceVal="setEndPlaceVal($event)" v-if="endPlaceShow"></EndPlace>
     </div>
   </div>
 </template>
@@ -79,8 +60,21 @@ export default {
       startPlaceVal: "",
       endPlaceVal: "",
       startPlaceShow: false,
-      endPlaceShow: false
+      endPlaceShow: false,
+      startDateVal: "",
+      isStudent: false,
+      isHighSpeed: false
     };
+  },
+  mounted: function() {
+    laydate.render({
+      elem: "#startDateInput",
+      type: "date",
+      format: "yyyy-MM-dd",
+      done: value => {
+        this.startDateVal = value;
+      }
+    });
   },
   methods: {
     setStartPlaceVal: function(startPlaceVal) {
@@ -89,7 +83,7 @@ export default {
     setEndPlaceVal: function(endPlaceVal) {
       this.endPlaceVal = endPlaceVal;
     },
-    showPlaceAndDate(index) {
+    showPlaces: function(index) {
       this.startPlaceShow = false;
       this.endPlaceShow = false;
       switch (index) {
@@ -102,6 +96,34 @@ export default {
         default:
           break;
       }
+    },
+    hidePlaces: function(event) {
+      var placeArea = document.getElementById("placeArea");
+      var startPlace = document.getElementById("startPlaceInput");
+      var endPlace = document.getElementById("endPlaceInput");
+      if (
+        placeArea &&
+        startPlace &&
+        endPlace &&
+        !placeArea.contains(event.target) &&
+        !startPlace.contains(event.target) &&
+        !endPlace.contains(event.target)
+      ) {
+        this.startPlaceShow = false;
+        this.endPlaceShow = false;
+      }
+    },
+    routeToSearchResult: function() {
+      this.$router.push({
+        name: "TicketSearchResult",
+        query: {
+          startPlace: this.startPlaceVal,
+          endPlace: this.endPlaceVal,
+          startDate: this.startDateVal,
+          isStudent: this.isStudent,
+          isHighSpeed: this.isHighSpeed
+        }
+      });
     }
   },
   components: {

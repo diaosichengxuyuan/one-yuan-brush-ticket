@@ -10,13 +10,13 @@
       <img class="jinbaoClass" src="./assets/images/jinbao.jpg">
     </div>
     <div class="fixedMiddleBody">
-      <a href="http://localhost:8080/ticketSearch">车票查询</a>
-      <a class="mainMenuClass" href="http://localhost:8080/addBrushTicketTask">添加抢票任务</a>
-      <a class="mainMenuClass" href="http://localhost:8080/brushTicketTaskList">抢票任务列表</a>
-      <a class="mainMenuClass" href="http://localhost:8080/gotTicketList">已抢到票列表</a>
-      <a id="loginMenu" href="http://localhost:8080/login">登录</a>
-      <a class="loginMenuClass" href="http://localhost:8080/member">会员</a>
-      <a class="loginMenuClass">个人中心</a>
+      <router-link to="/ticketSearch">车票查询</router-link>
+      <router-link class="mainMenuClass" to="/addBrushTicketTask">添加抢票任务</router-link>
+      <router-link class="mainMenuClass" to="/brushTicketTaskList">抢票任务列表</router-link>
+      <router-link class="mainMenuClass" to="/gotTicketList">已抢到票列表</router-link>
+      <router-link id="loginMenu" to="/login">登录</router-link>
+      <router-link class="loginMenuClass" to="/member">会员</router-link>
+      <router-link class="loginMenuClass" to="/">个人中心</router-link>
     </div>
     <router-view/>
   </div>
@@ -54,13 +54,13 @@ body {
 }
 
 div {
-  width: 1200px;
   margin-bottom: 5px;
   margin-left: 30px;
 }
 
 /* 上部展示栏 */
 .fixedUpperBody {
+  width: 1200px;
   background-color: rgb(158, 241, 247);
   float: left;
 }
@@ -119,6 +119,7 @@ div {
 
 /* 中部导航栏 */
 .fixedMiddleBody {
+  width: 1200px;
   height: 30px;
   background-color: rgb(30, 146, 255);
   float: left;

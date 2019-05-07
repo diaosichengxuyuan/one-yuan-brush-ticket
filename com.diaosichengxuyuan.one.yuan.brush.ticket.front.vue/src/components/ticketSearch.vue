@@ -59,11 +59,11 @@ export default {
     return {
       startPlaceVal: "",
       endPlaceVal: "",
-      startPlaceShow: false,
-      endPlaceShow: false,
       startDateVal: "",
       isStudent: false,
-      isHighSpeed: false
+      isHighSpeed: false,
+      startPlaceShow: false,
+      endPlaceShow: false
     };
   },
   mounted: function() {

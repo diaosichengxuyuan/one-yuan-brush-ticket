@@ -1,0 +1,310 @@
+<template>
+  <div v-on:click="hidePlaces">
+    <div class="contentBody">
+      <div id="startPlace" class="searchConditon">
+        出发地
+        <input
+          id="startPlaceInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="startPlaceVal"
+          v-on:click="showPlaces(1)"
+        >
+      </div>
+      <div id="endPlace" class="searchConditon">
+        目的地
+        <input
+          id="endPlaceInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="endPlaceVal"
+          v-on:click="showPlaces(2)"
+        >
+      </div>
+      <div id="startDate" class="searchConditon">
+        出发日期
+        <input
+          id="startDateInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="startDateVal"
+        >
+      </div>
+      <div id="trains" class="searchConditon">
+        车次(可多选)
+        <input
+          id="trainsInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="trainsVal"
+          v-on:click="showPlaces(3)"
+        >
+      </div>
+      <div id="seats" class="searchConditon">
+        坐席(单选)
+        <input
+          id="seatsInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="seatsVal"
+          v-on:click="showPlaces(4)"
+        >
+      </div>
+      <div id="passengers" class="searchConditon">
+        乘车人(可多选)
+        <input
+          id="passengersInput"
+          class="searchConditonClass"
+          type="text"
+          v-model="passengersVal"
+          v-on:click="showPlaces(5)"
+        >
+      </div>
+      <div id="phone" class="searchConditon">
+        联系手机
+        <input id="phoneInput" class="searchConditonClass" type="text" v-model="phoneVal">
+      </div>
+      <div id="submitBrushTicketTask">
+        <input id="submitBrushTicketTaskButton" type="button" value="提交" v-on:click="submit">
+      </div>
+      <div id="brushTicketAgreement">
+        点提交表示同意
+        <a
+          id="brushTicketAgreementLink"
+          href="javascript: void(0);"
+          v-on:click="showPlaces(6)"
+        >用户协议</a>
+      </div>
+    </div>
+    <div id="placeArea">
+      <StartPlace v-on:setStartPlaceVal="setStartPlaceVal($event)" v-if="startPlaceShow"></StartPlace>
+      <EndPlace v-on:setEndPlaceVal="setEndPlaceVal($event)" v-if="endPlaceShow"></EndPlace>
+      <Trains v-on:setTrainsVal="setTrainsVal($event)" v-if="trainsShow"></Trains>
+      <SeatsSelect v-on:setSeatsVal="setSeatsVal($event)" v-if="seatsSelectShow"></SeatsSelect>
+      <Passengers v-on:setPassengersVal="setPassengersVal($event)" v-if="passengersShow"></Passengers>
+      <BrushTicketAgreement v-if="brushTicketAgreementShow"></BrushTicketAgreement>
+    </div>
+  </div>
+</template>
+
+<script>
+import StartPlace from "@/components/startPlace";
+import EndPlace from "@/components/endPlace";
+import SeatsSelect from "@/components/seatsSelect";
+import Passengers from "@/components/passengers";
+import Trains from "@/components/trains";
+import BrushTicketAgreement from "@/components/brushTicketAgreement";
+
+export default {
+  name: "AddBrushTicketTask",
+  data() {
+    return {
+      startPlaceVal: "",
+      endPlaceVal: "",
+      startDateVal: "",
+      trainsVal: "",
+      seatsVal: "",
+      passengersVal: "",
+      phoneVal: "",
+      startPlaceShow: false,
+      endPlaceShow: false,
+      trainsShow: false,
+      seatsSelectShow: false,
+      passengersShow: false,
+      brushTicketAgreementShow: false
+    };
+  },
+  mounted: function() {
+    laydate.render({
+      elem: "#startDateInput",
+      type: "date",
+      format: "yyyy-MM-dd",
+      done: value => {
+        this.startDateVal = value;
+      }
+    });
+  },
+  methods: {
+    setStartPlaceVal: function(startPlaceVal) {
+      this.startPlaceVal = startPlaceVal;
+    },
+    setEndPlaceVal: function(endPlaceVal) {
+      this.endPlaceVal = endPlaceVal;
+    },
+    setSeatsVal: function(seatsVal) {
+      this.seatsVal = seatsVal;
+    },
+    setPassengersVal: function(passengersVal) {
+      this.passengersVal = passengersVal;
+    },
+    setTrainsVal: function(trainsVal) {
+      this.trainsVal = trainsVal;
+    },
+    showPlaces: function(index) {
+      this.startPlaceShow = false;
+      this.endPlaceShow = false;
+      this.trainsShow = false;
+      this.seatsSelectShow = false;
+      this.passengersShow = false;
+      this.brushTicketAgreementShow = false;
+      switch (index) {
+        case 1:
+          this.startPlaceShow = true;
+          break;
+        case 2:
+          this.endPlaceShow = true;
+          break;
+        case 3:
+          this.trainsShow = true;
+          break;
+        case 4:
+          this.seatsSelectShow = true;
+          break;
+        case 5:
+          this.passengersShow = true;
+          break;
+        case 6:
+          this.brushTicketAgreementShow = true;
+          break;
+        default:
+          break;
+      }
+    },
+    hidePlaces: function(event) {
+      var placeArea = document.getElementById("placeArea");
+      var startPlace = document.getElementById("startPlaceInput");
+      var endPlace = document.getElementById("endPlaceInput");
+      var trains = document.getElementById("trains");
+      var seats = document.getElementById("seats");
+      var passengers = document.getElementById("passengers");
+      var agreement = document.getElementById("brushTicketAgreement");
+      if (
+        placeArea &&
+        startPlace &&
+        endPlace &&
+        trains &&
+        seats &&
+        passengers &&
+        agreement &&
+        !placeArea.contains(event.target) &&
+        !startPlace.contains(event.target) &&
+        !endPlace.contains(event.target) &&
+        !trains.contains(event.target) &&
+        !seats.contains(event.target) &&
+        !passengers.contains(event.target) &&
+        !agreement.contains(event.target)
+      ) {
+        this.startPlaceShow = false;
+        this.endPlaceShow = false;
+        this.trainsShow = false;
+        this.seatsSelectShow = false;
+        this.passengersShow = false;
+        this.brushTicketAgreementShow = false;
+      }
+    },
+    submit: function() {
+      this.$router.push({
+        name: "BrushTicketTaskList"
+      });
+    }
+  },
+  components: {
+    StartPlace,
+    EndPlace,
+    Trains,
+    SeatsSelect,
+    Passengers,
+    BrushTicketAgreement
+  }
+};
+</script>
+
+<style scoped>
+.contentBody {
+  float: left;
+  height: 500px;
+  width: 500px;
+  margin-left: 0px;
+  margin-top: 0px;
+}
+
+.contentBody .searchConditon {
+  font-size: 15px;
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+.contentBody .searchConditonClass {
+  height: 20px;
+  width: 295px;
+  margin-left: 15px;
+  font-size: 15px;
+  text-align: center;
+  outline: none;
+  border: solid 1.4px;
+  border-color: rgb(170, 164, 164);
+}
+
+#startPlace {
+  margin-left: 66px;
+  width: 400px;
+}
+
+#endPlace {
+  margin-left: 66px;
+  width: 400px;
+}
+
+#startDate {
+  margin-left: 51px;
+  width: 420px;
+}
+
+#trains {
+  margin-left: 27px;
+  width: 420px;
+}
+
+#seats {
+  margin-left: 43px;
+  width: 420px;
+}
+
+#passengers {
+  margin-left: 14px;
+  width: 420px;
+}
+
+#phone {
+  margin-left: 55px;
+  width: 420px;
+}
+
+#submitBrushTicketTask {
+  width: 300px;
+  height: 35px;
+  margin-top: 30px;
+  margin-left: 130px;
+}
+
+#submitBrushTicketTaskButton {
+  -webkit-appearance: none;
+  height: 30px;
+  width: 305px;
+  color: black;
+  background-color: #ff7300;
+  font-size: 15px;
+  outline: none;
+}
+
+#brushTicketAgreement {
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 200px;
+}
+
+#brushTicketAgreementLink {
+  color: red;
+  text-decoration: none;
+}
+</style>

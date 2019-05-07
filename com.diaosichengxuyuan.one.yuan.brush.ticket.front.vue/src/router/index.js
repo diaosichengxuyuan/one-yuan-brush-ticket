@@ -8,6 +8,10 @@ import BrushTicketTaskList from '@/components/brushTicketTaskList'
 import BrushTicketTaskListStopped from '@/components/brushTicketTaskListStopped'
 import BrushTicketTaskListFinished from '@/components/brushTicketTaskListFinished'
 import BrushTicketTaskListStarted from '@/components/brushTicketTaskListStarted'
+import GotTicketList from '@/components/gotTicketList'
+import GotTicketListNotPay from '@/components/gotTicketListNotPay'
+import GotTicketListHasPay from '@/components/gotTicketListHasPay'
+import GotTicketListCancelled from '@/components/gotTicketListCancelled'
 
 Vue.use(Router)
 
@@ -58,6 +62,26 @@ export default new Router({
       path: '/brushTicketTaskListStarted',
       name: 'BrushTicketTaskListStarted',
       component: BrushTicketTaskListStarted
+    },
+    {
+      path: '/gotTicketList',
+      name: 'GotTicketList',
+      component: GotTicketList
+    },
+    {
+      path: '/gotTicketListNotPay',
+      name: 'GotTicketListNotPay',
+      component: GotTicketListNotPay
+    },
+    {
+      path: '/gotTicketListHasPay',
+      name: 'GotTicketListHasPay',
+      component: GotTicketListHasPay
+    },
+    {
+      path: '/gotTicketListCancelled',
+      name: 'GotTicketListCancelled',
+      component: GotTicketListCancelled
     }
   ]
 })

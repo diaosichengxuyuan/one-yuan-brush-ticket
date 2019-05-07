@@ -110,7 +110,6 @@
     }
 
     GotTicketList.search = function (root, type) {
-        debugger
         if (ticketList == undefined) {
             ticketList = new GotTicketList(root);
         }

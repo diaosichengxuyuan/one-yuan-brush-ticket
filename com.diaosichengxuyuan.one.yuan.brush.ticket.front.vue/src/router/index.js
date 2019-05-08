@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VeeValidate from 'vee-validate'
 import HomePage from '@/components/homePage'
 import TicketSearch from '@/components/ticketSearch'
 import TicketSearchResult from '@/components/ticketSearchResult'
@@ -12,8 +13,12 @@ import GotTicketList from '@/components/gotTicketList'
 import GotTicketListNotPay from '@/components/gotTicketListNotPay'
 import GotTicketListHasPay from '@/components/gotTicketListHasPay'
 import GotTicketListCancelled from '@/components/gotTicketListCancelled'
+import Login from '@/components/login'
+import LoginSuccess from '@/components/loginSuccess'
+import Member from '@/components/member'
 
 Vue.use(Router)
+Vue.use(VeeValidate);
 
 export default new Router({
   mode: "history",
@@ -82,6 +87,21 @@ export default new Router({
       path: '/gotTicketListCancelled',
       name: 'GotTicketListCancelled',
       component: GotTicketListCancelled
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/loginSuccess',
+      name: 'LoginSuccess',
+      component: LoginSuccess
+    },
+    {
+      path: '/member',
+      name: 'Member',
+      component: Member
     }
   ]
 })

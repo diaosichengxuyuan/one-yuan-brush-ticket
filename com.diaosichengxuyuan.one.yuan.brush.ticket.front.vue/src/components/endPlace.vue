@@ -1,6 +1,6 @@
 <template>
   <div id="mainContentArea">
-    <ul id="azTitle" class="azTitleClass">
+    <ul class="azTitleClass">
       <li v-bind:class="{azliClass:azContent1Show}" v-on:click="azTitleClick(1)">热门</li>
       <li v-bind:class="{azliClass:azContent2Show}" v-on:click="azTitleClick(2)">A－E</li>
       <li v-bind:class="{azliClass:azContent3Show}" v-on:click="azTitleClick(3)">F－J</li>
@@ -8,22 +8,22 @@
       <li v-bind:class="{azliClass:azContent5Show}" v-on:click="azTitleClick(5)">P－T</li>
       <li v-bind:class="{azliClass:azContent6Show}" v-on:click="azTitleClick(6)">U－Z</li>
     </ul>
-    <ul id="azContent1" class="azContentClass" v-show="azContent1Show">
+    <ul class="azContentClass" v-show="azContent1Show">
       <li v-on:click="setVal(1,index)" v-for="(azCity,index) in azCities1">{{azCity}}</li>
     </ul>
-    <ul id="azContent2" class="azContentClass" v-show="azContent2Show">
+    <ul class="azContentClass" v-show="azContent2Show">
       <li v-on:click="setVal(2,index)" v-for="(azCity,index) in azCities2">{{azCity}}</li>
     </ul>
-    <ul id="azContent3" class="azContentClass" v-show="azContent3Show">
+    <ul class="azContentClass" v-show="azContent3Show">
       <li v-on:click="setVal(3,index)" v-for="(azCity,index) in azCities3">{{azCity}}</li>
     </ul>
-    <ul id="azContent4" class="azContentClass" v-show="azContent4Show">
+    <ul class="azContentClass" v-show="azContent4Show">
       <li v-on:click="setVal(4,index)" v-for="(azCity,index) in azCities4">{{azCity}}</li>
     </ul>
-    <ul id="azContent5" class="azContentClass" v-show="azContent5Show">
+    <ul class="azContentClass" v-show="azContent5Show">
       <li v-on:click="setVal(5,index)" v-for="(azCity,index) in azCities5">{{azCity}}</li>
     </ul>
-    <ul id="azContent6" class="azContentClass" v-show="azContent6Show">
+    <ul class="azContentClass" v-show="azContent6Show">
       <li v-on:click="setVal(6,index)" v-for="(azCity,index) in azCities6">{{azCity}}</li>
     </ul>
   </div>

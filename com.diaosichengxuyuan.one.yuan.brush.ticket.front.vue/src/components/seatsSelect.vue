@@ -1,6 +1,6 @@
 <template>
   <div id="mainContentArea">
-    <form id="seatsSelectForm">
+    <form>
       <div class="seatsSelectClass">
         <input type="radio" id="secondSeat" name="seats" v-on:click="setVal('二等座')">
         <label for="secondSeat">二等座</label>
@@ -61,7 +61,6 @@ export default {
   display: none;
   opacity: 0;
 }
-
 
 .seatsSelectClass label {
   line-height: 1;

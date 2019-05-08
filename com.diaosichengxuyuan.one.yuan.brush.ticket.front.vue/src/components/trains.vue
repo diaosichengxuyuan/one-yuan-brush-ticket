@@ -1,6 +1,6 @@
 <template>
   <div id="mainContentArea">
-    <div id="ticketResultArea" class="ticketResultAreaClass">
+    <div class="ticketResultAreaClass">
       <table class="ticketResultAreaTable">
         <thead>
           <tr>
@@ -19,7 +19,7 @@
             <td class="ticketResultTd">{{ticket.startTime}}/{{ticket.endTime}}</td>
             <td class="ticketResultTd">{{ticket.startStation}}/{{ticket.endStation}}</td>
             <td class="ticketResultTd">{{ticket.costTime}}</td>
-            <td class="ticketResultTd">
+            <td class="ticketResultTdSpecial">
               二等座
               <a class="ticketResultReminder">{{ticket.secondSeatPrice}}</a>
               <br>一等座
@@ -72,7 +72,7 @@ export default {
   name: "Trains",
   data() {
     return {
-      ticketsVal:[],
+      ticketsVal: [],
       ticketList: [
         {
           trains: "G102",
@@ -257,6 +257,12 @@ export default {
   text-align: center;
   border-bottom: 1px solid rgb(224, 194, 199);
   width: 100px;
+}
+
+.ticketResultTdSpecial {
+  text-align: center;
+  border-bottom: 1px solid rgb(224, 194, 199);
+  width: 140px;
 }
 
 .ticketResultSelect {

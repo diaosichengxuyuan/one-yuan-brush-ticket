@@ -1,5 +1,5 @@
 <template>
-  <div id="ticketResultArea" class="ticketResultAreaClass">
+  <div class="ticketResultAreaClass">
     <table class="ticketResultAreaTable">
       <thead>
         <tr>

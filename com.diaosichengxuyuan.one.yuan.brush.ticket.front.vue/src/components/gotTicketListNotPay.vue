@@ -51,12 +51,7 @@ export default {
         endStation: "上海虹桥站",
         startTime: "9:15",
         endTime: "14:49",
-        status:
-          this.id == 1
-            ? "未支付"
-            : this.id == 2 || this.id == 3
-            ? "已支付"
-            : "已取消",
+        status: "未支付",
         passengers: [
           {
             name: "刘XX",

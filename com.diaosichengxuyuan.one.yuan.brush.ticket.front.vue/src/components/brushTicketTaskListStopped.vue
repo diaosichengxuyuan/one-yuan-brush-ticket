@@ -1,6 +1,6 @@
 <template>
-  <div v-on:click="hidePlaces">
-    <div class="contentBody">
+  <div>
+    <div class="contentBody" v-on:click="hidePlaces">
       <div id="startPlace" class="searchConditon">
         出发地
         <input
@@ -8,7 +8,8 @@
           class="searchConditonClass"
           type="text"
           v-model="startPlaceVal"
-          v-on:click="showPlaces(1)"
+          v-on:click.stop="showPlaces(1)"
+          autocomplete="off"
         >
       </div>
       <div id="endPlace" class="searchConditon">
@@ -18,7 +19,8 @@
           class="searchConditonClass"
           type="text"
           v-model="endPlaceVal"
-          v-on:click="showPlaces(2)"
+          v-on:click.stop="showPlaces(2)"
+          autocomplete="off"
         >
       </div>
       <div id="startDate" class="searchConditon">
@@ -28,6 +30,7 @@
           class="searchConditonClass"
           type="text"
           v-model="startDateVal"
+          autocomplete="off"
         >
       </div>
       <div id="trains" class="searchConditon">
@@ -37,7 +40,8 @@
           class="searchConditonClass"
           type="text"
           v-model="trainsVal"
-          v-on:click="showPlaces(3)"
+          v-on:click.stop="showPlaces(3)"
+          autocomplete="off"
         >
       </div>
       <div id="seats" class="searchConditon">
@@ -47,7 +51,8 @@
           class="searchConditonClass"
           type="text"
           v-model="seatsVal"
-          v-on:click="showPlaces(4)"
+          v-on:click.stop="showPlaces(4)"
+          autocomplete="off"
         >
       </div>
       <div id="passengers" class="searchConditon">
@@ -57,12 +62,13 @@
           class="searchConditonClass"
           type="text"
           v-model="passengersVal"
-          v-on:click="showPlaces(5)"
+          v-on:click.stop="showPlaces(5)"
+          autocomplete="off"
         >
       </div>
       <div id="phone" class="searchConditon">
         联系手机
-        <input id="phoneInput" class="searchConditonClass" type="text" v-model="phoneVal">
+        <input id="phoneInput" class="searchConditonClass" type="text" v-model="phoneVal" autocomplete="off">
       </div>
       <div id="submitBrushTicketTask">
         <input id="submitBrushTicketTaskButton" type="button" value="启动" v-on:click="start">
@@ -71,8 +77,8 @@
         点启动表示同意
         <a
           id="brushTicketAgreementLink"
-          href="javascript: void(0);"
-          v-on:click="showPlaces(6)"
+          href="javascript:void(0);"
+          v-on:click.stop="showPlaces(6)"
         >用户协议</a>
       </div>
     </div>
@@ -170,37 +176,13 @@ export default {
           break;
       }
     },
-    hidePlaces: function(event) {
-      var placeArea = document.getElementById("placeArea");
-      var startPlace = document.getElementById("startPlaceInput");
-      var endPlace = document.getElementById("endPlaceInput");
-      var trains = document.getElementById("trains");
-      var seats = document.getElementById("seats");
-      var passengers = document.getElementById("passengers");
-      var agreement = document.getElementById("brushTicketAgreement");
-      if (
-        placeArea &&
-        startPlace &&
-        endPlace &&
-        trains &&
-        seats &&
-        passengers &&
-        agreement &&
-        !placeArea.contains(event.target) &&
-        !startPlace.contains(event.target) &&
-        !endPlace.contains(event.target) &&
-        !trains.contains(event.target) &&
-        !seats.contains(event.target) &&
-        !passengers.contains(event.target) &&
-        !agreement.contains(event.target)
-      ) {
-        this.startPlaceShow = false;
-        this.endPlaceShow = false;
-        this.trainsShow = false;
-        this.seatsSelectShow = false;
-        this.passengersShow = false;
-        this.brushTicketAgreementShow = false;
-      }
+    hidePlaces: function() {
+      this.startPlaceShow = false;
+      this.endPlaceShow = false;
+      this.trainsShow = false;
+      this.seatsSelectShow = false;
+      this.passengersShow = false;
+      this.brushTicketAgreementShow = false;
     },
     start: function() {
       this.$router.push({

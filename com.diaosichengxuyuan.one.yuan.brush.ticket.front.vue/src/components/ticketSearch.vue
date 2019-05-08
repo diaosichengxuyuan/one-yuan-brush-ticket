@@ -1,6 +1,6 @@
 <template>
-  <div v-on:click="hidePlaces">
-    <div class="contentBody">
+  <div>
+    <div class="contentBody" v-on:click="hidePlaces">
       <div id="startPlace" class="searchConditon">
         出发地
         <input
@@ -8,7 +8,9 @@
           class="searchConditonClass"
           type="text"
           v-model="startPlaceVal"
-          v-on:click="showPlaces(1)"
+          v-on:click.stop="showPlaces(1)"
+          autocomplete="off"
+          v-validate="'required'"
         >
       </div>
       <div id="endPlace" class="searchConditon">
@@ -18,7 +20,8 @@
           class="searchConditonClass"
           type="text"
           v-model="endPlaceVal"
-          v-on:click="showPlaces(2)"
+          v-on:click.stop="showPlaces(2)"
+          autocomplete="off"
         >
       </div>
       <div id="startDate" class="searchConditon">
@@ -28,6 +31,7 @@
           class="searchConditonClass"
           type="text"
           v-model="startDateVal"
+          autocomplete="off"
         >
       </div>
       <div id="studentSelect">
@@ -98,20 +102,8 @@ export default {
       }
     },
     hidePlaces: function(event) {
-      var placeArea = document.getElementById("placeArea");
-      var startPlace = document.getElementById("startPlaceInput");
-      var endPlace = document.getElementById("endPlaceInput");
-      if (
-        placeArea &&
-        startPlace &&
-        endPlace &&
-        !placeArea.contains(event.target) &&
-        !startPlace.contains(event.target) &&
-        !endPlace.contains(event.target)
-      ) {
-        this.startPlaceShow = false;
-        this.endPlaceShow = false;
-      }
+      this.startPlaceShow = false;
+      this.endPlaceShow = false;
     },
     routeToSearchResult: function() {
       this.$router.push({
@@ -138,7 +130,7 @@ export default {
   float: left;
   height: 500px;
   width: 500px;
-  margin-left: 60px;
+  margin-left: 0px;
   margin-top: 10px;
 }
 

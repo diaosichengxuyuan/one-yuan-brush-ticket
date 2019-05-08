@@ -131,7 +131,7 @@ export default {
 .mainContentArea {
   float: left;
   width: 1200px;
-  margin-left: 0px;
+  margin-left: 20px;
   margin-top: 30px;
 }
 

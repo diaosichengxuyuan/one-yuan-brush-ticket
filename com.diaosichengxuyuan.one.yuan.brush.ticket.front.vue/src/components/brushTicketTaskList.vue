@@ -99,7 +99,7 @@ export default {
       } else if ("已结束" == status) {
         componentName = "BrushTicketTaskListFinished";
       }
-      debugger
+
       this.$router.push({
         name: componentName,
         query: {
@@ -155,7 +155,7 @@ export default {
 
 .AddTask {
   position: absolute;
-  left: 560px;
+  left: 590px;
   top: 550px;
 }
 

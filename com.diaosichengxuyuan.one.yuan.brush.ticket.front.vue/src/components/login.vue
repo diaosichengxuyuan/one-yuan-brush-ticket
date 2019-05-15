@@ -4,14 +4,36 @@
       <div class="instruction">请使用12306账号密码登录</div>
       <div class="accountAndPassword">
         账号&nbsp;&nbsp;
-        <input id="accountId" type="text" v-model="accountId" autocomplete="off">
+        <input
+          id="accountId"
+          name="账号"
+          type="text"
+          v-model="accountId"
+          autocomplete="off"
+          v-validate="'required'"
+        >
+        <span class="errorSpan" v-show="errors.has('账号')">{{errors.first("账号")}}</span>
       </div>
       <div class="accountAndPassword">
         密码&nbsp;&nbsp;
-        <input id="passwordId" type="password" v-model="password" autocomplete="off">
+        <input
+          id="passwordId"
+          name="密码"
+          type="password"
+          v-model="password"
+          autocomplete="off"
+          v-validate="'required'"
+        >
+        <span class="errorSpan" v-show="errors.has('密码')">{{errors.first("密码")}}</span>
       </div>
       <div class="protocal">
-        <input id="protocalBoxId" type="checkbox" v-model="isAgree">同意
+        <input
+          id="protocalBoxId"
+          name="用户协议"
+          type="checkbox"
+          v-model="isAgree"
+          v-validate="'required'"
+        >同意
         <a
           id="protocalLinkId"
           class="protocalLink"
@@ -44,8 +66,12 @@ export default {
   },
   methods: {
     login: function() {
-      this.$router.push({
-        name: "LoginSuccess"
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.$router.push({
+            name: "LoginSuccess"
+          });
+        }
       });
     },
     showPlaces: function() {
@@ -88,6 +114,7 @@ export default {
   margin: auto;
   margin-top: 30px;
   text-align: center;
+  height: 50px;
 }
 
 #mainLoginArea .accountAndPassword input {
@@ -140,5 +167,12 @@ export default {
   top: 190px;
   overflow-y: auto;
   display: none;
+}
+
+.errorSpan {
+  color: red;
+  margin-left: 120px;
+  font-size: 8px;
+  font-weight: bold;
 }
 </style>

@@ -5,6 +5,7 @@
         出发地
         <input
           id="startPlaceInput"
+          name="出发地"
           class="searchConditonClass"
           type="text"
           v-model="startPlaceVal"
@@ -12,27 +13,34 @@
           autocomplete="off"
           v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('出发地')">{{errors.first("出发地")}}</span>
       </div>
       <div id="endPlace" class="searchConditon">
         目的地
         <input
           id="endPlaceInput"
+          name="目的地"
           class="searchConditonClass"
           type="text"
           v-model="endPlaceVal"
           v-on:click.stop="showPlaces(2)"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('目的地')">{{errors.first("目的地")}}</span>
       </div>
       <div id="startDate" class="searchConditon">
         出发日期
         <input
           id="startDateInput"
+          name="出发日期"
           class="searchConditonClass"
           type="text"
           v-model="startDateVal"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('出发日期')">{{errors.first("出发日期")}}</span>
       </div>
       <div id="studentSelect">
         学生
@@ -43,7 +51,7 @@
         <input id="highSpeedTrainSelectInput" type="checkbox" v-model="isHighSpeed">
       </div>
       <div id="ticketSearchClick">
-        <input id="ticketSearchButton" type="button" value="查询" v-on:click="routeToSearchResult">
+        <input id="ticketSearchButton" type="button" value="查询" v-on:click="validate">
       </div>
     </div>
     <div id="placeArea">
@@ -105,6 +113,13 @@ export default {
       this.startPlaceShow = false;
       this.endPlaceShow = false;
     },
+    validate: function() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.routeToSearchResult();
+        }
+      });
+    },
     routeToSearchResult: function() {
       this.$router.push({
         name: "TicketSearchResult",
@@ -138,6 +153,7 @@ export default {
   font-size: 20px;
   margin-top: 50px;
   margin-left: 50px;
+  height: 45px;
 }
 
 .contentBody .searchConditonClass {
@@ -208,5 +224,12 @@ export default {
   background-color: #ff7300;
   font-size: 20px;
   outline: none;
+}
+
+.errorSpan {
+  color: red;
+  margin-left: 150px;
+  font-size: 8px;
+  font-weight: bold;
 }
 </style>

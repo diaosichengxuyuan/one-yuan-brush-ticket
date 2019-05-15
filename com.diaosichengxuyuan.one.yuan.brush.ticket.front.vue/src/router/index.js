@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import VeeValidate from 'vee-validate'
+import zh_CN from 'vee-validate/dist/locale/zh_CN'
+import VueI18n from 'vue-i18n'
 import HomePage from '@/components/homePage'
 import TicketSearch from '@/components/ticketSearch'
 import TicketSearchResult from '@/components/ticketSearchResult'
@@ -17,8 +19,18 @@ import Login from '@/components/login'
 import LoginSuccess from '@/components/loginSuccess'
 import Member from '@/components/member'
 
-Vue.use(Router)
-Vue.use(VeeValidate);
+Vue.use(Router);
+Vue.use(VueI18n);
+const i18n = new VueI18n({
+  locale: 'zh_CN'
+});
+Vue.use(VeeValidate, {
+  i18n,
+  i18nRootKey: 'validation',
+  dictionary: {
+    zh_CN
+  }
+});
 
 export default new Router({
   mode: "history",

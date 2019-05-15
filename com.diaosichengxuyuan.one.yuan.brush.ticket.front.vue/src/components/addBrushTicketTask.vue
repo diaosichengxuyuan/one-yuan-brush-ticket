@@ -5,76 +5,97 @@
         出发地
         <input
           id="startPlaceInput"
+          name="出发地"
           class="searchConditonClass"
           type="text"
           v-model="startPlaceVal"
           v-on:click.stop="showPlaces(1)"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('出发地')">{{errors.first("出发地")}}</span>
       </div>
       <div id="endPlace" class="searchConditon">
         目的地
         <input
           id="endPlaceInput"
+          name="目的地"
           class="searchConditonClass"
           type="text"
           v-model="endPlaceVal"
           v-on:click.stop="showPlaces(2)"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('目的地')">{{errors.first("目的地")}}</span>
       </div>
       <div id="startDate" class="searchConditon">
         出发日期
         <input
           id="startDateInput"
+          name="出发日期"
           class="searchConditonClass"
           type="text"
           v-model="startDateVal"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('出发日期')">{{errors.first("出发日期")}}</span>
       </div>
       <div id="trains" class="searchConditon">
         车次(可多选)
         <input
           id="trainsInput"
+          name="车次"
           class="searchConditonClass"
           type="text"
           v-model="trainsVal"
           v-on:click.stop="showPlaces(3)"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('车次')">{{errors.first("车次")}}</span>
       </div>
       <div id="seats" class="searchConditon">
         坐席(单选)
         <input
           id="seatsInput"
+          name="坐席"
           class="searchConditonClass"
           type="text"
           v-model="seatsVal"
           v-on:click.stop="showPlaces(4)"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('坐席')">{{errors.first("坐席")}}</span>
       </div>
       <div id="passengers" class="searchConditon">
         乘车人(可多选)
         <input
           id="passengersInput"
+          name="乘车人"
           class="searchConditonClass"
           type="text"
           v-model="passengersVal"
           v-on:click.stop="showPlaces(5)"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('乘车人')">{{errors.first("乘车人")}}</span>
       </div>
       <div id="phone" class="searchConditon">
         联系手机
         <input
           id="phoneInput"
+          name="联系手机"
           class="searchConditonClass"
           type="text"
           v-model="phoneVal"
           autocomplete="off"
+          v-validate="'required'"
         >
+        <span class="errorSpan" v-show="errors.has('联系手机')">{{errors.first("联系手机")}}</span>
       </div>
       <div id="submitBrushTicketTask">
         <input id="submitBrushTicketTaskButton" type="button" value="提交" v-on:click="submit">
@@ -191,8 +212,12 @@ export default {
       this.brushTicketAgreementShow = false;
     },
     submit: function() {
-      this.$router.push({
-        name: "BrushTicketTaskList"
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.$router.push({
+            name: "BrushTicketTaskList"
+          });
+        }
       });
     }
   },
@@ -220,6 +245,7 @@ export default {
   font-size: 15px;
   margin-top: 30px;
   margin-left: 50px;
+  height: 26px;
 }
 
 .contentBody .searchConditonClass {
@@ -294,5 +320,12 @@ export default {
 #brushTicketAgreementLink {
   color: red;
   text-decoration: none;
+}
+
+.errorSpan {
+  color: red;
+  margin-left: 150px;
+  font-size: 8px;
+  font-weight: bold;
 }
 </style>

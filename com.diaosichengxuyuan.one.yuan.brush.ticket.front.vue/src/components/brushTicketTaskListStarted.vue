@@ -4,19 +4,22 @@
       <table>
         <tbody>
           <tr>
-            <td id="trains_nosale">G101</td>
-            <td id="trains_brushing">G102</td>
-            <td id="trains_remaining">G103</td>
+            <td id="trains_nosale">{{nosaleData}}</td>
+            <td id="trains_brushing">{{brushingData}}</td>
+            <td id="trains_remaining">{{remainingData}}</td>
           </tr>
           <tr>
             <td>
-              <img id="jpg_nosale" src="../assets/images/nosale.jpg">
+              <div class="nosale" v-show="nosaleShow">
+                <br>
+                <br>未开售
+              </div>
             </td>
             <td>
-              <img id="jpg_brushing" src="../assets/images/brushing.jpg">
+              <div class="brushing" v-show="brushingShow"></div>
             </td>
             <td>
-              <img id="jpg_remaining" src="../assets/images/remaining.jpg">
+              <div class="remaining" v-show="remainingShow"></div>
             </td>
           </tr>
         </tbody>
@@ -111,7 +114,13 @@ export default {
       trainsVal: "G202",
       seatsVal: "二等座",
       passengersVal: "周杰伦",
-      phoneVal: "13611070029"
+      phoneVal: "13611070029",
+      nosaleData: "G101",
+      brushingData: "G102",
+      remainingData: "G103",
+      nosaleShow: true,
+      brushingShow: true,
+      remainingShow: true
     };
   },
   methods: {
@@ -220,5 +229,94 @@ export default {
   background-color: #ff7300;
   font-size: 15px;
   outline: none;
+}
+
+.nosale {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  left: 170px;
+  top: 45px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #ff7300;
+  overflow: hidden;
+  background-color: rgb(227, 228, 210);
+}
+
+.brushing {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  left: 170px;
+  top: 45px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #ff7300;
+  overflow: hidden;
+  background-color: rgb(227, 228, 210);
+}
+
+.brushing:after {
+  content: "\2002\2002\2002抢\2002\2002票\2002\2002\2002中";
+  font-size: 15px;
+  display: block;
+  background-image: linear-gradient(
+    44deg,
+    rgba(0, 255, 51, 0) 50%,
+    #ff7300 100%
+  );
+  width: 50%;
+  height: 50%;
+  animation: brushing-beam 5s infinite;
+  animation-timing-function: linear;
+  transform-origin: bottom right;
+}
+
+@keyframes brushing-beam {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.remaining {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  left: 170px;
+  top: 45px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #ff7300;
+  overflow: hidden;
+  background-color: rgb(227, 228, 210);
+}
+
+.remaining:after {
+  content: "\2002\2002\2002\2002\2002\2002余票\2002监控\2002中";
+  font-size: 15px;
+  display: block;
+  background-image: linear-gradient(
+    44deg,
+    rgba(0, 255, 51, 0) 50%,
+    #ff7300 100%
+  );
+  width: 50%;
+  height: 50%;
+  animation: remaining-beam 5s infinite;
+  animation-timing-function: linear;
+  transform-origin: bottom right;
+}
+
+@keyframes remaining-beam {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

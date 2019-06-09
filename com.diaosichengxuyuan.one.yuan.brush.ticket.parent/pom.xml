@@ -8,13 +8,10 @@
     <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.ticketcenter</module>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.brushcenter</module>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.ordercenter</module>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.notifycenter</module>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.authcenter</module>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.accountcenter</module>
-        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.membercenter</module>
+        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.web</module>
+        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.service</module>
+        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.dao</module>
+        <module>com.diaosichengxuyuan.one.yuan.brush.ticket.common</module>
     </modules>
     <packaging>pom</packaging>
 

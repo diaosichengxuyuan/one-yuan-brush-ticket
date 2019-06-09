@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.brushcenter</artifactId>
+    <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.web</artifactId>
 
 
 </project>

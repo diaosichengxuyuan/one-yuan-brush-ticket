@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.authcenter</artifactId>
+    <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.dao</artifactId>
 
 
 </project>

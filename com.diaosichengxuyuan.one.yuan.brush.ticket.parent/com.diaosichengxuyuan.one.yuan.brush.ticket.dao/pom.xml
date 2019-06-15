@@ -8,8 +8,26 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.dao</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.diaosichengxuyuan.one.yuan.brush.ticket</groupId>
+            <artifactId>com.diaosichengxuyuan.one.yuan.brush.ticket.common</artifactId>
+        </dependency>
+        <!--加解密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

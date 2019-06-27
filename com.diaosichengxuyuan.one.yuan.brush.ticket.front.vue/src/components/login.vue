@@ -43,6 +43,7 @@
       </div>
       <div class="login">
         <input id="loginId" type="button" value="登录" v-on:click="login">
+        <div class="errMsg">{{loginErrMsg}}</div>
       </div>
     </div>
     <div id="mainContentArea" v-if="agreementShow">
@@ -53,6 +54,7 @@
 
 <script>
 import BrushTicketAgreement from "@/components/brushTicketAgreement";
+import Utils from "../../static/utils.js";
 
 export default {
   name: "Login",
@@ -61,16 +63,15 @@ export default {
       accountId: "",
       password: "",
       isAgree: false,
-      agreementShow: false
+      agreementShow: false,
+      loginErrMsg: ""
     };
   },
   methods: {
     login: function() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.$router.push({
-            name: "LoginSuccess"
-          });
+          this.remoteLogin();
         }
       });
     },
@@ -79,6 +80,49 @@ export default {
     },
     hidePlaces: function(event) {
       this.agreementShow = false;
+    },
+    remoteLogin: function() {
+      this.$http
+        .post(
+          Utils.getRemoteLoginPath() +
+            "?username=" +
+            this.accountId +
+            "&&password=" +
+            this.password,
+          {
+            params: {}
+          }
+        )
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.loginErrMsg = "登录失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.gotoLoginSuccess();
+            } else if (response.message) {
+              this.loginErrMsg = response.message;
+            } else {
+              this.loginErrMsg = "登录失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.loginErrMsg = res.message;
+            } else {
+              this.loginErrMsg = "登录失败";
+            }
+          }
+        );
+    },
+    gotoLoginSuccess: function() {
+      this.$router.push({
+        name: "LoginSuccess"
+      });
     }
   },
   components: {
@@ -170,6 +214,13 @@ export default {
 }
 
 .errorSpan {
+  color: red;
+  margin-left: 120px;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+.errMsg {
   color: red;
   margin-left: 120px;
   font-size: 8px;

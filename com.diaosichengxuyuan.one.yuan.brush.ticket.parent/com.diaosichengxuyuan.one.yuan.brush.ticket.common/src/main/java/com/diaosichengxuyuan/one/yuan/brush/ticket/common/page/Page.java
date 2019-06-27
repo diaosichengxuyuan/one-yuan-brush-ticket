@@ -27,4 +27,5 @@ public class Page {
     @NotNull
     @Range(min = 0, max = 100)
     private Integer size;
+
 }

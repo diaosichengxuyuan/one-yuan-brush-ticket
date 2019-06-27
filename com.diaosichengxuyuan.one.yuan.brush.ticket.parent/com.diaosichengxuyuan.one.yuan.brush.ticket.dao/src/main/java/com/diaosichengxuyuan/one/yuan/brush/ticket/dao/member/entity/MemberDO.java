@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.account.entity;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "account")
-public class AccountDO {
+@Table(name = "member")
+public class MemberDO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +27,7 @@ public class AccountDO {
     @Column(name = "account_id")
     private String accountId;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "period_validity")
+    private Date periodValidity;
 
 }

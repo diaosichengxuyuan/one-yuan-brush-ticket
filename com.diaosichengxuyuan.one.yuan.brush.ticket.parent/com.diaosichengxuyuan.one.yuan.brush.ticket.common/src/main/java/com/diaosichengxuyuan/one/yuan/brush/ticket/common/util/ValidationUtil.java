@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.common.validation;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.common.util;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -31,4 +31,5 @@ public class ValidationUtil {
             throw new IllegalArgumentException(message);
         }
     }
+
 }

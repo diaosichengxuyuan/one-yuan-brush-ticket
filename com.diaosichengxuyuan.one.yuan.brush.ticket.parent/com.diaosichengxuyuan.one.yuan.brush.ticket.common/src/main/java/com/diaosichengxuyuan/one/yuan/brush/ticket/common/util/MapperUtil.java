@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.common.mapper;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.common.util;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
@@ -16,4 +16,5 @@ public class MapperUtil {
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().mapNulls(false).build();
         return mapperFactory.getMapperFacade();
     }
+
 }

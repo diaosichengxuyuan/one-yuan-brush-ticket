@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import vueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
 import VueI18n from 'vue-i18n'
@@ -19,11 +20,16 @@ import Login from '@/components/login'
 import LoginSuccess from '@/components/loginSuccess'
 import Member from '@/components/member'
 
+//路由组件
 Vue.use(Router);
+//http请求组件
+Vue.use(vueResource);
+//校验国际化
 Vue.use(VueI18n);
 const i18n = new VueI18n({
   locale: 'zh_CN'
 });
+//校验器
 Vue.use(VeeValidate, {
   i18n,
   i18nRootKey: 'validation',
@@ -31,6 +37,12 @@ Vue.use(VeeValidate, {
     zh_CN
   }
 });
+//允许跨域
+Vue.http.options.emulateJSON = true;
+Vue.http.options.crossOrigin = true;
+Vue.http.options.emulateHTTP = true;
+//携带cookie
+Vue.http.options.credentials = true;
 
 export default new Router({
   mode: "history",

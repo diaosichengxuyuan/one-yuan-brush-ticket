@@ -16,4 +16,5 @@ public interface MemberService {
      * @return 会员信息
      */
     MemberDTO queryMember(String accountId);
+
 }

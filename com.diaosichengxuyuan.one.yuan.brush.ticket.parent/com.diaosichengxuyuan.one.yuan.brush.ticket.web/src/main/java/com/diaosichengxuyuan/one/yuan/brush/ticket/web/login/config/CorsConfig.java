@@ -29,7 +29,7 @@ public class CorsConfig {
         response.setHeader("Access-Control-Allow-Headers",
             "Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Content-type", "application/json;charset=utf-8");
+        response.setHeader("Content-Type", "application/json;charset=utf-8");
         response.setHeader("Cache-Control", "no-cache, must-revalidate");
     }
 

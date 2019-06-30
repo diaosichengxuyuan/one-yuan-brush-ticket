@@ -15,4 +15,5 @@ public interface MemberRemote {
      * @return 会员信息
      */
     MemberDTO queryMember();
+
 }

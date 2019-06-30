@@ -36,7 +36,7 @@
           </td>
           <td class="ticketResultTd">
             余
-            <a class="ticketResultReminder">{{ticket.secondeSeatRemain}}</a>张
+            <a class="ticketResultReminder">{{ticket.secondSeatRemain}}</a>张
             <br>余
             <a class="ticketResultReminder">{{ticket.firstSeatRemain}}</a>张
             <br>余
@@ -54,149 +54,72 @@
         </tr>
       </tbody>
     </table>
+    <div class="errMsg">{{errMsg}}</div>
   </div>
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "TicketSearchResult",
   data() {
     return {
-      ticketList: [
-        {
-          trains: "G102",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G103",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G104",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G105",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G106",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G107",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        }
-      ]
+      errMsg: "",
+      ticketList: []
     };
+  },
+  created() {
+    const startPlace = this.$route.query.startPlace;
+    const endPlace = this.$route.query.endPlace;
+    const startDate = this.$route.query.startDate;
+    var isStudent = this.$route.query.isStudent;
+    var isHighSpeed = this.$route.query.isHighSpeed;
+    if (!startPlace || !endPlace || !startPlace) {
+      this.errMsg = "查询参数不规范";
+      return;
+    }
+
+    if (!isStudent) {
+      isStudent = false;
+    }
+    if (!isHighSpeed) {
+      isHighSpeed = false;
+    }
+
+    this.$http
+      .post(Utils.getRemoteQueryTicketPath(), {
+        startPlace: startPlace,
+        endPlace: endPlace,
+        startDate: startDate,
+        isStudent: isStudent,
+        isHighSpeed: isHighSpeed
+      })
+      .then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "查询失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.ticketList = response.ticketList;
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "查询失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "登录失效，请重新登录！";
+          }
+        }
+      );
   }
 };
 </script>
@@ -227,5 +150,13 @@ export default {
 
 .ticketResultReminder {
   color: red;
+}
+
+.errMsg {
+  color: red;
+  margin-top: 50px;
+  margin-left: 500px;
+  font-size: 8px;
+  font-weight: bold;
 }
 </style>

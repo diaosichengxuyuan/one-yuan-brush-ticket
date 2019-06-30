@@ -12,7 +12,7 @@
       有效期至&nbsp;&nbsp;
       <input type="text" readonly="readonly" v-model="period">
     </div>
-    <div class="errMsg">{{loginErrMsg}}</div>
+    <div class="errMsg">{{errMsg}}</div>
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
       status: "",
       account: "",
       period: "",
-      loginErrMsg: ""
+      errMsg: ""
     };
   },
   created() {
@@ -34,7 +34,7 @@ export default {
       res => {
         const response = res.body;
         if (!response) {
-          this.loginErrMsg = "查询失败";
+          this.errMsg = "查询失败";
           return;
         }
 
@@ -44,16 +44,16 @@ export default {
           this.account = response.accountId;
           this.period = response.periodValidity;
         } else if (response.message) {
-          this.loginErrMsg = response.message;
+          this.errMsg = response.message;
         } else {
-          this.loginErrMsg = "查询失败";
+          this.errMsg = "查询失败";
         }
       },
       res => {
         if (res && res.message) {
-          this.loginErrMsg = res.message;
+          this.errMsg = res.message;
         } else {
-          this.loginErrMsg = "登录失效，请重新登录！";
+          this.errMsg = "登录失效，请重新登录！";
         }
       }
     );

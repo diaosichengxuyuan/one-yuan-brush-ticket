@@ -43,7 +43,7 @@
       </div>
       <div class="login">
         <input id="loginId" type="button" value="登录" v-on:click="login">
-        <div class="errMsg">{{loginErrMsg}}</div>
+        <div class="errMsg">{{errMsg}}</div>
       </div>
     </div>
     <div id="mainContentArea" v-if="agreementShow">
@@ -64,7 +64,7 @@ export default {
       password: "",
       isAgree: false,
       agreementShow: false,
-      loginErrMsg: ""
+      errMsg: ""
     };
   },
   methods: {
@@ -90,14 +90,13 @@ export default {
             "&&password=" +
             this.password,
           {
-            params: {}
           }
         )
         .then(
           res => {
             const response = res.body;
             if (!response) {
-              this.loginErrMsg = "登录失败";
+              this.errMsg = "登录失败";
               return;
             }
 
@@ -105,16 +104,16 @@ export default {
             if (statusCode == "200") {
               this.gotoLoginSuccess();
             } else if (response.message) {
-              this.loginErrMsg = response.message;
+              this.errMsg = response.message;
             } else {
-              this.loginErrMsg = "登录失败";
+              this.errMsg = "登录失败";
             }
           },
           res => {
             if (res && res.message) {
-              this.loginErrMsg = res.message;
+              this.errMsg = res.message;
             } else {
-              this.loginErrMsg = "登录失败";
+              this.errMsg = "登录失败";
             }
           }
         );

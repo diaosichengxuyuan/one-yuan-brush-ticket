@@ -7,6 +7,12 @@ const utils = {
     },
     getRemoteQueryMemberPath: function () {
         return this.getRemoteBasePath() + "/member/queryMember";
+    },
+    getRemotePlacePath: function () {
+        return this.getRemoteBasePath() + "/place/queryPlaces";
+    },
+    getRemoteQueryTicketPath: function () {
+        return this.getRemoteBasePath() + "/ticket/queryTickets";
     }
 }
 

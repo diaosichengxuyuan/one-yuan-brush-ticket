@@ -221,8 +221,10 @@ export default {
 
 .errMsg {
   color: red;
-  margin-left: 120px;
   font-size: 8px;
   font-weight: bold;
+  position: absolute;
+  top: 540px;
+  left: 700px;
 }
 </style>

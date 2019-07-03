@@ -13,6 +13,9 @@ const utils = {
     },
     getRemoteQueryTicketPath: function () {
         return this.getRemoteBasePath() + "/ticket/queryTickets";
+    },
+    getRemoteQueryPassengerPath: function(){
+        return this.getRemoteBasePath() + "/passenger/queryPassengers";
     }
 }
 

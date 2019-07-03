@@ -1,5 +1,6 @@
 <template>
   <div id="mainContentArea">
+    <div class="errMsg">{{errMsg}}</div>
     <div class="ticketResultAreaClass">
       <table class="ticketResultAreaTable">
         <thead>
@@ -15,50 +16,50 @@
         </thead>
         <tbody>
           <tr v-for="ticket in ticketList">
-            <td class="ticketResultTd">{{ticket.trains}}</td>
+            <td class="ticketResultTd">{{ticket.train}}</td>
             <td class="ticketResultTd">{{ticket.startTime}}/{{ticket.endTime}}</td>
             <td class="ticketResultTd">{{ticket.startStation}}/{{ticket.endStation}}</td>
             <td class="ticketResultTd">{{ticket.costTime}}</td>
             <td class="ticketResultTdSpecial">
               二等座
               <a class="ticketResultReminder">{{ticket.secondSeatPrice}}</a>
-              <br>一等座
+              <br />一等座
               <a class="ticketResultReminder">{{ticket.firstSeatPrice}}</a>
-              <br>商务座
+              <br />商务座
               <a class="ticketResultReminder">{{ticket.businessSeatPrice}}</a>
-              <br>无座
+              <br />无座
               <a class="ticketResultReminder">{{ticket.noSeatPrice}}</a>
-              <br>硬座
+              <br />硬座
               <a class="ticketResultReminder">{{ticket.hardSeatPrice}}</a>
-              <br>硬卧
+              <br />硬卧
               <a class="ticketResultReminder">{{ticket.hardSleeperSeatPrice}}</a>
-              <br>软卧
+              <br />软卧
               <a class="ticketResultReminder">{{ticket.softSleeperSeatPrice}}</a>
-              <br>
+              <br />
             </td>
             <td class="ticketResultTd">
               余
               <a class="ticketResultReminder">{{ticket.secondeSeatRemain}}</a>张
-              <br>余
+              <br />余
               <a class="ticketResultReminder">{{ticket.firstSeatRemain}}</a>张
-              <br>余
+              <br />余
               <a class="ticketResultReminder">{{ticket.businessSeatRemain}}</a>张
-              <br>余
+              <br />余
               <a class="ticketResultReminder">{{ticket.noSeatRemain}}</a>张
-              <br>余
+              <br />余
               <a class="ticketResultReminder">{{ticket.hardSeatRemain}}</a>张
-              <br>余
+              <br />余
               <a class="ticketResultReminder">{{ticket.hardSleeperSeatRemain}}</a>张
-              <br>余
+              <br />余
               <a class="ticketResultReminder">{{ticket.softSleeperSeatRemain}}</a>张
-              <br>
+              <br />
             </td>
             <td class="ticketResultTd">
               <input
                 class="ticketResultSelect"
                 type="checkbox"
-                v-on:click="setVal($event, ticket.trains)"
-              >
+                v-on:click="setVal($event, ticket)"
+              />
             </td>
           </tr>
         </tbody>
@@ -68,146 +69,72 @@
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "Trains",
+  props: ["startPlace", "endPlace", "startDate"],
   data() {
     return {
+      errMsg: "",
       ticketsVal: [],
-      ticketList: [
-        {
-          trains: "G102",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G103",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G104",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G105",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G106",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        },
-        {
-          trains: "G107",
-          startTime: "06:43",
-          endTime: "12:40",
-          startStation: "北京南",
-          endStation: "上海虹桥",
-          costTime: "5小时57分",
-          secondSeatPrice: "￥553",
-          secondeSeatRemain: "21",
-          firstSeatPrice: "￥772",
-          firstSeatRemain: "18",
-          businessSeatPrice: "￥1500",
-          businessSeatRemain: "0",
-          noSeatPrice: "",
-          noSeatRemain: "",
-          hardSeatPrice: "",
-          hardSeatRemain: "",
-          hardSleeperSeatPrice: "",
-          hardSleeperSeatRemain: "",
-          softSleeperSeatPrice: "",
-          softSleeperSeatRemain: ""
-        }
-      ]
+      ticketList: []
     };
+  },
+  created() {
+    if (!this.startPlace) {
+      this.errMsg = "请选择出发地";
+      return;
+    }
+
+    if (!this.endPlace) {
+      this.errMsg = "请选择目的地";
+      return;
+    }
+
+    if (!this.startDate) {
+      this.errMsg = "请选择出发日期";
+      return;
+    }
+
+    if (isNaN(Date.parse(this.startDate))) {
+      this.errMsg = "出发日期格式不正确";
+      return;
+    }
+
+    this.$http
+      .post(Utils.getRemoteQueryTicketPath(), {
+        startPlace: this.startPlace,
+        endPlace: this.endPlace,
+        startDate: this.startDate,
+        isStudent: false,
+        isHighSpeed: false
+      })
+      .then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "查询失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.ticketList = response.ticketList;
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "查询失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "登录失效，请重新登录！";
+          }
+        }
+      );
   },
   methods: {
     setVal: function(ele, val) {
@@ -251,6 +178,7 @@ export default {
 .ticketResultTh {
   text-align: center;
   background-color: #297ebb;
+  width: 100px;
 }
 
 .ticketResultTd {
@@ -272,5 +200,14 @@ export default {
 
 .ticketResultReminder {
   color: red;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 100px;
+  left: 220px;
 }
 </style>

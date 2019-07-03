@@ -13,43 +13,43 @@
       </thead>
       <tbody>
         <tr v-for="ticket in ticketList">
-          <td class="ticketResultTd">{{ticket.trains}}</td>
+          <td class="ticketResultTd">{{ticket.train}}</td>
           <td class="ticketResultTd">{{ticket.startTime}}/{{ticket.endTime}}</td>
           <td class="ticketResultTd">{{ticket.startStation}}/{{ticket.endStation}}</td>
           <td class="ticketResultTd">{{ticket.costTime}}</td>
           <td class="ticketResultTd">
             二等座
             <a class="ticketResultReminder">{{ticket.secondSeatPrice}}</a>
-            <br>一等座
+            <br />一等座
             <a class="ticketResultReminder">{{ticket.firstSeatPrice}}</a>
-            <br>商务座
+            <br />商务座
             <a class="ticketResultReminder">{{ticket.businessSeatPrice}}</a>
-            <br>无座
+            <br />无座
             <a class="ticketResultReminder">{{ticket.noSeatPrice}}</a>
-            <br>硬座
+            <br />硬座
             <a class="ticketResultReminder">{{ticket.hardSeatPrice}}</a>
-            <br>硬卧
+            <br />硬卧
             <a class="ticketResultReminder">{{ticket.hardSleeperSeatPrice}}</a>
-            <br>软卧
+            <br />软卧
             <a class="ticketResultReminder">{{ticket.softSleeperSeatPrice}}</a>
-            <br>
+            <br />
           </td>
           <td class="ticketResultTd">
             余
             <a class="ticketResultReminder">{{ticket.secondSeatRemain}}</a>张
-            <br>余
+            <br />余
             <a class="ticketResultReminder">{{ticket.firstSeatRemain}}</a>张
-            <br>余
+            <br />余
             <a class="ticketResultReminder">{{ticket.businessSeatRemain}}</a>张
-            <br>余
+            <br />余
             <a class="ticketResultReminder">{{ticket.noSeatRemain}}</a>张
-            <br>余
+            <br />余
             <a class="ticketResultReminder">{{ticket.hardSeatRemain}}</a>张
-            <br>余
+            <br />余
             <a class="ticketResultReminder">{{ticket.hardSleeperSeatRemain}}</a>张
-            <br>余
+            <br />余
             <a class="ticketResultReminder">{{ticket.softSleeperSeatRemain}}</a>张
-            <br>
+            <br />
           </td>
         </tr>
       </tbody>
@@ -75,7 +75,12 @@ export default {
     const startDate = this.$route.query.startDate;
     var isStudent = this.$route.query.isStudent;
     var isHighSpeed = this.$route.query.isHighSpeed;
-    if (!startPlace || !endPlace || !startPlace) {
+    if (
+      !startPlace ||
+      !endPlace ||
+      !startDate ||
+      isNaN(Date.parse(startDate))
+    ) {
       this.errMsg = "查询参数不规范";
       return;
     }

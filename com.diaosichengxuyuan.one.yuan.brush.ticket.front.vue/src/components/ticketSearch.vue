@@ -82,7 +82,7 @@ export default {
     laydate.render({
       elem: "#startDateInput",
       type: "date",
-      format: "yyyy/MM/dd",
+      format: "yyyy-MM-dd",
       done: value => {
         this.startDateVal = value;
       }

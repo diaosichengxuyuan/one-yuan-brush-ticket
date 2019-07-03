@@ -2,15 +2,15 @@
   <div id="mainLoginArea">
     <div class="status">
       状态&nbsp;&nbsp;
-      <input type="text" readonly="readonly" v-model="status">
+      <input type="text" readonly="readonly" v-model="status" />
     </div>
     <div class="account">
       账号&nbsp;&nbsp;
-      <input type="text" readonly="readonly" v-model="account">
+      <input type="text" readonly="readonly" v-model="account" />
     </div>
     <div class="period">
       有效期至&nbsp;&nbsp;
-      <input type="text" readonly="readonly" v-model="period">
+      <input type="text" readonly="readonly" v-model="period" />
     </div>
     <div class="errMsg">{{errMsg}}</div>
   </div>
@@ -117,8 +117,10 @@ export default {
 
 .errMsg {
   color: red;
-  margin-left: 650px;
   font-size: 8px;
   font-weight: bold;
+  position: absolute;
+  top: 430px;
+  left: 560px;
 }
 </style>

@@ -12,7 +12,7 @@
           v-on:click.stop="showPlaces(1)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('出发地')">{{errors.first("出发地")}}</span>
       </div>
       <div id="endPlace" class="searchConditon">
@@ -26,7 +26,7 @@
           v-on:click.stop="showPlaces(2)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('目的地')">{{errors.first("目的地")}}</span>
       </div>
       <div id="startDate" class="searchConditon">
@@ -39,7 +39,7 @@
           v-model="startDateVal"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('出发日期')">{{errors.first("出发日期")}}</span>
       </div>
       <div id="trains" class="searchConditon">
@@ -49,11 +49,11 @@
           name="车次"
           class="searchConditonClass"
           type="text"
-          v-model="trainsVal"
+          v-model="trainNames"
           v-on:click.stop="showPlaces(3)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('车次')">{{errors.first("车次")}}</span>
       </div>
       <div id="seats" class="searchConditon">
@@ -67,7 +67,7 @@
           v-on:click.stop="showPlaces(4)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('坐席')">{{errors.first("坐席")}}</span>
       </div>
       <div id="passengers" class="searchConditon">
@@ -77,11 +77,11 @@
           name="乘车人"
           class="searchConditonClass"
           type="text"
-          v-model="passengersVal"
+          v-model="passengerNames"
           v-on:click.stop="showPlaces(5)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('乘车人')">{{errors.first("乘车人")}}</span>
       </div>
       <div id="phone" class="searchConditon">
@@ -94,11 +94,11 @@
           v-model="phoneVal"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('联系手机')">{{errors.first("联系手机")}}</span>
       </div>
       <div id="submitBrushTicketTask">
-        <input id="submitBrushTicketTaskButton" type="button" value="提交" v-on:click="submit">
+        <input id="submitBrushTicketTaskButton" type="button" value="提交" v-on:click="submit" />
       </div>
       <div id="brushTicketAgreement">
         点提交表示同意
@@ -112,7 +112,13 @@
     <div id="placeArea">
       <StartPlace v-on:setStartPlaceVal="setStartPlaceVal($event)" v-if="startPlaceShow"></StartPlace>
       <EndPlace v-on:setEndPlaceVal="setEndPlaceVal($event)" v-if="endPlaceShow"></EndPlace>
-      <Trains v-on:setTrainsVal="setTrainsVal($event)" v-if="trainsShow"></Trains>
+      <Trains
+        v-bind:startPlace="startPlaceVal"
+        v-bind:endPlace="endPlaceVal"
+        v-bind:startDate="startDateVal"
+        v-on:setTrainsVal="setTrainsVal($event)"
+        v-if="trainsShow"
+      ></Trains>
       <SeatsSelect v-on:setSeatsVal="setSeatsVal($event)" v-if="seatsSelectShow"></SeatsSelect>
       <Passengers v-on:setPassengersVal="setPassengersVal($event)" v-if="passengersShow"></Passengers>
       <BrushTicketAgreement v-if="brushTicketAgreementShow"></BrushTicketAgreement>
@@ -135,9 +141,11 @@ export default {
       startPlaceVal: "",
       endPlaceVal: "",
       startDateVal: "",
-      trainsVal: "",
+      trains: "",
+      trainNames: "",
       seatsVal: "",
-      passengersVal: "",
+      passengerIds: [],
+      passengerNames: [],
       phoneVal: "",
       startPlaceShow: false,
       endPlaceShow: false,
@@ -168,10 +176,33 @@ export default {
       this.seatsVal = seatsVal;
     },
     setPassengersVal: function(passengersVal) {
-      this.passengersVal = passengersVal;
+      let passengerIds = [];
+      let passengerNames = [];
+
+      for (let index in passengersVal) {
+        passengerIds.push(passengersVal[index].id);
+        passengerNames.push(passengersVal[index].name);
+      }
+
+      this.passengerIds = passengerIds;
+      this.passengerNames = passengerNames;
     },
     setTrainsVal: function(trainsVal) {
-      this.trainsVal = trainsVal;
+      debugger
+      let trainNames = [];
+      let trains = [];
+
+      for (let index in trainsVal) {
+        trainNames.push(trainsVal[index].train);
+        trains.push({
+          train: trainsVal[index].train,
+          startSaleTime: trainsVal[index].startSaleTime,
+          endSaleTime: trainsVal[index].endSaleTime
+        });
+      }
+
+      this.trainNames = trainNames;
+      this.trains = trains;
     },
     showPlaces: function(index) {
       this.startPlaceShow = false;

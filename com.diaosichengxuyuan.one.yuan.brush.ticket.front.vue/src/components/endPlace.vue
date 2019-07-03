@@ -1,5 +1,6 @@
 <template>
   <div id="mainContentArea">
+    <div class="errMsg">{{errMsg}}</div>
     <ul class="azTitleClass">
       <li v-bind:class="{azliClass:azContent1Show}" v-on:click="azTitleClick(1)">热门</li>
       <li v-bind:class="{azliClass:azContent2Show}" v-on:click="azTitleClick(2)">A－E</li>
@@ -36,6 +37,7 @@ export default {
   name: "EndPlace",
   data() {
     return {
+      errMsg: "",
       azCities1: [],
       azCities2: [],
       azCities3: [],
@@ -55,6 +57,7 @@ export default {
       res => {
         const response = res.body;
         if (!response) {
+          this.errMsg = "查询地点信息失败";
           return;
         }
 
@@ -66,9 +69,19 @@ export default {
           this.azCities4 = response.places3;
           this.azCities5 = response.places4;
           this.azCities6 = response.places5;
+        } else if (response.message) {
+          this.errMsg = response.message;
+        } else {
+          this.errMsg = "查询地点信息失败";
         }
       },
-      res => {}
+      res => {
+        if (res && res.message) {
+          this.errMsg = res.message;
+        } else {
+          this.errMsg = "登录失效，请重新登录！";
+        }
+      }
     );
   },
   methods: {
@@ -186,5 +199,14 @@ export default {
 
 .azliClass {
   background-color: #684462;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 100px;
+  left: 220px;
 }
 </style>

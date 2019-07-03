@@ -1,5 +1,6 @@
 <template>
   <div id="mainContentArea">
+    <div class="errMsg">{{errMsg}}</div>
     <table class="passengersAreaTable">
       <thead>
         <tr>
@@ -18,8 +19,8 @@
             <input
               class="ticketResultSelect"
               type="checkbox"
-              v-on:click="setVal($event, passenger.name)"
-            >
+              v-on:click="setVal($event, passenger)"
+            />
           </td>
         </tr>
       </tbody>
@@ -28,49 +29,43 @@
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "Passengers",
   data() {
     return {
+      errMsg: "",
       passengersVal: [],
-      passengerList: [
-        {
-          name: "迈克尔杰克逊",
-          attribute: "成人",
-          idCard: "3723*********025"
-        },
-        {
-          name: "杜甫",
-          attribute: "成人",
-          idCard: "3723*********025"
-        },
-        {
-          name: "爱新觉罗弘历",
-          attribute: "成人",
-          idCard: "3723*********025"
-        },
-        {
-          name: "C罗",
-          attribute: "成人",
-          idCard: "3723*********025"
-        },
-        {
-          name: "爱因斯坦",
-          attribute: "成人",
-          idCard: "3723*********025"
-        },
-        {
-          name: "张伯伦",
-          attribute: "成人",
-          idCard: "3723*********025"
-        },
-        {
-          name: "乔布斯",
-          attribute: "成人",
-          idCard: "3723*********025"
-        }
-      ]
+      passengerList: []
     };
+  },
+  created() {
+    this.$http.get(Utils.getRemoteQueryPassengerPath()).then(
+      res => {
+        const response = res.body;
+        if (!response) {
+          this.errMsg = "查询乘客信息失败";
+          return;
+        }
+
+        const statusCode = response.statusCode;
+        if (statusCode == "200") {
+          this.passengerList = response.passengerList;
+        } else if (response.message) {
+          this.errMsg = response.message;
+        } else {
+          this.errMsg = "查询乘客信息失败";
+        }
+      },
+      res => {
+        if (res && res.message) {
+          this.errMsg = res.message;
+        } else {
+          this.errMsg = "登录失效，请重新登录！";
+        }
+      }
+    );
   },
   methods: {
     setVal: function(ele, val) {
@@ -120,5 +115,14 @@ export default {
 .passengersSelect {
   height: 18px;
   width: 18px;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 100px;
+  left: 220px;
 }
 </style>

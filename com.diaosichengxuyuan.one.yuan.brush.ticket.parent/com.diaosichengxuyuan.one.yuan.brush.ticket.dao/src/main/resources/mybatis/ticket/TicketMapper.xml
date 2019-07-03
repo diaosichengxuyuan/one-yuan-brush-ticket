@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.TicketMapper">
+  <resultMap id="BaseResultMap" type="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.entity.TicketDO">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="week" jdbcType="TINYINT" property="week" />
+    <result column="train" jdbcType="VARCHAR" property="train" />
+    <result column="start_place" jdbcType="VARCHAR" property="startPlace" />
+    <result column="end_place" jdbcType="VARCHAR" property="endPlace" />
+    <result column="start_time" jdbcType="TIME" property="startTime" />
+    <result column="end_time" jdbcType="TIME" property="endTime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+</mapper>

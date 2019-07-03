@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.account.entity;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "account")
-public class AccountDO {
+@Table(name = "task_train")
+public class TaskTrainDO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,15 @@ public class AccountDO {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @Column(name = "account_id")
-    private String accountId;
+    @Column(name = "task_id")
+    private Long taskId;
 
-    @Column(name = "password")
-    private String password;
+    private String train;
+
+    @Column(name = "start_sale_time")
+    private Date startSaleTime;
+
+    @Column(name = "end_sale_time")
+    private Date endSaleTime;
 
 }

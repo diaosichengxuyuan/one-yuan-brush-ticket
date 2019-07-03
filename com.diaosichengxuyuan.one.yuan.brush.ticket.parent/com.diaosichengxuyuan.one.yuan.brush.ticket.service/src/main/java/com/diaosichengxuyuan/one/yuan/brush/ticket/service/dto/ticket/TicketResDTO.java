@@ -1,10 +1,11 @@
 package com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket;
 
-import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @Builder
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TicketResDTO {
 
-    private String trains;
+    private String train;
 
     private String startTime;
 
@@ -51,5 +52,9 @@ public class TicketResDTO {
     private String softSleeperSeatPrice;
 
     private String softSleeperSeatRemain;
+
+    private Date startSaleTime;
+
+    private Date endSaleTime;
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Builder
 @Table(name = "member")
 public class MemberDO {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

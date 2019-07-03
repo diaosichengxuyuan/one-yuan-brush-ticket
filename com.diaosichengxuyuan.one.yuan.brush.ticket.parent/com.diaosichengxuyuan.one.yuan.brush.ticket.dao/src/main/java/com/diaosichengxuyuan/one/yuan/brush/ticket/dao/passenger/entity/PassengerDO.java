@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.account.entity;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.passenger.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "account")
-public class AccountDO {
+@Table(name = "passenger")
+public class PassengerDO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,13 @@ public class AccountDO {
     @Column(name = "account_id")
     private String accountId;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "attribute")
+    private String attribute;
+
+    @Column(name = "id_card")
+    private String idCard;
 
 }

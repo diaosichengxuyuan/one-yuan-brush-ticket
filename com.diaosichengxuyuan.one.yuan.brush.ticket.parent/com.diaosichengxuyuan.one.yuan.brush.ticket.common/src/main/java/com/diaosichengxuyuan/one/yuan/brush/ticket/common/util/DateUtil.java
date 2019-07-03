@@ -13,6 +13,12 @@ import java.util.Date;
  */
 public class DateUtil {
 
+    /**
+     * 获取今年的最后一秒的时刻
+     *
+     * @param date 日期
+     * @return 结果
+     */
     public static Date getLastTimeOfTheYear(Date date) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(date);
@@ -24,9 +30,30 @@ public class DateUtil {
         return instance.getTime();
     }
 
+    /**
+     * 格式化日期
+     *
+     * @param date   日期
+     * @param format 格式
+     * @return 结果
+     */
     public static String formatDate(Date date, String format) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 在输入日期上增加n天
+     *
+     * @param date 日期
+     * @param days 需要增加的天数
+     * @return 结果
+     */
+    public static Date addDays(Date date, int days) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(date);
+        instance.add(Calendar.DAY_OF_MONTH, days);
+        return instance.getTime();
     }
 
 }

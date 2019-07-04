@@ -1,4 +1,7 @@
 const utils = {
+    formatDatetime: function (datetime) {
+        return new Date(datetime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-');
+    },
     getRemoteBasePath: function () {
         return "http://localhost:7001";
     },
@@ -14,8 +17,11 @@ const utils = {
     getRemoteQueryTicketPath: function () {
         return this.getRemoteBasePath() + "/ticket/queryTickets";
     },
-    getRemoteQueryPassengerPath: function(){
+    getRemoteQueryPassengerPath: function () {
         return this.getRemoteBasePath() + "/passenger/queryPassengers";
+    },
+    getRemoteInsertTaskPath: function () {
+        return this.getRemoteBasePath() + "/task/insertTask";
     }
 }
 

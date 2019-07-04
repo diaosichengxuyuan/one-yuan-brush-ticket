@@ -108,6 +108,7 @@
           v-on:click.stop="showPlaces(6)"
         >用户协议</a>
       </div>
+      <div class="errMsg">{{errMsg}}</div>
     </div>
     <div id="placeArea">
       <StartPlace v-on:setStartPlaceVal="setStartPlaceVal($event)" v-if="startPlaceShow"></StartPlace>
@@ -133,6 +134,7 @@ import SeatsSelect from "@/components/seatsSelect";
 import Passengers from "@/components/passengers";
 import Trains from "@/components/trains";
 import BrushTicketAgreement from "@/components/brushTicketAgreement";
+import Utils from "../../static/utils.js";
 
 export default {
   name: "AddBrushTicketTask",
@@ -141,7 +143,7 @@ export default {
       startPlaceVal: "",
       endPlaceVal: "",
       startDateVal: "",
-      trains: "",
+      trains: [],
       trainNames: "",
       seatsVal: "",
       passengerIds: [],
@@ -152,7 +154,8 @@ export default {
       trainsShow: false,
       seatsSelectShow: false,
       passengersShow: false,
-      brushTicketAgreementShow: false
+      brushTicketAgreementShow: false,
+      errMsg: ""
     };
   },
   mounted: function() {
@@ -188,7 +191,6 @@ export default {
       this.passengerNames = passengerNames;
     },
     setTrainsVal: function(trainsVal) {
-      debugger
       let trainNames = [];
       let trains = [];
 
@@ -245,10 +247,70 @@ export default {
     submit: function() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.$router.push({
-            name: "BrushTicketTaskList"
-          });
+          this.remoteSubmit();
         }
+      });
+    },
+    remoteSubmit: function() {
+      debugger;
+      this.$http
+        .post(Utils.getRemoteInsertTaskPath(), this.getInputParams())
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "提交抢票任务失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.gotoBrushTicketTaskList();
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "提交抢票任务失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
+          }
+        );
+    },
+    getInputParams: function() {
+      let task = {
+        startPlace: this.startPlaceVal,
+        endPlace: this.endPlaceVal,
+        startDate: this.startDateVal,
+        seat: this.seatsVal,
+        phone: this.phoneVal
+      };
+
+      for (let index in this.trains) {
+        task["taskTrainReqDTOList[" + index + "].train"] = this.trains[
+          index
+        ].train;
+        task[
+          "taskTrainReqDTOList[" + index + "].startSaleTime"
+        ] = Utils.formatDatetime(this.trains[index].startSaleTime);
+        task[
+          "taskTrainReqDTOList[" + index + "].endSaleTime"
+        ] = Utils.formatDatetime(this.trains[index].endSaleTime);
+      }
+
+      for (let index in this.passengerIds) {
+        task["passengerIdList[" + index + "]"] = this.passengerIds[index];
+      }
+
+      return task;
+    },
+    gotoBrushTicketTaskList: function() {
+      this.$router.push({
+        name: "BrushTicketTaskList"
       });
     }
   },
@@ -358,5 +420,14 @@ export default {
   margin-left: 150px;
   font-size: 8px;
   font-weight: bold;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 585px;
+  left: 510px;
 }
 </style>

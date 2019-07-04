@@ -6,7 +6,6 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.TicketResL
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.ticket.TicketService;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.web.ticket.TicketRemote;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

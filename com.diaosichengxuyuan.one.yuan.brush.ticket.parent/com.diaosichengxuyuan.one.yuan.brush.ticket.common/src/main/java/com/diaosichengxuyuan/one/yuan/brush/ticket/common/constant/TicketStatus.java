@@ -8,19 +8,20 @@ package com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant;
  */
 public enum TicketStatus {
 
-    /**
-     * 未支付
-     */
-    NOT_PAY,
+    NOT_PAY("未支付"),
 
-    /**
-     * 已支付
-     */
-    HAS_PAY,
+    HAS_PAY("已支付"),
 
-    /**
-     * 已取消
-     */
-    CANCELLED
+    CANCELLED("已取消");
+
+    private String name;
+
+    TicketStatus(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

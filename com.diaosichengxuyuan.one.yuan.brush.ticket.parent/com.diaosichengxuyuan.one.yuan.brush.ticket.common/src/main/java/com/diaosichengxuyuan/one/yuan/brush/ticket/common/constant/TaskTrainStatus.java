@@ -8,24 +8,22 @@ package com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant;
  */
 public enum TaskTrainStatus {
 
-    /**
-     * 未开售
-     */
-    NOT_SALE,
+    NOT_SALE("未开售"),
 
-    /**
-     * 抢票中
-     */
-    ON_SALE,
+    ON_SALE("抢票中"),
 
-    /**
-     * 余票监控中
-     */
-    ON_MONITOR,
+    ON_MONITOR("余票监控中"),
 
-    /**
-     * 已停止
-     */
-    STOPPED
+    STOPPED("已停止");
+
+    private String name;
+
+    TaskTrainStatus(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

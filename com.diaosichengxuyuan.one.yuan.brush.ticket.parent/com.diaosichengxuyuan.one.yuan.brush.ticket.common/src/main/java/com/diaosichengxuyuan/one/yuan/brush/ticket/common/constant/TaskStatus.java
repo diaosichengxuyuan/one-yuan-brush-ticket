@@ -8,19 +8,20 @@ package com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant;
  */
 public enum TaskStatus {
 
-    /**
-     * 已启动
-     */
-    STARTED,
+    STARTED("已启动"),
 
-    /**
-     * 已停止
-     */
-    STOPPED,
+    STOPPED("已停止"),
 
-    /**
-     * 已停止
-     */
-    FINISHED
+    FINISHED("已结束");
+
+    private String name;
+
+    TaskStatus(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

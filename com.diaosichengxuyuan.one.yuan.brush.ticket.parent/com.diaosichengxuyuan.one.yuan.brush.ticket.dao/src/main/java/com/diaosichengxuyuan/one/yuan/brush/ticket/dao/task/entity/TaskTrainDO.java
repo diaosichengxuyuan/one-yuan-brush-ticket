@@ -28,6 +28,7 @@ public class TaskTrainDO {
     @Column(name = "task_id")
     private Long taskId;
 
+    @Column(name = "train")
     private String train;
 
     @Column(name = "start_sale_time")
@@ -35,5 +36,11 @@ public class TaskTrainDO {
 
     @Column(name = "end_sale_time")
     private Date endSaleTime;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "thread_id")
+    private String threadId;
 
 }

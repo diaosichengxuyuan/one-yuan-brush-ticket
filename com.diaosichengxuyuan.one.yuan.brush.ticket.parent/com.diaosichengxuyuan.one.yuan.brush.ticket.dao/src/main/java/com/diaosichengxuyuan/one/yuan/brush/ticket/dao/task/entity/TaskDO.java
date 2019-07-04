@@ -43,4 +43,7 @@ public class TaskDO {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "status")
+    private String status;
+
 }

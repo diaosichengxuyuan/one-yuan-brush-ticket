@@ -14,10 +14,15 @@ public class BaseDTO {
     /**
      * 状态码
      */
-    private String statusCode = StatusCode.SUCCESS.getCode();
+    private String statusCode;
 
     /**
      * 成功或失败的描述
      */
     private String message;
+
+    public BaseDTO() {
+        statusCode = StatusCode.SUCCESS.getCode();
+    }
+
 }

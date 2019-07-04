@@ -13,7 +13,7 @@ public interface PassengerService {
     /**
      * 查询乘客信息
      *
-     * @param accountId 账号id
+     * @param accountId 账号
      * @return 乘客信息
      */
     PassengerListDTO queryPassengers(String accountId);

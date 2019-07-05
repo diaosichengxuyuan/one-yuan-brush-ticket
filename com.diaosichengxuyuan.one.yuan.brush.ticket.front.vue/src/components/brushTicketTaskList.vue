@@ -2,10 +2,10 @@
   <div class="mainContentArea">
     <div class="taskInstruction">
       只允许添加
-      <br>5个任务!!!
-      <br>
-      <br>无用的任务
-      <br>请删除!!!
+      <br />5个任务!!!
+      <br />
+      <br />无用的任务
+      <br />请删除!!!
     </div>
     <div id="taskListId" class="taskList">
       <table>
@@ -17,7 +17,7 @@
                 v-on:click="jumpToBrushTicketDetail(task.id,task.status)"
               >
                 {{task.startPlace}}→{{task.endPlace}}
-                <br>
+                <br />
                 {{task.startDate}}
               </a>
             </td>
@@ -26,55 +26,33 @@
               <a
                 class="taskListDeleteLink"
                 href="javascript:void(0);"
-                v-on:click="deleteById(task.id)"
+                v-on:click="remoteDeleteById(task.id)"
               >删除</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <div class="errMsg">{{errMsg}}</div>
     <div class="AddTask">
-      <input type="button" value="添加" v-on:click="jumpToAddBrushTicketTask">
+      <input type="button" value="添加" v-on:click="jumpToAddBrushTicketTask" />
     </div>
   </div>
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "BrushTicketTaskList",
   data() {
     return {
-      taskList: [
-        {
-          id: 1,
-          startPlace: "北京",
-          endPlace: "上海",
-          startDate: "2019年5月26日",
-          status: "已停止"
-        },
-        {
-          id: 2,
-          startPlace: "杭州",
-          endPlace: "武汉",
-          startDate: "2018年7月26日",
-          status: "已启动"
-        },
-        {
-          id: 3,
-          startPlace: "长沙",
-          endPlace: "广州",
-          startDate: "2019年3月20日",
-          status: "已结束"
-        },
-        {
-          id: 4,
-          startPlace: "天津",
-          endPlace: "南京",
-          startDate: "2018年2月21日",
-          status: "已结束"
-        }
-      ]
+      errMsg: "",
+      taskList: []
     };
+  },
+  created() {
+    this.remoteQueryAll();
   },
   methods: {
     jumpToAddBrushTicketTask: function() {
@@ -82,13 +60,63 @@ export default {
         name: "AddBrushTicketTask"
       });
     },
-    deleteById: function(id) {
-      for (var index in this.taskList) {
-        if (this.taskList[index].id == id) {
-          this.taskList.splice(index, 1);
-          return;
+    remoteQueryAll: function() {
+      this.$http.get(Utils.getRemoteQueryTaskPath()).then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "查询失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.taskList = response.taskResDTOList;
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "查询失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "登录失效，请重新登录！";
+          }
         }
-      }
+      );
+    },
+    remoteDeleteById: function(id) {
+      this.$http
+        .post(Utils.getRemoteDeleteTaskPath(), {
+          id: id
+        })
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "删除失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.remoteQueryAll();
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "删除失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
+          }
+        );
     },
     jumpToBrushTicketDetail: function(id, status) {
       var componentName = "BrushTicketTaskList";
@@ -167,5 +195,14 @@ export default {
   background-color: #ff7300;
   font-size: 18px;
   outline: none;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 300px;
+  left: 950px;
 }
 </style>

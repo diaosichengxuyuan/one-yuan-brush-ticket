@@ -22,6 +22,21 @@ const utils = {
     },
     getRemoteInsertTaskPath: function () {
         return this.getRemoteBasePath() + "/task/insertTask";
+    },
+    getRemoteQueryTaskPath: function () {
+        return this.getRemoteBasePath() + "/task/queryTaskList";
+    },
+    getRemoteDeleteTaskPath: function () {
+        return this.getRemoteBasePath() + "/task/deleteTaskById";
+    },
+    getRemoteQueryTaskByIdPath: function () {
+        return this.getRemoteBasePath() + "/task/queryTaskById";
+    },
+    getRemoteStopTaskPath:function(){
+        return this.getRemoteBasePath() + "/task/stopTaskById";
+    },
+    getRemoteStartTaskPath:function(){
+        return this.getRemoteBasePath() + "/task/startTaskById";
     }
 }
 

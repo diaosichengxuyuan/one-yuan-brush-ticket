@@ -12,7 +12,7 @@
           v-on:click.stop="showPlaces(1)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('出发地')">{{errors.first("出发地")}}</span>
       </div>
       <div id="endPlace" class="searchConditon">
@@ -26,7 +26,7 @@
           v-on:click.stop="showPlaces(2)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('目的地')">{{errors.first("目的地")}}</span>
       </div>
       <div id="startDate" class="searchConditon">
@@ -39,7 +39,7 @@
           v-model="startDateVal"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('出发日期')">{{errors.first("出发日期")}}</span>
       </div>
       <div id="trains" class="searchConditon">
@@ -49,11 +49,11 @@
           name="车次"
           class="searchConditonClass"
           type="text"
-          v-model="trainsVal"
+          v-model="trainNames"
           v-on:click.stop="showPlaces(3)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('车次')">{{errors.first("车次")}}</span>
       </div>
       <div id="seats" class="searchConditon">
@@ -67,7 +67,7 @@
           v-on:click.stop="showPlaces(4)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('坐席')">{{errors.first("坐席")}}</span>
       </div>
       <div id="passengers" class="searchConditon">
@@ -77,11 +77,11 @@
           name="乘车人"
           class="searchConditonClass"
           type="text"
-          v-model="passengersVal"
+          v-model="passengerNames"
           v-on:click.stop="showPlaces(5)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('乘车人')">{{errors.first("乘车人")}}</span>
       </div>
       <div id="phone" class="searchConditon">
@@ -94,11 +94,11 @@
           v-model="phoneVal"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('联系手机')">{{errors.first("联系手机")}}</span>
       </div>
       <div id="submitBrushTicketTask">
-        <input id="submitBrushTicketTaskButton" type="button" value="启动" v-on:click="start">
+        <input id="submitBrushTicketTaskButton" type="button" value="启动" v-on:click="remoteStart" />
       </div>
       <div id="brushTicketAgreement">
         点启动表示同意
@@ -108,11 +108,18 @@
           v-on:click.stop="showPlaces(6)"
         >用户协议</a>
       </div>
+      <div class="errMsg">{{errMsg}}</div>
     </div>
     <div id="placeArea">
       <StartPlace v-on:setStartPlaceVal="setStartPlaceVal($event)" v-if="startPlaceShow"></StartPlace>
       <EndPlace v-on:setEndPlaceVal="setEndPlaceVal($event)" v-if="endPlaceShow"></EndPlace>
-      <Trains v-on:setTrainsVal="setTrainsVal($event)" v-if="trainsShow"></Trains>
+      <Trains
+        v-bind:startPlace="startPlaceVal"
+        v-bind:endPlace="endPlaceVal"
+        v-bind:startDate="startDateVal"
+        v-on:setTrainsVal="setTrainsVal($event)"
+        v-if="trainsShow"
+      ></Trains>
       <SeatsSelect v-on:setSeatsVal="setSeatsVal($event)" v-if="seatsSelectShow"></SeatsSelect>
       <Passengers v-on:setPassengersVal="setPassengersVal($event)" v-if="passengersShow"></Passengers>
       <BrushTicketAgreement v-if="brushTicketAgreementShow"></BrushTicketAgreement>
@@ -127,6 +134,7 @@ import SeatsSelect from "@/components/seatsSelect";
 import Passengers from "@/components/passengers";
 import Trains from "@/components/trains";
 import BrushTicketAgreement from "@/components/brushTicketAgreement";
+import Utils from "../../static/utils.js";
 
 export default {
   name: "BrushTicketTaskListStopped",
@@ -135,16 +143,19 @@ export default {
       startPlaceVal: "",
       endPlaceVal: "",
       startDateVal: "",
-      trainsVal: "",
+      trains: [],
+      trainNames: [],
       seatsVal: "",
-      passengersVal: "",
+      passengerIds: [],
+      passengerNames: [],
       phoneVal: "",
       startPlaceShow: false,
       endPlaceShow: false,
       trainsShow: false,
       seatsSelectShow: false,
       passengersShow: false,
-      brushTicketAgreementShow: false
+      brushTicketAgreementShow: false,
+      errMsg: ""
     };
   },
   mounted: function() {
@@ -157,6 +168,59 @@ export default {
       }
     });
   },
+  created() {
+    this.$http
+      .get(Utils.getRemoteQueryTaskByIdPath() + "?id=" + this.$route.query.id)
+      .then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "查询失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.startPlaceVal = response.startPlace;
+            this.endPlaceVal = response.endPlace;
+            this.startDateVal = response.startDate;
+            this.seatsVal = response.seat;
+            this.phoneVal = response.phone;
+
+            debugger;
+            if (response.taskTrainResDTOList) {
+              for (let index in response.taskTrainResDTOList) {
+                this.trainNames.push(response.taskTrainResDTOList[index].train);
+                this.trains.push({
+                  train: response.taskTrainResDTOList[index].train,
+                  startSaleTime:
+                    response.taskTrainResDTOList[index].startSaleTime,
+                  endSaleTime: response.taskTrainResDTOList[index].endSaleTime
+                });
+              }
+            }
+
+            if (response.passengerDTOList) {
+              for (let index in response.passengerDTOList) {
+                this.passengerIds.push(response.passengerDTOList[index].id);
+                this.passengerNames.push(response.passengerDTOList[index].name);
+              }
+            }
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "查询失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "登录失效，请重新登录！";
+          }
+        }
+      );
+  },
   methods: {
     setStartPlaceVal: function(startPlaceVal) {
       this.startPlaceVal = startPlaceVal;
@@ -168,10 +232,32 @@ export default {
       this.seatsVal = seatsVal;
     },
     setPassengersVal: function(passengersVal) {
-      this.passengersVal = passengersVal;
+      let passengerIds = [];
+      let passengerNames = [];
+
+      for (let index in passengersVal) {
+        passengerIds.push(passengersVal[index].id);
+        passengerNames.push(passengersVal[index].name);
+      }
+
+      this.passengerIds = passengerIds;
+      this.passengerNames = passengerNames;
     },
     setTrainsVal: function(trainsVal) {
-      this.trainsVal = trainsVal;
+      let trainNames = [];
+      let trains = [];
+
+      for (let index in trainsVal) {
+        trainNames.push(trainsVal[index].train);
+        trains.push({
+          train: trainsVal[index].train,
+          startSaleTime: trainsVal[index].startSaleTime,
+          endSaleTime: trainsVal[index].endSaleTime
+        });
+      }
+
+      this.trainNames = trainNames;
+      this.trains = trains;
     },
     showPlaces: function(index) {
       this.startPlaceShow = false;
@@ -211,13 +297,71 @@ export default {
       this.passengersShow = false;
       this.brushTicketAgreementShow = false;
     },
-    start: function() {
+    remoteStart: function() {
+      debugger;
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.$router.push({
-            name: "BrushTicketTaskList"
-          });
+          this.$http
+            .post(Utils.getRemoteStartTaskPath(), this.getInputParams())
+            .then(
+              res => {
+                const response = res.body;
+                if (!response) {
+                  this.errMsg = "启动任务失败";
+                  return;
+                }
+
+                const statusCode = response.statusCode;
+                if (statusCode == "200") {
+                  this.gotoBrushTicketTaskList();
+                } else if (response.message) {
+                  this.errMsg = response.message;
+                } else {
+                  this.errMsg = "启动任务失败";
+                }
+              },
+              res => {
+                if (res && res.message) {
+                  this.errMsg = res.message;
+                } else {
+                  this.errMsg = "登录失效，请重新登录！";
+                }
+              }
+            );
         }
+      });
+    },
+    getInputParams: function() {
+      let task = {
+        id: this.$route.query.id,
+        startPlace: this.startPlaceVal,
+        endPlace: this.endPlaceVal,
+        startDate: this.startDateVal,
+        seat: this.seatsVal,
+        phone: this.phoneVal
+      };
+
+      for (let index in this.trains) {
+        task["taskTrainReqDTOList[" + index + "].train"] = this.trains[
+          index
+        ].train;
+        task[
+          "taskTrainReqDTOList[" + index + "].startSaleTime"
+        ] = Utils.formatDatetime(this.trains[index].startSaleTime);
+        task[
+          "taskTrainReqDTOList[" + index + "].endSaleTime"
+        ] = Utils.formatDatetime(this.trains[index].endSaleTime);
+      }
+
+      for (let index in this.passengerIds) {
+        task["passengerIdList[" + index + "]"] = this.passengerIds[index];
+      }
+
+      return task;
+    },
+    gotoBrushTicketTaskList: function() {
+      this.$router.push({
+        name: "BrushTicketTaskList"
       });
     }
   },
@@ -327,5 +471,14 @@ export default {
   margin-left: 150px;
   font-size: 8px;
   font-weight: bold;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 585px;
+  left: 510px;
 }
 </style>

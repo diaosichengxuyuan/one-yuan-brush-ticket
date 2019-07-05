@@ -11,8 +11,8 @@
           <tr>
             <td>
               <div class="nosale" v-show="nosaleShow">
-                <br>
-                <br>未开售
+                <br />
+                <br />未开售
               </div>
             </td>
             <td>
@@ -34,7 +34,7 @@
           type="text"
           readonly="readonly"
           v-model="startPlaceVal"
-        >
+        />
       </div>
       <div id="endPlace" class="searchConditon">
         目的地
@@ -44,7 +44,7 @@
           type="text"
           readonly="readonly"
           v-model="endPlaceVal"
-        >
+        />
       </div>
       <div id="startDate" class="searchConditon">
         出发日期
@@ -54,7 +54,7 @@
           type="text"
           readonly="readonly"
           v-model="startDateVal"
-        >
+        />
       </div>
       <div id="trains" class="searchConditon">
         车次(可多选)
@@ -64,7 +64,7 @@
           type="text"
           readonly="readonly"
           v-model="trainsVal"
-        >
+        />
       </div>
       <div id="seats" class="searchConditon">
         坐席(单选)
@@ -74,7 +74,7 @@
           type="text"
           readonly="readonly"
           v-model="seatsVal"
-        >
+        />
       </div>
       <div id="passengers" class="searchConditon">
         乘车人(可多选)
@@ -84,7 +84,7 @@
           type="text"
           readonly="readonly"
           v-model="passengersVal"
-        >
+        />
       </div>
       <div id="phone" class="searchConditon">
         联系手机
@@ -94,27 +94,31 @@
           type="text"
           readonly="readonly"
           v-model="phoneVal"
-        >
+        />
       </div>
+      <div class="errMsg">{{errMsg}}</div>
       <div id="stopBrushTicketTask">
-        <input id="stopBrushTicketTaskButton" type="button" value="停止" v-on:click="stop">
+        <input id="stopBrushTicketTaskButton" type="button" value="停止" v-on:click="remoteStop" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "BrushTicketTaskListStarted",
   data() {
     return {
-      startPlaceVal: "北京",
-      endPlaceVal: "上海",
-      startDateVal: "2019-08-08",
-      trainsVal: "G202",
-      seatsVal: "二等座",
-      passengersVal: "周杰伦",
-      phoneVal: "13611070029",
+      errMsg: "",
+      startPlaceVal: "",
+      endPlaceVal: "",
+      startDateVal: "",
+      trainsVal: [],
+      seatsVal: "",
+      passengersVal: [],
+      phoneVal: "",
       nosaleData: "G101",
       brushingData: "G102",
       remainingData: "G103",
@@ -123,8 +127,84 @@ export default {
       remainingShow: true
     };
   },
+  created() {
+    this.$http
+      .get(Utils.getRemoteQueryTaskByIdPath() + "?id=" + this.$route.query.id)
+      .then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "查询失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.startPlaceVal = response.startPlace;
+            this.endPlaceVal = response.endPlace;
+            this.startDateVal = response.startDate;
+            this.seatsVal = response.seat;
+            this.phoneVal = response.phone;
+
+            if (response.taskTrainResDTOList) {
+              for (let index in response.taskTrainResDTOList) {
+                this.trainsVal.push(response.taskTrainResDTOList[index].train);
+              }
+            }
+
+            if (response.passengerDTOList) {
+              for (let index in response.passengerDTOList) {
+                this.passengersVal.push(response.passengerDTOList[index].name);
+              }
+            }
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "查询失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "登录失效，请重新登录！";
+          }
+        }
+      );
+  },
   methods: {
-    stop: function() {
+    remoteStop: function() {
+      this.$http
+        .post(Utils.getRemoteStopTaskPath(), {
+          id: this.$route.query.id
+        })
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "停止任务失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.gotoBrushTicketTaskList();
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "停止任务失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
+          }
+        );
+    },
+    gotoBrushTicketTaskList: function() {
       this.$router.push({
         name: "BrushTicketTaskList"
       });
@@ -318,5 +398,14 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 450px;
+  left: 1000px;
 }
 </style>

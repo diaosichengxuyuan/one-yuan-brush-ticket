@@ -17,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TaskReqDTO {
 
+    private Long id;
+
     /**
      * 前端无需传入
      */

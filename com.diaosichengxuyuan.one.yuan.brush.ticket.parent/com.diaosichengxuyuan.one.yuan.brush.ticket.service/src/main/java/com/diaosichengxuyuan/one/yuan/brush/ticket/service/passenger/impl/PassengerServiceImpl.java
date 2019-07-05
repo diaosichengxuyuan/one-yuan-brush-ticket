@@ -23,10 +23,10 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public PassengerListDTO queryPassengers(String accountId) {
-        List<PassengerDO> passengerDOs = passengerMapper.select(PassengerDO.builder().accountId(accountId).build());
-        List<PassengerDTO> passengerDTOs = MapperUtil.mapAsList(passengerDOs, PassengerDO.class, PassengerDTO.class);
+        List<PassengerDO> passengerDOList = passengerMapper.select(PassengerDO.builder().accountId(accountId).build());
+        List<PassengerDTO> passengerDTOList = MapperUtil.mapAsList(passengerDOList, PassengerDO.class, PassengerDTO.class);
 
-        return PassengerListDTO.builder().passengerList(passengerDTOs).build();
+        return PassengerListDTO.builder().passengerList(passengerDTOList).build();
     }
 
 }

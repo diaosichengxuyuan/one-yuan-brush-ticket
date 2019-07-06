@@ -11,12 +11,13 @@
         <result column="account_id" jdbcType="VARCHAR" property="accountId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="attribute" jdbcType="VARCHAR" property="attribute"/>
+        <result column="card_type" jdbcType="VARCHAR" property="cardType"/>
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
     </resultMap>
 
     <select id="queryListByIds" resultMap="BaseResultMap">
         select * from passenger where id in
-        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+        <foreach close=")" collection="ids" index="index" item="id" open="(" separator=",">
             #{id}
         </foreach>
     </select>

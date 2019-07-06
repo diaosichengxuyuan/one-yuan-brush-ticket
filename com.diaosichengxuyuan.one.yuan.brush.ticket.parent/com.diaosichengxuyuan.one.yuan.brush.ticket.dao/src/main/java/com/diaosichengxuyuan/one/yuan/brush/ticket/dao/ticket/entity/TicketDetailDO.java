@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.passenger.entity;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "passenger")
-public class PassengerDO {
+@Builder
+@Table(name = "ticket_detail")
+public class TicketDetailDO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,8 @@ public class PassengerDO {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @Column(name = "account_id")
-    private String accountId;
+    @Column(name = "ticket_id")
+    private Long ticketId;
 
     @Column(name = "name")
     private String name;
@@ -37,7 +37,19 @@ public class PassengerDO {
     @Column(name = "card_type")
     private String cardType;
 
-    @Column(name = "id_card")
-    private String idCard;
+    @Column(name = "card_number")
+    private String cardNumber;
+
+    @Column(name = "seat")
+    private String seat;
+
+    @Column(name = "carriage")
+    private String carriage;
+
+    @Column(name = "seat_number")
+    private String seatNumber;
+
+    @Column(name = "price")
+    private String price;
 
 }

@@ -49,4 +49,7 @@ public class TicketDO {
     @Column(name = "end_time")
     private Date endTime;
 
+    @Column(name = "status")
+    private String status;
+
 }

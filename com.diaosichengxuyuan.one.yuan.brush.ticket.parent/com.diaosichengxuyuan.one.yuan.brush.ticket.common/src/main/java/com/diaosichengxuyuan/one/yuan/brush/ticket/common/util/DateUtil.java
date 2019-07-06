@@ -56,4 +56,30 @@ public class DateUtil {
         return instance.getTime();
     }
 
+    public static String toWeek(int week) {
+        if(week == 1) {
+            return "周一";
+        }
+        if(week == 2) {
+            return "周二";
+        }
+        if(week == 3) {
+            return "周三";
+        }
+        if(week == 4) {
+            return "周四";
+        }
+        if(week == 5) {
+            return "周五";
+        }
+        if(week == 6) {
+            return "周六";
+        }
+        if(week == 7) {
+            return "周日";
+        }
+
+        return null;
+    }
+
 }

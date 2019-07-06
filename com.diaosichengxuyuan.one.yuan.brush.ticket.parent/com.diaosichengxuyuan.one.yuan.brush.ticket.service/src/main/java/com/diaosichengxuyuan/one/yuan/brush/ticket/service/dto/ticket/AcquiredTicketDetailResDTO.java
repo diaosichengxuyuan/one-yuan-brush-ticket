@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.passenger;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "passenger")
-public class PassengerDTO {
-
-    private Long id;
+public class AcquiredTicketDetailResDTO {
 
     private String name;
 
@@ -23,6 +20,14 @@ public class PassengerDTO {
 
     private String cardType;
 
-    private String idCard;
+    private String cardNumber;
+
+    private String seat;
+
+    private String carriage;
+
+    private String seatNumber;
+
+    private String price;
 
 }

@@ -20,6 +20,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Page {
 
+    private static final Integer MAX_SIZE = 100;
+
     @NotNull
     @Range(min = 0)
     private Integer num;
@@ -27,5 +29,13 @@ public class Page {
     @NotNull
     @Range(min = 0, max = 100)
     private Integer size;
+
+    public Integer getSize() {
+        if(size <= MAX_SIZE) {
+            return size;
+        }
+
+        return MAX_SIZE;
+    }
 
 }

@@ -25,9 +25,6 @@ public class DataDO {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @Column(name = "account_id")
-    private String accountId;
-
     @Column(name = "task_num")
     private Long taskNum;
 

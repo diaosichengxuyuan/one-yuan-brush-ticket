@@ -177,8 +177,8 @@ public class TaskServiceImpl implements TaskService {
 
         //停止所有相关task_train
 
-        taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).status(TaskStatus.STOPPED.getName())
-            .build());
+        taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).modifyTime(new Date())
+            .status(TaskStatus.STOPPED.getName()).build());
 
         return new BaseDTO();
     }
@@ -194,7 +194,7 @@ public class TaskServiceImpl implements TaskService {
             return baseDTO;
         }
 
-        deleteTaskById(taskReqDTO.getId());
+        internalDeleteTaskById(taskReqDTO.getId());
 
         internalInsertTask(taskReqDTO);
 

@@ -8,7 +8,6 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
     <result column="task_num" jdbcType="BIGINT" property="taskNum" />
     <result column="user_num" jdbcType="BIGINT" property="userNum" />
     <result column="member_num" jdbcType="BIGINT" property="memberNum" />

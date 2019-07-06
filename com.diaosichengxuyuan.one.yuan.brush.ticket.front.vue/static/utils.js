@@ -8,6 +8,9 @@ const utils = {
     getRemoteLoginPath: function () {
         return this.getRemoteBasePath() + "/login";
     },
+    getRemoteLogoutPath: function () {
+        return this.getRemoteBasePath() + "/logout";
+    },
     getRemoteQueryMemberPath: function () {
         return this.getRemoteBasePath() + "/member/queryMember";
     },

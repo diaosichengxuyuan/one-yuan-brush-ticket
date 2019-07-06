@@ -65,7 +65,7 @@ export default {
   name: "TicketSearchResult",
   data() {
     return {
-      errMsg: "",
+      errMsg: "登录失效，请重新登录！",
       ticketList: []
     };
   },
@@ -159,9 +159,10 @@ export default {
 
 .errMsg {
   color: red;
-  margin-top: 50px;
-  margin-left: 500px;
   font-size: 8px;
   font-weight: bold;
+  position: absolute;
+  top: 300px;
+  left: 570px;
 }
 </style>

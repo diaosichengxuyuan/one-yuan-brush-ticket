@@ -120,7 +120,10 @@ export default {
     },
     gotoLoginSuccess: function() {
       this.$router.push({
-        name: "LoginSuccess"
+        name: "LoginSuccess",
+        params:{
+          accountId:this.accountId
+        }
       });
     }
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="mainContentArea">
-    <div class="taskInstruction">
+    <div class="taskInstruction" v-show="taskInstructionShow">
       只允许添加
       <br />5个任务!!!
       <br />
@@ -35,7 +35,7 @@
     </div>
     <div class="errMsg">{{errMsg}}</div>
     <div class="AddTask">
-      <input type="button" value="添加" v-on:click="jumpToAddBrushTicketTask" />
+      <input type="button" value="添加" v-on:click="jumpToAddBrushTicketTask" v-show="addButtonShow" />
     </div>
   </div>
 </template>
@@ -48,7 +48,9 @@ export default {
   data() {
     return {
       errMsg: "",
-      taskList: []
+      taskList: [],
+      taskInstructionShow: false,
+      addButtonShow: false
     };
   },
   created() {
@@ -72,6 +74,8 @@ export default {
           const statusCode = response.statusCode;
           if (statusCode == "200") {
             this.taskList = response.taskResDTOList;
+            this.taskInstructionShow = true;
+            this.addButtonShow = true;
           } else if (response.message) {
             this.errMsg = response.message;
           } else {

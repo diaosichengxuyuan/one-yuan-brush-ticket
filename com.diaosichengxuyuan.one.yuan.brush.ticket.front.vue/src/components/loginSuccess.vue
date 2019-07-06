@@ -1,26 +1,64 @@
 <template>
   <div id="mainLoginArea">
-    <div class="instruction">已登录</div>
-    <div class="account">
+    <div class="instruction" v-show="mainLoginAreaShow">已登录</div>
+    <div class="account" v-show="mainLoginAreaShow">
       账号&nbsp;&nbsp;
-      <input id="accountId" type="text" readonly="readonly" v-model="accountId">
+      <input id="accountId" type="text" readonly="readonly" v-model="accountId" />
     </div>
-    <div class="loginOut">
-      <input id="loginOutId" type="button" value="退出登录" v-on:click="loginOut">
+    <div class="logout" v-show="mainLoginAreaShow">
+      <input id="logoutId" type="button" value="退出登录" v-on:click="remoteLogout" />
     </div>
+    <div class="errMsg">{{errMsg}}</div>
   </div>
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "LoginSuccess",
   data() {
     return {
-      accountId: "121xxxxx26@qq.com"
+      accountId: "",
+      errMsg: "",
+      mainLoginAreaShow: false
     };
   },
+  created() {
+    this.accountId = this.$route.params.accountId;
+    if (this.accountId) {
+      this.mainLoginAreaShow = true;
+    }
+  },
   methods: {
-    loginOut: function() {
+    remoteLogout() {
+      this.$http.post(Utils.getRemoteLogoutPath(), {}).then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "退出失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.gotoLogin();
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "退出失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "退出失败";
+          }
+        }
+      );
+    },
+    gotoLogin: function() {
       this.$router.push({
         name: "Login"
       });
@@ -61,18 +99,27 @@ export default {
   background-color: rgb(170, 164, 164);
 }
 
-#mainLoginArea .loginOut {
+#mainLoginArea .logout {
   width: 500px;
   margin-top: 180px;
   margin-left: 380px;
   text-align: center;
 }
 
-#mainLoginArea .loginOut input {
+#mainLoginArea .logout input {
   font-size: 20px;
   background-color: #ff7300;
   outline: none;
   width: 300px;
   height: 35px;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 530px;
+  left: 700px;
 }
 </style>

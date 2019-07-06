@@ -21,8 +21,20 @@
     </div>
     <div class="errMsg">{{errMsg}}</div>
     <div class="turnPage">
-      <input class="turnLeftPage" type="button" value="上一页" v-on:click="reducePage" />
-      <input class="turnRightPage" type="button" value="下一页" v-on:click="addPage" />
+      <input
+        class="turnLeftPage"
+        type="button"
+        value="上一页"
+        v-on:click="reducePage"
+        v-show="turnLeftButtonShow"
+      />
+      <input
+        class="turnRightPage"
+        type="button"
+        value="下一页"
+        v-on:click="addPage"
+        v-show="turnRightButtonShow"
+      />
     </div>
   </div>
 </template>
@@ -36,7 +48,9 @@ export default {
     return {
       errMsg: "",
       currentPage: 1,
-      ticketList: []
+      ticketList: [],
+      turnLeftButtonShow: false,
+      turnRightButtonShow: false
     };
   },
   created() {
@@ -60,6 +74,8 @@ export default {
             const statusCode = response.statusCode;
             if (statusCode == "200") {
               this.ticketList = response.acquiredTicketResDTOList;
+              this.turnLeftButtonShow = true;
+              this.turnRightButtonShow = true;
             } else if (response.message) {
               this.errMsg = response.message;
             } else {
@@ -80,10 +96,10 @@ export default {
       this.remoteGetTicketList();
     },
     reducePage: function() {
-      if(this.currentPage == 1){
+      if (this.currentPage == 1) {
         return;
       }
-      
+
       this.currentPage--;
       this.remoteGetTicketList();
     },
@@ -166,6 +182,6 @@ export default {
   font-weight: bold;
   position: absolute;
   top: 300px;
-  left: 950px;
+  left: 1070px;
 }
 </style>

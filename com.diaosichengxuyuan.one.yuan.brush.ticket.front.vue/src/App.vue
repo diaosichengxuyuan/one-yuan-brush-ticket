@@ -8,14 +8,15 @@
       <img class="jinbaoClass" src="./assets/images/jinbao.jpg" />
     </div>
     <div class="fixedMiddleBody">
-      <router-link to="/ticketSearch">车票查询</router-link>
+      <router-link class="ticketSearchClass" to="/ticketSearch">车票查询</router-link>
       <router-link class="mainMenuClass" to="/addBrushTicketTask">添加抢票任务</router-link>
       <router-link class="mainMenuClass" to="/brushTicketTaskList">抢票任务列表</router-link>
       <router-link class="mainMenuClass" to="/gotTicketList">已抢到票列表</router-link>
-      <router-link id="loginMenu" to="/login">登录</router-link>
-      <router-link class="loginMenuClass" to="/member">会员</router-link>
-      <router-link class="loginMenuClass" to="/">个人中心</router-link>
+      <router-link class="loginClass" to="/login">登录</router-link>
+      <router-link class="memberClass" to="/member">会员</router-link>
+      <a class="logoutClass" href="javascript:void(0);" v-on:click="remoteLogout">退出</a>
     </div>
+    <div class="errMsg">{{errMsg}}</div>
     <router-view />
   </div>
 </template>
@@ -27,6 +28,7 @@ export default {
   name: "App",
   data() {
     return {
+      errMsg: "",
       currentDailyNum: 0,
       currentMembers: 0,
       brushTicketOrderNum: 0
@@ -44,7 +46,7 @@ export default {
           if (!response) {
             return;
           }
-        
+
           const statusCode = response.statusCode;
           if (statusCode == "200") {
             this.currentDailyNum = response.taskNum;
@@ -54,6 +56,45 @@ export default {
         },
         res => {}
       );
+    },
+    remoteLogout() {
+      this.$http.post(Utils.getRemoteLogoutPath(), {}).then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "退出失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.gotoLogin();
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "退出失败";
+          }
+
+          setTimeout(this.resetErrMsg, 3000);
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "退出失败";
+          }
+
+          setTimeout(this.resetErrMsg, 3000);
+        }
+      );
+    },
+    resetErrMsg(){
+this.errMsg="";
+    },
+    gotoLogin() {
+      this.$router.push({
+        name: "Login"
+      });
     }
   }
 };
@@ -135,15 +176,32 @@ div {
   color: black;
 }
 
-.fixedMiddleBody .mainMenuClass {
+.ticketSearchClass {
+  margin-left: 10px;
+}
+
+.mainMenuClass {
   margin-left: 50px;
 }
 
-#loginMenu {
-  margin-left: 310px;
+.loginClass {
+  margin-left: 340px;
 }
 
-.fixedMiddleBody .loginMenuClass {
+.memberClass {
   margin-left: 50px;
+}
+
+.logoutClass {
+  margin-left: 50px;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 160px;
+  left: 1180px;
 }
 </style>

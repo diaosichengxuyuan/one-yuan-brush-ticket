@@ -2,8 +2,9 @@
   <div id="mainContentArea" v-model="ticketDetail">
     <div
       class="ticketDetail"
+      v-show="mainContentAreaShow"
     >{{ticketDetail.date}}({{ticketDetail.week}})&nbsp;&nbsp;{{ticketDetail.train}}&nbsp;&nbsp;{{ticketDetail.startPlace}}({{ticketDetail.startTime}}开) → {{ticketDetail.endPlace}}({{ticketDetail.endTime}}到)</div>
-    <div class="passengers">
+    <div class="passengers" v-show="mainContentAreaShow">
       <table>
         <thead>
           <tr>
@@ -33,7 +34,10 @@
         </tbody>
       </table>
     </div>
-    <div class="payDetail">剩余支付时间:29分21秒 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已抢到票，请自行到12306后台支付！！！</div>
+    <div
+      class="payDetail"
+      v-show="mainContentAreaShow"
+    >剩余支付时间:29分21秒 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已抢到票，请自行到12306后台支付！！！</div>
     <div class="errMsg">{{errMsg}}</div>
   </div>
 </template>
@@ -46,7 +50,8 @@ export default {
   data() {
     return {
       errMsg: "",
-      ticketDetail: {}
+      ticketDetail: {},
+      mainContentAreaShow: false
     };
   },
   created() {
@@ -67,6 +72,7 @@ export default {
           const statusCode = response.statusCode;
           if (statusCode == "200") {
             this.ticketDetail = response;
+            this.mainContentAreaShow = true;
           } else if (response.message) {
             this.errMsg = response.message;
           } else {

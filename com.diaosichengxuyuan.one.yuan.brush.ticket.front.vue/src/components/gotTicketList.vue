@@ -9,9 +9,9 @@
                 href="javascript:void(0);"
                 v-on:click="jumpToTicketDetail(ticket.id,ticket.status)"
               >
-                {{ticket.startDate}}({{ticket.week}})&nbsp;&nbsp;{{ticket.trains}}
-                <br>
-                {{ticket.startStation}}({{ticket.startTime}}开) → {{ticket.endStation}}({{ticket.endTime}}到)
+                {{ticket.date}}({{ticket.week}})&nbsp;&nbsp;{{ticket.train}}
+                <br />
+                {{ticket.startPlace}}({{ticket.startTime}}开) → {{ticket.endPlace}}({{ticket.endTime}}到)
               </a>
             </td>
             <td>{{ticket.status}}</td>
@@ -19,92 +19,73 @@
         </tbody>
       </table>
     </div>
+    <div class="errMsg">{{errMsg}}</div>
     <div class="turnPage">
-      <input class="turnLeftPage" type="button" value="上一页" v-on:click="reducePage">
-      <input class="turnRightPage" type="button" value="下一页" v-on:click="addPage">
+      <input class="turnLeftPage" type="button" value="上一页" v-on:click="reducePage" />
+      <input class="turnRightPage" type="button" value="下一页" v-on:click="addPage" />
     </div>
   </div>
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "GotTicketList",
   data() {
     return {
+      errMsg: "",
       currentPage: 1,
-      ticketList: [
-        {
-          id: 1,
-          startDate: "2019-01-19",
-          week: "周六",
-          trains: "G11",
-          startStation: "北京南站",
-          endStation: "上海虹桥站",
-          startTime: "9:15",
-          endTime: "14:49",
-          status: "未支付"
-        },
-        {
-          id: 2,
-          startDate: "2019-01-19",
-          week: "周六",
-          trains: "G21",
-          startStation: "北京南站",
-          endStation: "上海虹桥站",
-          startTime: "9:15",
-          endTime: "14:49",
-          status: "已支付"
-        },
-        {
-          id: 3,
-          startDate: "2019-01-19",
-          week: "周六",
-          trains: "G31",
-          startStation: "北京南站",
-          endStation: "上海虹桥站",
-          startTime: "9:15",
-          endTime: "14:49",
-          status: "已支付"
-        },
-        {
-          id: 4,
-          startDate: "2019-01-19",
-          week: "周六",
-          trains: "G41",
-          startStation: "北京南站",
-          endStation: "上海虹桥站",
-          startTime: "9:15",
-          endTime: "14:49",
-          status: "已取消"
-        },
-        {
-          id: 5,
-          startDate: "2019-01-19",
-          week: "周六",
-          trains: "G51",
-          startStation: "北京南站",
-          endStation: "上海虹桥站",
-          startTime: "9:15",
-          endTime: "14:49",
-          status: "已取消"
-        }
-      ]
+      ticketList: []
     };
   },
+  created() {
+    this.remoteGetTicketList();
+  },
   methods: {
-    getTicketList: function() {
-      for (var index in this.ticketList) {
-        var ticket = this.ticketList[index];
-        ticket.trains = "G" + ticket.id + this.currentPage;
-      }
+    remoteGetTicketList: function() {
+      this.$http
+        .post(Utils.getRemoteQueryAcquiredTicket(), {
+          num: this.currentPage,
+          size: 5
+        })
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "查询失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.ticketList = response.acquiredTicketResDTOList;
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "查询失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
+          }
+        );
     },
     addPage: function() {
       this.currentPage++;
-      this.getTicketList();
+      this.remoteGetTicketList();
     },
     reducePage: function() {
+      if(this.currentPage == 1){
+        return;
+      }
+      
       this.currentPage--;
-      this.getTicketList();
+      this.remoteGetTicketList();
     },
     jumpToTicketDetail: function(id, status) {
       var componentName = "GotTicketList";
@@ -115,7 +96,6 @@ export default {
       } else if ("已取消" == status) {
         componentName = "GotTicketListCancelled";
       }
-      debugger;
       this.$router.push({
         name: componentName,
         query: {
@@ -178,5 +158,14 @@ export default {
 
 .turnPage .turnRightPage {
   margin-left: 130px;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 300px;
+  left: 950px;
 }
 </style>

@@ -15,7 +15,7 @@ const utils = {
         return this.getRemoteBasePath() + "/place/queryPlaces";
     },
     getRemoteQueryTicketPath: function () {
-        return this.getRemoteBasePath() + "/ticket/queryTickets";
+        return this.getRemoteBasePath() + "/ticket/queryTicketList";
     },
     getRemoteQueryPassengerPath: function () {
         return this.getRemoteBasePath() + "/passenger/queryPassengers";
@@ -32,11 +32,17 @@ const utils = {
     getRemoteQueryTaskByIdPath: function () {
         return this.getRemoteBasePath() + "/task/queryTaskById";
     },
-    getRemoteStopTaskPath:function(){
+    getRemoteStopTaskPath: function () {
         return this.getRemoteBasePath() + "/task/stopTaskById";
     },
-    getRemoteStartTaskPath:function(){
+    getRemoteStartTaskPath: function () {
         return this.getRemoteBasePath() + "/task/startTaskById";
+    },
+    getRemoteQueryAcquiredTicket: function () {
+        return this.getRemoteBasePath() + "/ticket/queryAcquiredTicketList";
+    },
+    getRemoteQueryAcquiredTicketByIdPath: function () {
+        return this.getRemoteBasePath() + "/ticket/queryAcquiredTicketById";
     }
 }
 

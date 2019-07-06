@@ -2,7 +2,7 @@
   <div id="mainContentArea" v-model="ticketDetail">
     <div
       class="ticketDetail"
-    >{{ticketDetail.startDate}}({{ticketDetail.week}})&nbsp;&nbsp;{{ticketDetail.trains}}&nbsp;&nbsp;{{ticketDetail.startStation}}({{ticketDetail.startTime}}开) → {{ticketDetail.endStation}}({{ticketDetail.endTime}}到)</div>
+    >{{ticketDetail.date}}({{ticketDetail.week}})&nbsp;&nbsp;{{ticketDetail.train}}&nbsp;&nbsp;{{ticketDetail.startPlace}}({{ticketDetail.startTime}}开) → {{ticketDetail.endPlace}}({{ticketDetail.endTime}}到)</div>
     <div class="passengers hasPay">
       <table>
         <thead>
@@ -19,62 +19,67 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(passenger,index) in ticketDetail.passengers">
+          <tr v-for="(passenger,index) in ticketDetail.acquiredTicketDetailResDTOList">
             <td>{{index+1}}</td>
             <td>{{passenger.name}}</td>
             <td>{{passenger.cardType}}</td>
             <td>{{passenger.cardNumber }}</td>
-            <td>{{passenger.ticketType}}</td>
-            <td>{{passenger.seats }}</td>
+            <td>{{passenger.attribute}}</td>
+            <td>{{passenger.seat}}</td>
             <td>{{passenger.carriage}}</td>
             <td>{{passenger.seatNumber}}</td>
-            <td>{{passenger.price }}</td>
+            <td>{{passenger.price}}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <div class="errMsg">{{errMsg}}</div>
   </div>
 </template>
 
 <script>
+import Utils from "../../static/utils.js";
+
 export default {
   name: "GotTicketListHasPay",
   data() {
     return {
-      ticketDetail: {
-        id: 2,
-        startDate: "2019-01-19",
-        week: "周六",
-        trains: "G11",
-        startStation: "北京南站",
-        endStation: "上海虹桥站",
-        startTime: "9:15",
-        endTime: "14:49",
-        status: "已支付",
-        passengers: [
-          {
-            name: "刘XX",
-            cardType: "中国居民身份证",
-            cardNumber: "3723*********025",
-            ticketType: "成人票",
-            seats: "二等座",
-            carriage: "04",
-            seatNumber: "11B号",
-            price: "553.0元"
-          },
-          {
-            name: "张XX",
-            cardType: "中国居民身份证",
-            cardNumber: "3723*********025",
-            ticketType: "成人票",
-            seats: "二等座",
-            carriage: "04",
-            seatNumber: "11B号",
-            price: "553.0元"
-          }
-        ]
-      }
+      errMsg: "",
+      ticketDetail: {}
     };
+  },
+  created() {
+    this.$http
+      .get(
+        Utils.getRemoteQueryAcquiredTicketByIdPath() +
+          "?id=" +
+          this.$route.query.id
+      )
+      .then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            this.errMsg = "查询失败";
+            return;
+          }
+
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.ticketDetail = response;
+          } else if (response.message) {
+            this.errMsg = response.message;
+          } else {
+            this.errMsg = "查询失败";
+          }
+        },
+        res => {
+          if (res && res.message) {
+            this.errMsg = res.message;
+          } else {
+            this.errMsg = "登录失效，请重新登录！";
+          }
+        }
+      );
   }
 };
 </script>
@@ -121,5 +126,14 @@ td {
   font-size: 30px;
   text-align: center;
   color: red;
+}
+
+.errMsg {
+  color: red;
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 200px;
+  left: 50px;
 }
 </style>

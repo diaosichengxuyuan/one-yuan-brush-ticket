@@ -43,6 +43,9 @@ const utils = {
     },
     getRemoteQueryAcquiredTicketByIdPath: function () {
         return this.getRemoteBasePath() + "/ticket/queryAcquiredTicketById";
+    },
+    getRemoteQueryDataPath: function () {
+        return this.getRemoteBasePath() + "/data/queryData";
     }
 }
 

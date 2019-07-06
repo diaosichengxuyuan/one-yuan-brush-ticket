@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="fixedUpperBody">
-      <img class="zhaocaiClass" src="./assets/images/zhaocai.jpg">
-      <div id="currentDailyNum" class="currentDataClass">当前活跃{{currentDailyNum}}人</div>
+      <img class="zhaocaiClass" src="./assets/images/zhaocai.jpg" />
+      <div id="currentDailyNum" class="currentDataClass">当前登录{{currentDailyNum}}人</div>
       <div id="currentMembers" class="currentDataClass">当前会员{{currentMembers}}人</div>
       <div id="brushTicketOrderNum" class="currentDataClass">抢票订单{{brushTicketOrderNum}}个</div>
-      <div id="whetherLoggedIn" class="whetherOwnClass">{{whetherLoggedIn}}</div>
-      <div id="whetherMember" class="whetherOwnClass">{{whetherMember}}</div>
-      <img class="jinbaoClass" src="./assets/images/jinbao.jpg">
+      <img class="jinbaoClass" src="./assets/images/jinbao.jpg" />
     </div>
     <div class="fixedMiddleBody">
       <router-link to="/ticketSearch">车票查询</router-link>
@@ -18,31 +16,45 @@
       <router-link class="loginMenuClass" to="/member">会员</router-link>
       <router-link class="loginMenuClass" to="/">个人中心</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
+import Utils from "../static/utils.js";
+
 export default {
   name: "App",
   data() {
     return {
       currentDailyNum: 0,
       currentMembers: 0,
-      brushTicketOrderNum: 0,
-      whetherLoggedIn: "未登录",
-      whetherMember: "非会员"
+      brushTicketOrderNum: 0
     };
   },
-  methods: {
-    calculateSiteData: function() {
-      this.currentDailyNum = Math.ceil(Math.random() * 1000);
-      this.currentMembers = Math.ceil(Math.random() * 1000);
-      this.brushTicketOrderNum = Math.ceil(Math.random() * 1000);
-    }
-  },
   created() {
-    setInterval(this.calculateSiteData, 1000);
+    this.remoteQueryData();
+    setInterval(this.remoteQueryData, 5000);
+  },
+  methods: {
+    remoteQueryData() {
+      this.$http.get(Utils.getRemoteQueryDataPath()).then(
+        res => {
+          const response = res.body;
+          if (!response) {
+            return;
+          }
+        
+          const statusCode = response.statusCode;
+          if (statusCode == "200") {
+            this.currentDailyNum = response.taskNum;
+            this.currentMembers = response.userNum;
+            this.brushTicketOrderNum = response.memberNum;
+          }
+        },
+        res => {}
+      );
+    }
   }
 };
 </script>
@@ -87,17 +99,17 @@ div {
 
 #currentDailyNum {
   margin-top: 10px;
-  margin-left: 55px;
+  margin-left: 130px;
 }
 
 #currentMembers {
-  margin-top: 60px;
-  margin-left: 10px;
+  margin-top: 45px;
+  margin-left: 50px;
 }
 
 #brushTicketOrderNum {
   margin-top: 20px;
-  margin-left: 10px;
+  margin-left: 50px;
 }
 
 .fixedUpperBody .whetherOwnClass {
@@ -105,16 +117,6 @@ div {
   width: 50px;
   margin-top: 10px;
   font-family: "Times New Roman", Times, serif;
-}
-
-#whetherLoggedIn {
-  margin-left: 120px;
-  background-color: rgb(248, 82, 82);
-}
-
-#whetherMember {
-  margin-left: 0 px;
-  background-color: rgb(248, 82, 82);
 }
 
 /* 中部导航栏 */

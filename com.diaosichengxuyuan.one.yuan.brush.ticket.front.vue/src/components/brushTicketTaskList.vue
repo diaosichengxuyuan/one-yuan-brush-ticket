@@ -74,8 +74,10 @@ export default {
           const statusCode = response.statusCode;
           if (statusCode == "200") {
             this.taskList = response.taskResDTOList;
-            this.taskInstructionShow = true;
-            this.addButtonShow = true;
+            if (this.taskList && this.taskList.length > 0) {
+              this.taskInstructionShow = true;
+              this.addButtonShow = true;
+            }
           } else if (response.message) {
             this.errMsg = response.message;
           } else {

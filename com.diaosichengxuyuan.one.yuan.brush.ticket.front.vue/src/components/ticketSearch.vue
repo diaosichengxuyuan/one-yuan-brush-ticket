@@ -12,7 +12,7 @@
           v-on:click.stop="showPlaces(1)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('出发地')">{{errors.first("出发地")}}</span>
       </div>
       <div id="endPlace" class="searchConditon">
@@ -26,7 +26,7 @@
           v-on:click.stop="showPlaces(2)"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('目的地')">{{errors.first("目的地")}}</span>
       </div>
       <div id="startDate" class="searchConditon">
@@ -36,22 +36,23 @@
           name="出发日期"
           class="searchConditonClass"
           type="text"
+          readonly="readonly"
           v-model="startDateVal"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('出发日期')">{{errors.first("出发日期")}}</span>
       </div>
       <div id="studentSelect">
         学生
-        <input id="studentSelectInput" type="checkbox" v-model="isStudent">
+        <input id="studentSelectInput" type="checkbox" v-model="isStudent" />
       </div>
       <div id="highSpeedTrainSelect">
         高铁/动车
-        <input id="highSpeedTrainSelectInput" type="checkbox" v-model="isHighSpeed">
+        <input id="highSpeedTrainSelectInput" type="checkbox" v-model="isHighSpeed" />
       </div>
       <div id="ticketSearchClick">
-        <input id="ticketSearchButton" type="button" value="查询" v-on:click="validate">
+        <input id="ticketSearchButton" type="button" value="查询" v-on:click="validate" />
       </div>
     </div>
     <div id="placeArea">
@@ -116,11 +117,12 @@ export default {
     validate: function() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.routeToSearchResult();
+
+          this.gotoSearchResult();
         }
       });
     },
-    routeToSearchResult: function() {
+    gotoSearchResult: function() {
       this.$router.push({
         name: "TicketSearchResult",
         query: {

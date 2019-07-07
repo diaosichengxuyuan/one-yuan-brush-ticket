@@ -74,8 +74,10 @@ export default {
             const statusCode = response.statusCode;
             if (statusCode == "200") {
               this.ticketList = response.acquiredTicketResDTOList;
-              this.turnLeftButtonShow = true;
-              this.turnRightButtonShow = true;
+              if (this.ticketList && this.ticketList.length > 0) {
+                this.turnLeftButtonShow = true;
+                this.turnRightButtonShow = true;
+              }
             } else if (response.message) {
               this.errMsg = response.message;
             } else {

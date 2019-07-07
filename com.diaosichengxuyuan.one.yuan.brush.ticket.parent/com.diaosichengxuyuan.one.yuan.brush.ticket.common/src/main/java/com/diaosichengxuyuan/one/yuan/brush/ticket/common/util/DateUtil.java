@@ -27,6 +27,8 @@ public class DateUtil {
         instance.set(Calendar.HOUR_OF_DAY, 23);
         instance.set(Calendar.MINUTE, 59);
         instance.set(Calendar.SECOND, 59);
+        //mysql数据库可能会因为毫秒的精度导致进位
+        instance.set(Calendar.MILLISECOND,0);
         return instance.getTime();
     }
 

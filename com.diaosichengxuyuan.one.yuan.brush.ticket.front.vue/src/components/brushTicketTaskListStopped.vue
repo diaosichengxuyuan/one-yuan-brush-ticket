@@ -36,6 +36,7 @@
           name="出发日期"
           class="searchConditonClass"
           type="text"
+          readonly="readonly"
           v-model="startDateVal"
           autocomplete="off"
           v-validate="'required'"
@@ -49,6 +50,7 @@
           name="车次"
           class="searchConditonClass"
           type="text"
+          readonly="readonly"
           v-model="trainNames"
           v-on:click.stop="showPlaces(3)"
           autocomplete="off"
@@ -63,6 +65,7 @@
           name="坐席"
           class="searchConditonClass"
           type="text"
+          readonly="readonly"
           v-model="seatsVal"
           v-on:click.stop="showPlaces(4)"
           autocomplete="off"
@@ -77,6 +80,7 @@
           name="乘车人"
           class="searchConditonClass"
           type="text"
+          readonly="readonly"
           v-model="passengerNames"
           v-on:click.stop="showPlaces(5)"
           autocomplete="off"
@@ -187,7 +191,6 @@ export default {
             this.seatsVal = response.seat;
             this.phoneVal = response.phone;
 
-            debugger;
             if (response.taskTrainResDTOList) {
               for (let index in response.taskTrainResDTOList) {
                 this.trainNames.push(response.taskTrainResDTOList[index].train);
@@ -298,9 +301,13 @@ export default {
       this.brushTicketAgreementShow = false;
     },
     remoteStart: function() {
-      debugger;
       this.$validator.validateAll().then(result => {
         if (result) {
+          if (!Utils.isPhoneNumberAvailable(this.phoneVal)) {
+            this.errMsg = "手机号码不合法";
+            return;
+          }
+
           this.$http
             .post(Utils.getRemoteStartTaskPath(), this.getInputParams())
             .then(

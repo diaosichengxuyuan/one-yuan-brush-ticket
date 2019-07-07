@@ -49,6 +49,10 @@ const utils = {
     },
     getRemoteQueryDataPath: function () {
         return this.getRemoteBasePath() + "/data/queryData";
+    },
+    isPhoneNumberAvailable: function (phoneNumber) {
+        var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        return reg.test(phoneNumber);
     }
 }
 

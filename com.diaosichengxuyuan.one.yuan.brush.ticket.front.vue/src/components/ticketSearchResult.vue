@@ -65,7 +65,7 @@ export default {
   name: "TicketSearchResult",
   data() {
     return {
-      errMsg: "登录失效，请重新登录！",
+      errMsg: "",
       ticketList: []
     };
   },

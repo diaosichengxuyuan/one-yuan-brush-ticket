@@ -36,7 +36,7 @@ export default {
   },
   created() {
     this.remoteQueryData();
-    setInterval(this.remoteQueryData, 5000);
+    setInterval(this.remoteQueryData, 20000);
   },
   methods: {
     remoteQueryData() {
@@ -88,8 +88,8 @@ export default {
         }
       );
     },
-    resetErrMsg(){
-this.errMsg="";
+    resetErrMsg() {
+      this.errMsg = "";
     },
     gotoLogin() {
       this.$router.push({

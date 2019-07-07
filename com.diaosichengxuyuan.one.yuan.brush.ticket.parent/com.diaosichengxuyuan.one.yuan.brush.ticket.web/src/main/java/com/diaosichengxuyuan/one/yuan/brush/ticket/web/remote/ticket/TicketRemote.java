@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.ticket;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.ticket;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.page.Page;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.AcquiredTicketResDTO;

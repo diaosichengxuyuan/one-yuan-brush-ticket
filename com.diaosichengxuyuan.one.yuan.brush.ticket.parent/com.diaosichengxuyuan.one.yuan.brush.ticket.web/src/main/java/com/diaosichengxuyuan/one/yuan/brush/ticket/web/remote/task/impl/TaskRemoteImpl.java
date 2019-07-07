@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.task.impl;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.task.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.BaseDTO;
@@ -8,7 +8,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskReqDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskResDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskResListDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.task.TaskService;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.web.task.TaskRemote;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.task.TaskRemote;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

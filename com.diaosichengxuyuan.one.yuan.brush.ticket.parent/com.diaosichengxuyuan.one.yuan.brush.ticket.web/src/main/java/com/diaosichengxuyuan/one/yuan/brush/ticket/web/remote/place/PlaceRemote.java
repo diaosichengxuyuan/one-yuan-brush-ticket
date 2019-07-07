@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.place;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.place;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.place.PlaceDTO;
 

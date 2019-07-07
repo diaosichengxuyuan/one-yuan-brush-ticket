@@ -1,8 +1,8 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.passenger.impl;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.passenger.impl;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.passenger.PassengerListDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.passenger.PassengerService;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.web.passenger.PassengerRemote;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.passenger.PassengerRemote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;

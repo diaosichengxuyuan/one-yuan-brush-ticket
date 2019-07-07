@@ -41,6 +41,7 @@
         <slf4j.version>1.7.12</slf4j.version>
         <spring.boot.maven.version>2.1.1.RELEASE</spring.boot.maven.version>
         <http.client.version>4.5.2</http.client.version>
+        <aspectj.version>1.8.13</aspectj.version>
     </properties>
 
     <dependencyManagement>
@@ -168,6 +169,11 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${http.client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

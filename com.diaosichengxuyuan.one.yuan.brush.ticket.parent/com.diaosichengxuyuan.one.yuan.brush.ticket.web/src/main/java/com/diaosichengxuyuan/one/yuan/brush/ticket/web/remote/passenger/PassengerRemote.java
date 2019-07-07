@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.passenger;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.passenger;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.passenger.PassengerListDTO;
 

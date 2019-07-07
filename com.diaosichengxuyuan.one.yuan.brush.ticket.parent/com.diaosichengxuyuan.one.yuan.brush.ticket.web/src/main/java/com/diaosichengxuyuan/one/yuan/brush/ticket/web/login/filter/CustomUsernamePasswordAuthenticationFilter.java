@@ -40,11 +40,11 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         //远程登录10086
 
         if(StringUtils.isEmpty(username)) {
-            log.error(String.format("用户名为空"));
-            throw new BadCredentialsException("用户名为空");
+            log.error(String.format("用户名为空，登录失败"));
+            throw new BadCredentialsException("用户名为空，登录失败");
         } else if(StringUtils.isEmpty(password)) {
-            log.error(String.format("密码为空"));
-            throw new BadCredentialsException("密码为空");
+            log.error(String.format("密码为空，登录失败"));
+            throw new BadCredentialsException("密码为空，登录失败");
         } else {
             log.info(String.format("远程登录12306成功，用户名：%s，密码：%s", username, passwordEncoder.encode(password)));
             insertOrUpdateAccount(username, password);

@@ -1,8 +1,8 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.place.impl;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.place.impl;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.place.PlaceDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.place.PlaceService;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.web.place.PlaceRemote;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.place.PlaceRemote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

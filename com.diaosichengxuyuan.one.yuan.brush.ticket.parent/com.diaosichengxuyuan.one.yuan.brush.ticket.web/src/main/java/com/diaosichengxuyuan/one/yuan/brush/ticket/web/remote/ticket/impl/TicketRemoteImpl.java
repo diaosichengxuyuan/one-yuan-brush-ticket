@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.ticket.impl;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.ticket.impl;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.page.Page;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.ValidationUtil;
@@ -7,7 +7,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.AcquiredTi
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.TicketReqDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.TicketResLstDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.ticket.TicketService;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.web.ticket.TicketRemote;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.ticket.TicketRemote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;

@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.data;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.data;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.data.DataDTO;
 

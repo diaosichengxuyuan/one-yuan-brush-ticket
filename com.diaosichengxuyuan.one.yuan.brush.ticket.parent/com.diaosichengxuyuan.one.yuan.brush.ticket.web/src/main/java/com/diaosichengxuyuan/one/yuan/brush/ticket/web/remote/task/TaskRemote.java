@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.task;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.task;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.BaseDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskReqDTO;

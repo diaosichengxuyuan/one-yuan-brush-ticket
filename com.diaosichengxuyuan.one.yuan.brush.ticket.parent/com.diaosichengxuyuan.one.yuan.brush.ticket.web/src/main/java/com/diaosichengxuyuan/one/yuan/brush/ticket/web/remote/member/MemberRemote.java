@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.member;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.member;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.member.MemberDTO;
 

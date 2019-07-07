@@ -1,8 +1,8 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.web.data.impl;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.data.impl;
 
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.data.DataService;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.data.DataDTO;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.web.data.DataRemote;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.data.DataRemote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

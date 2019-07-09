@@ -39,9 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //添加自定义的登录filter，配置在UsernamePasswordAuthenticationFilter之前，这样就不需要走到UsernamePasswordAuthenticationFilter处理了
         http.addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginProcessingUrl("/login")
-            .successHandler(successHandler).failureHandler(failureHandler).and().logout().logoutSuccessHandler(
-            logoutSuccessHandler).and().csrf().disable();
+        http.authorizeRequests().antMatchers("/data/queryData", "/place/queryPlaces", "/ticket/queryTicketList")
+            .permitAll().anyRequest().authenticated().and().formLogin().loginProcessingUrl("/login").successHandler(
+            successHandler).failureHandler(failureHandler).and().logout().logoutSuccessHandler(logoutSuccessHandler)
+            .and().csrf().disable();
 
     }
 
@@ -60,8 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-       return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

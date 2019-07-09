@@ -12,7 +12,7 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="attribute" jdbcType="VARCHAR" property="attribute"/>
         <result column="card_type" jdbcType="VARCHAR" property="cardType"/>
-        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="card_number" jdbcType="VARCHAR" property="cardNumber"/>
     </resultMap>
 
     <select id="queryListByIds" resultMap="BaseResultMap">

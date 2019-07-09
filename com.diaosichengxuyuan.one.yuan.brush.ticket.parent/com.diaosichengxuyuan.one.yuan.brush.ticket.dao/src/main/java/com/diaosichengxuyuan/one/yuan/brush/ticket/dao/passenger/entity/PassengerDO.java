@@ -37,7 +37,7 @@ public class PassengerDO {
     @Column(name = "card_type")
     private String cardType;
 
-    @Column(name = "id_card")
-    private String idCard;
+    @Column(name = "card_number")
+    private String cardNumber;
 
 }

@@ -1,5 +1,6 @@
 package com.diaosichengxuyuan.one.yuan.brush.ticket.service.passenger.impl;
 
+import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.AnonymousUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.MapperUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.passenger.PassengerMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.passenger.entity.PassengerDO;
@@ -24,7 +25,11 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public PassengerListDTO queryPassengers(String accountId) {
         List<PassengerDO> passengerDOList = passengerMapper.select(PassengerDO.builder().accountId(accountId).build());
-        List<PassengerDTO> passengerDTOList = MapperUtil.mapAsList(passengerDOList, PassengerDO.class, PassengerDTO.class);
+        List<PassengerDTO> passengerDTOList = MapperUtil.mapAsList(passengerDOList, PassengerDO.class,
+            PassengerDTO.class);
+
+        passengerDTOList.forEach(
+            passengerDTO -> passengerDTO.setCardNumber(AnonymousUtil.anonymize(passengerDTO.getCardNumber())));
 
         return PassengerListDTO.builder().passengerList(passengerDTOList).build();
     }

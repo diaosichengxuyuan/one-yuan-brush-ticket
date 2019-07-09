@@ -6,4 +6,10 @@ package com.diaosichengxuyuan.one.yuan.brush.ticket.common.util;
  * @author liuhaipeng
  * @date 2019/6/27
  */
-public class EncryptUtil {}
+public class EncryptUtil {
+
+    public String decrypt(){
+        return null;
+    }
+
+}

@@ -23,6 +23,6 @@ public class PassengerDTO {
 
     private String cardType;
 
-    private String idCard;
+    private String cardNumber;
 
 }

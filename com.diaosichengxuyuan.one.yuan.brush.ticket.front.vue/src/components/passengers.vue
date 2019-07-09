@@ -14,7 +14,7 @@
         <tr v-for="passenger in passengerList">
           <td class="passengersTd">{{passenger.name}}</td>
           <td class="passengersTd">{{passenger.attribute}}</td>
-          <td class="passengersTd">{{passenger.idCard}}</td>
+          <td class="passengersTd">{{passenger.cardNumber}}</td>
           <td class="passengersTd">
             <input
               class="ticketResultSelect"

@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 const utils = {
     formatDatetime: function (datetime) {
         return new Date(datetime).toLocaleString('chinese', { hour12: false }).replace(/\//g, '-');
@@ -53,6 +55,16 @@ const utils = {
     isPhoneNumberAvailable: function (phoneNumber) {
         var reg = /^[1][3,4,5,7,8][0-9]{9}$/;
         return reg.test(phoneNumber);
+    },
+    encrypt: function (password, secretKey) {
+        const key = CryptoJS.enc.Utf8.parse(secretKey); 
+        const parsedPassword = CryptoJS.enc.Utf8.parse(password);
+        var encrypted = CryptoJS.AES.encrypt(parsedPassword, key, 
+        {
+           mode:CryptoJS.mode.ECB,
+           padding: CryptoJS.pad.Pkcs7
+        });
+        return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
     }
 }
 

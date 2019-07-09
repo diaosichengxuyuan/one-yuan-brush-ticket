@@ -11,7 +11,7 @@
           v-model="accountId"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('账号')">{{errors.first("账号")}}</span>
       </div>
       <div class="accountAndPassword">
@@ -23,7 +23,7 @@
           v-model="password"
           autocomplete="off"
           v-validate="'required'"
-        >
+        />
         <span class="errorSpan" v-show="errors.has('密码')">{{errors.first("密码")}}</span>
       </div>
       <div class="protocal">
@@ -33,7 +33,7 @@
           type="checkbox"
           v-model="isAgree"
           v-validate="'required'"
-        >同意
+        />同意
         <a
           id="protocalLinkId"
           class="protocalLink"
@@ -42,7 +42,7 @@
         >用户协议</a>
       </div>
       <div class="login">
-        <input id="loginId" type="button" value="登录" v-on:click="login">
+        <input id="loginId" type="button" value="登录" v-on:click="login" />
         <div class="errMsg">{{errMsg}}</div>
       </div>
     </div>
@@ -89,8 +89,7 @@ export default {
             this.accountId +
             "&&password=" +
             this.password,
-          {
-          }
+          {}
         )
         .then(
           res => {
@@ -121,8 +120,8 @@ export default {
     gotoLoginSuccess: function() {
       this.$router.push({
         name: "LoginSuccess",
-        params:{
-          accountId:this.accountId
+        params: {
+          accountId: this.accountId
         }
       });
     }

@@ -32,7 +32,7 @@ public class DataServiceImpl implements DataService {
             return;
         }
 
-        dataMapper.updateByPrimaryKey(DataDO.builder().id(1L).taskNum(dataDO.getTaskNum() + 1).build());
+        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).taskNum(dataDO.getTaskNum() + 1).build());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class DataServiceImpl implements DataService {
             return;
         }
 
-        dataMapper.updateByPrimaryKey(DataDO.builder().id(1L).userNum(dataDO.getUserNum() + 1).build());
+        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).userNum(dataDO.getUserNum() + 1).build());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DataServiceImpl implements DataService {
             return;
         }
 
-        dataMapper.updateByPrimaryKey(DataDO.builder().id(1L).memberNum(dataDO.getMemberNum() + 1).build());
+        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).memberNum(dataDO.getMemberNum() + 1).build());
     }
 
 }

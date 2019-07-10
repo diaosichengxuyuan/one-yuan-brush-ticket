@@ -14,6 +14,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.TaskTrainMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.MidTaskPassengerDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskTrainDO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.service.data.DataService;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.passenger.PassengerDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskReqDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskResDTO;
@@ -50,6 +51,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private PassengerMapper passengerMapper;
 
+    @Autowired
+    private DataService dataService;
+
     @Value("${brush.ticket.task.max.count}")
     private int taskMaxCount;
 
@@ -63,6 +67,9 @@ public class TaskServiceImpl implements TaskService {
             baseDTO.setMessage("任务个数已达上限，请到抢票任务列表页面删除！");
             return baseDTO;
         }
+
+        //插入到数据表
+        dataService.increaseTaskNumber();
 
         return internalInsertTask(taskReqDTO);
     }

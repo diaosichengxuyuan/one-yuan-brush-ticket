@@ -6,6 +6,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.DateUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.HttpUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.member.MemberMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.member.entity.MemberDO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.service.data.DataService;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.web.login.config.CorsConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Autowired
     private CorsConfig corsConfig;
 
+    @Autowired
+    private DataService dataService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException, ServletException {
@@ -64,6 +68,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         if(memberDO == null) {
             memberMapper.insertSelective(MemberDO.builder().createTime(new Date()).modifyTime(new Date()).accountId(
                 username).periodValidity(DateUtil.getLastTimeOfTheYear(new Date())).build());
+            //插入数据表
+            dataService.increaseMemberNumber();
         } else {
             memberMapper.updateByPrimaryKeySelective(MemberDO.builder().id(memberDO.getId()).modifyTime(new Date())
                 .periodValidity(DateUtil.getLastTimeOfTheYear(new Date())).build());

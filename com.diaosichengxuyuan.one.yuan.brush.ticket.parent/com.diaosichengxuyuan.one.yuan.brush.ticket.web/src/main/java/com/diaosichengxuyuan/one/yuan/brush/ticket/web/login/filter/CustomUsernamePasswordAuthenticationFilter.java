@@ -1,7 +1,10 @@
 package com.diaosichengxuyuan.one.yuan.brush.ticket.web.login.filter;
 
+import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.Constant;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.AESEncryptUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.account.AccountMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.account.entity.AccountDO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.service.data.DataService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +34,9 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private DataService dataService;
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException {
@@ -38,6 +45,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         String password = obtainPassword(request);
 
         //远程登录10086
+        String originalPassword = AESEncryptUtil.decrypt(password,
+            System.getProperty(Constant.Encryption.ENCRYPT_ALGORITHM_KEY));
 
         if(StringUtils.isEmpty(username)) {
             log.error(String.format("用户名为空，登录失败"));
@@ -57,6 +66,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         if(accountDO == null) {
             accountMapper.insertSelective(AccountDO.builder().createTime(new Date()).modifyTime(new Date()).accountId(
                 username).password(passwordEncoder.encode(password)).build());
+            //插入数据表
+            dataService.increaseUserNumber();
         } else {
             accountMapper.updateByPrimaryKeySelective(AccountDO.builder().id(accountDO.getId()).modifyTime(new Date())
                 .password(passwordEncoder.encode(password)).build());

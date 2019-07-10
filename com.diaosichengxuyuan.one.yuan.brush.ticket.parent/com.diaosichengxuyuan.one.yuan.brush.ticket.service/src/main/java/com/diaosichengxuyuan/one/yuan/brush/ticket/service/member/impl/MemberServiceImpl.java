@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberDTO queryMember(String accountId) {
         MemberDO memberDO = memberMapper.selectOne(MemberDO.builder().accountId(accountId).build());
         if(memberDO == null) {
-            return null;
+            return MemberDTO.builder().accountId(AnonymousUtil.anonymize(accountId)).isMember(false).build();
         }
 
         return MemberDTO.builder().accountId(AnonymousUtil.anonymize(memberDO.getAccountId())).periodValidity(

@@ -82,6 +82,7 @@ export default {
       this.agreementShow = false;
     },
     remoteLogin: function() {
+      this.password = Utils.encrypt(this.password, Utils.getSecretKey());
       this.$http
         .post(
           Utils.getRemoteLoginPath() +

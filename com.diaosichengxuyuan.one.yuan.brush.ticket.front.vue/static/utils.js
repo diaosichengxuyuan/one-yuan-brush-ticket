@@ -57,14 +57,26 @@ const utils = {
         return reg.test(phoneNumber);
     },
     encrypt: function (password, secretKey) {
-        const key = CryptoJS.enc.Utf8.parse(secretKey); 
+        //用0填充密钥为128bit
+        const keyLength = 16;
+        const filledKey = Buffer.alloc(keyLength);
+        const originalKey = Buffer.from(secretKey);
+        if (originalKey.length < filledKey.length) {
+            filledKey.map((b, i) => filledKey[i] = originalKey[i]);
+        }
+
+        const key = CryptoJS.enc.Utf8.parse(filledKey);
         const parsedPassword = CryptoJS.enc.Utf8.parse(password);
-        var encrypted = CryptoJS.AES.encrypt(parsedPassword, key, 
-        {
-           mode:CryptoJS.mode.ECB,
-           padding: CryptoJS.pad.Pkcs7
-        });
+        var encrypted = CryptoJS.AES.encrypt(parsedPassword, key,
+            {
+                mode: CryptoJS.mode.ECB,
+                //Pkcs7和Pkcs5结果是一样的
+                padding: CryptoJS.pad.Pkcs7
+            });
         return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+    },
+    getSecretKey: function () {
+        return "";
     }
 }
 

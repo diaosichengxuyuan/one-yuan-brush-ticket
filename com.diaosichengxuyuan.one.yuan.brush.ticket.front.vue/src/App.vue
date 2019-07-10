@@ -49,9 +49,9 @@ export default {
 
           const statusCode = response.statusCode;
           if (statusCode == "200") {
-            this.currentDailyNum = response.taskNum;
-            this.currentMembers = response.userNum;
-            this.brushTicketOrderNum = response.memberNum;
+            this.currentDailyNum = response.userNum;
+            this.currentMembers = response.memberNum;
+            this.brushTicketOrderNum = response.taskNum;
           }
         },
         res => {}

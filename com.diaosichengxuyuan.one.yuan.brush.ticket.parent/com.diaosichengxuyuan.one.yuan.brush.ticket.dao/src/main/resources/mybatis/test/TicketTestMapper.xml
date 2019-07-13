@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestMapper">
-  <resultMap id="BaseResultMap" type="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestDO">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
-    <result column="start_sale_time" jdbcType="TIMESTAMP" property="startSaleTime" />
-    <result column="end_sale_time" jdbcType="TIMESTAMP" property="endSaleTime" />
-    <result column="date" jdbcType="DATE" property="date" />
-    <result column="start_place" jdbcType="VARCHAR" property="startPlace" />
-    <result column="end_place" jdbcType="VARCHAR" property="endPlace" />
-    <result column="train" jdbcType="VARCHAR" property="train" />
-    <result column="price" jdbcType="VARCHAR" property="price" />
-    <result column="remain" jdbcType="INTEGER" property="remain" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestDO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="start_sale_time" jdbcType="TIMESTAMP" property="startSaleTime"/>
+        <result column="end_sale_time" jdbcType="TIMESTAMP" property="endSaleTime"/>
+        <result column="date" jdbcType="DATE" property="date"/>
+        <result column="start_place" jdbcType="VARCHAR" property="startPlace"/>
+        <result column="end_place" jdbcType="VARCHAR" property="endPlace"/>
+        <result column="train" jdbcType="VARCHAR" property="train"/>
+        <result column="price" jdbcType="VARCHAR" property="price"/>
+        <result column="remain" jdbcType="INTEGER" property="remain"/>
+    </resultMap>
+
+    <update id="updateByPrimaryKeyAndRemain">
+        update ticket_test set remain = #{remain1} where id = #{id} and remain = #{remain2}
+    </update>
 </mapper>

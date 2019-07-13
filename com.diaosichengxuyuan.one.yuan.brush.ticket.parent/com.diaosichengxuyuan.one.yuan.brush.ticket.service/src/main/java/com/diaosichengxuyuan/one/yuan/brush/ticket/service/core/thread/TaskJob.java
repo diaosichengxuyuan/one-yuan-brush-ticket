@@ -3,6 +3,7 @@ package com.diaosichengxuyuan.one.yuan.brush.ticket.service.core.thread;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.TaskStatus;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.TaskTrainStatus;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.TicketStatus;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.DateUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.passenger.PassengerMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.passenger.entity.PassengerDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.MidTaskPassengerMapper;
@@ -146,8 +147,9 @@ public class TaskJob implements Runnable, Delayed {
         //插入抢票数据到ticket表
         TicketDO ticketDO = TicketDO.builder().createTime(new Date()).modifyTime(new Date()).accountId(
             taskDO.getAccountId()).date(taskDO.getStartDate()).week((byte)1).train(taskTrainDO.getTrain()).startPlace(
-            taskDO.getStartPlace()).endPlace(taskDO.getEndPlace()).startTime(new Date()).endTime(new Date()).status(
-            TicketStatus.NOT_PAY.getName()).taskTrainId(taskTrainDO.getId()).build();
+            taskDO.getStartPlace()).endPlace(taskDO.getEndPlace()).startTime(new Date()).endTime(new Date()).endPayTime(
+            DateUtil.addDays(new Date(), 0, 0, 30)).status(TicketStatus.NOT_PAY.getName()).taskTrainId(
+            taskTrainDO.getId()).build();
         ticketMapper.insert(ticketDO);
 
         List<MidTaskPassengerDO> midTaskPassengerDOList = midTaskPassengerMapper.select(

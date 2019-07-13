@@ -27,7 +27,7 @@ public class DateUtil {
         instance.set(Calendar.MINUTE, 59);
         instance.set(Calendar.SECOND, 59);
         //mysql数据库可能会因为毫秒的精度导致进位
-        instance.set(Calendar.MILLISECOND,0);
+        instance.set(Calendar.MILLISECOND, 0);
         return instance.getTime();
     }
 
@@ -44,16 +44,18 @@ public class DateUtil {
     }
 
     /**
-     * 在输入日期上增加n天
+     * 在输入日期上增加时间
      *
      * @param date 日期
      * @param days 需要增加的天数
      * @return 结果
      */
-    public static Date addDays(Date date, int days) {
+    public static Date addDays(Date date, int days, int hours, int minutes) {
         Calendar instance = Calendar.getInstance();
         instance.setTime(date);
         instance.add(Calendar.DAY_OF_MONTH, days);
+        instance.add(Calendar.HOUR_OF_DAY, hours);
+        instance.add(Calendar.MINUTE, minutes);
         return instance.getTime();
     }
 

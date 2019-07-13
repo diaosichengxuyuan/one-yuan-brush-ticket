@@ -1,10 +1,8 @@
 package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test;
 
-import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,6 +15,9 @@ public class TicketTestService {
     @Autowired
     private TicketTestMapper ticketTestMapper;
 
+    /**
+     * 查询余票数量
+     */
     public int queryRemainingCount(TicketTestReqDTO ticketTestReqDTO) {
         TicketTestDO ticketTestDO = ticketTestMapper.selectOne(TicketTestDO.builder().date(ticketTestReqDTO.getDate())
             .train(ticketTestReqDTO.getTrain()).build());
@@ -27,6 +28,9 @@ public class TicketTestService {
         return ticketTestDO.getRemain();
     }
 
+    /**
+     * 刷票，此处有并发更改数据库的情况
+     */
     public boolean brushTicket(TicketTestReqDTO ticketTestReqDTO) {
         TicketTestDO ticketTestDO = ticketTestMapper.selectOne(TicketTestDO.builder().date(ticketTestReqDTO.getDate())
             .train(ticketTestReqDTO.getTrain()).build());
@@ -38,32 +42,19 @@ public class TicketTestService {
             return false;
         }
 
+        //使用乐观锁带version去更新
+        int num = ticketTestMapper.updateByPrimaryKeyAndRemain(ticketTestDO.getRemain() - 1, ticketTestDO.getId(),
+            ticketTestDO.getRemain());
+        if(num == 0) {
+            return false;
+        }
+
         try {
             TimeUnit.SECONDS.sleep(30);
         } catch(Exception e) {
         }
 
-        ticketTestMapper.updateByPrimaryKeySelective(TicketTestDO.builder().id(ticketTestDO.getId())
-            .remain(ticketTestDO.getRemain() - 1).build());
-
         return true;
-    }
-
-    public void insertOrUpdateTicket(TicketTestReqDTO ticketTestReqDTO) {
-        TicketTestDO testDO = MapperUtil.map(ticketTestReqDTO, TicketTestReqDTO.class, TicketTestDO.class);
-
-        TicketTestDO ticketTestDO = ticketTestMapper.selectOne(TicketTestDO.builder().date(ticketTestReqDTO.getDate())
-            .train(ticketTestReqDTO.getTrain()).build());
-        if(ticketTestDO == null) {
-            testDO.setCreateTime(new Date());
-            testDO.setModifyTime(new Date());
-            ticketTestMapper.insert(testDO);
-        } else {
-            testDO.setId(ticketTestDO.getId());
-            testDO.setCreateTime(ticketTestDO.getCreateTime());
-            testDO.setModifyTime(new Date());
-            ticketTestMapper.updateByPrimaryKeySelective(testDO);
-        }
     }
 
 }

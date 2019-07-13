@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2019/7/11
  */
 public class TaskThreadFactory implements ThreadFactory {
+
     private final ThreadGroup group;
 
     private final AtomicInteger threadNumber = new AtomicInteger(1);

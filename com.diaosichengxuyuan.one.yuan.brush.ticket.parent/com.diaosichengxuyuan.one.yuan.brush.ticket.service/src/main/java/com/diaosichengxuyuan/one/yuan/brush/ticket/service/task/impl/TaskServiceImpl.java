@@ -76,6 +76,7 @@ public class TaskServiceImpl implements TaskService {
         dataService.increaseTaskNumber();
 
         Long id = internalInsertTask(taskReqDTO);
+
         //启动所有相关task_train
         taskExecutor.start(id);
 

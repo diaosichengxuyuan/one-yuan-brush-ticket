@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -29,6 +30,8 @@ public class AcquiredTicketResDTO extends BaseDTO {
     private String startTime;
 
     private String endTime;
+
+    private Date endPayTime;
 
     private String status;
 

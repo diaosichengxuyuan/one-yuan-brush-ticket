@@ -27,4 +27,9 @@ public interface TaskExecutor {
      */
     void startAll();
 
+    /**
+     * 定时线程以固定频率停止超期子任务
+     */
+    void stopSubAtFixRate();
+
 }

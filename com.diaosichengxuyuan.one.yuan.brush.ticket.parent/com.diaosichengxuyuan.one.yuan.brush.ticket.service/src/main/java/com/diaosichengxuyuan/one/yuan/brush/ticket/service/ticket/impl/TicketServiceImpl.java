@@ -63,14 +63,15 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public AcquiredTicketResListDTO queryAcquiredTicketList(Page page, String accountId) {
-        PageHelper.startPage(page.getNum(), page.getSize());
+        PageHelper.startPage(page.getNum(), page.getSize(),"modify_time desc");
         List<TicketDO> ticketDOList = ticketMapper.select(TicketDO.builder().accountId(accountId).build());
         List<AcquiredTicketResDTO> acquiredTicketResDTOList = new ArrayList<>(ticketDOList.size());
         ticketDOList.forEach(ticketDO -> acquiredTicketResDTOList.add(AcquiredTicketResDTO.builder().id(
             ticketDO.getId()).date(DateUtil.formatDate(ticketDO.getDate(), "yyyy-MM-dd")).week(
             DateUtil.toWeek(ticketDO.getWeek())).train(ticketDO.getTrain()).startPlace(ticketDO.getStartPlace())
             .endPlace(ticketDO.getEndPlace()).startTime(DateUtil.formatDate(ticketDO.getStartTime(), "HH:mm")).endTime(
-                DateUtil.formatDate(ticketDO.getEndTime(), "HH:mm")).status(ticketDO.getStatus()).build()));
+                DateUtil.formatDate(ticketDO.getEndTime(), "HH:mm")).endPayTime(ticketDO.getEndPayTime())
+            .status(ticketDO.getStatus()).build()));
         return AcquiredTicketResListDTO.builder().acquiredTicketResDTOList(acquiredTicketResDTOList).build();
     }
 
@@ -91,7 +92,8 @@ public class TicketServiceImpl implements TicketService {
             DateUtil.formatDate(ticketDO.getDate(), "yyyy-MM-dd")).week(DateUtil.toWeek(ticketDO.getWeek())).train(
             ticketDO.getTrain()).startPlace(ticketDO.getStartPlace()).endPlace(ticketDO.getEndPlace()).startTime(
             DateUtil.formatDate(ticketDO.getStartTime(), "HH:mm")).endTime(
-            DateUtil.formatDate(ticketDO.getEndTime(), "HH:mm")).status(ticketDO.getStatus()).build();
+            DateUtil.formatDate(ticketDO.getEndTime(), "HH:mm")).endPayTime(ticketDO.getEndPayTime()).status(
+            ticketDO.getStatus()).build();
         List<AcquiredTicketDetailResDTO> acquiredTicketDetailResDTOList = MapperUtil.mapAsList(ticketDetailDOList,
             TicketDetailDO.class, AcquiredTicketDetailResDTO.class);
         acquiredTicketResDTO.setAcquiredTicketDetailResDTOList(acquiredTicketDetailResDTOList);

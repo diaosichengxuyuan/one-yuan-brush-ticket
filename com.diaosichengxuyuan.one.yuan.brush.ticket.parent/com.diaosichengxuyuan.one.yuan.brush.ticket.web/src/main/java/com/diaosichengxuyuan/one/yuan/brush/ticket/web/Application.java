@@ -13,9 +13,13 @@ public class Application {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(Application.class, args);
 
-        //由于服务器停止可能导致运行中的抢票线程停止，所以服务器重启时启动抢票线程
         TaskExecutor taskExecutor = (TaskExecutor)applicationContext.getBean("taskExecutor");
+
+        //由于服务器停止可能导致运行中的抢票线程停止，所以服务器重启时启动抢票线程
         taskExecutor.startAll();
+
+        //定时线程以固定频率停止超期子任务
+        taskExecutor.stopSubAtFixRate();
     }
 
 }

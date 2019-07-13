@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.TaskTrainMapper">
-  <resultMap id="BaseResultMap" type="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskTrainDO">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
-    <result column="task_id" jdbcType="BIGINT" property="taskId" />
-    <result column="train" jdbcType="VARCHAR" property="train" />
-    <result column="start_sale_time" jdbcType="TIMESTAMP" property="startSaleTime" />
-    <result column="end_sale_time" jdbcType="TIMESTAMP" property="endSaleTime" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="thread_id" jdbcType="VARCHAR" property="threadId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskTrainDO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="task_id" jdbcType="BIGINT" property="taskId"/>
+        <result column="train" jdbcType="VARCHAR" property="train"/>
+        <result column="start_sale_time" jdbcType="TIMESTAMP" property="startSaleTime"/>
+        <result column="end_sale_time" jdbcType="TIMESTAMP" property="endSaleTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="thread_id" jdbcType="VARCHAR" property="threadId"/>
+    </resultMap>
+
+    <update id="updateStatusByPrimaryKey">
+        update task_train set modify_time = now(), status = #{status}, thread_id = null where id = #{id}
+    </update>
+
+    <select id="selectAllByEndSaleTime" resultMap="BaseResultMap">
+        select * from task_train where thread_id is not null and <![CDATA[end_sale_time < now()]]>
+    </select>
 </mapper>

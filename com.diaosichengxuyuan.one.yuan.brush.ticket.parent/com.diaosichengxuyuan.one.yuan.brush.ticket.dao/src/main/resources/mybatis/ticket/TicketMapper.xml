@@ -16,6 +16,7 @@
     <result column="end_place" jdbcType="VARCHAR" property="endPlace" />
     <result column="start_time" jdbcType="TIME" property="startTime" />
     <result column="end_time" jdbcType="TIME" property="endTime" />
+    <result column="end_pay_time" jdbcType="DATE" property="endPayTime" />
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
 </mapper>

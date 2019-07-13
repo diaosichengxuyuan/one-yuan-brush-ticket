@@ -19,11 +19,11 @@ public class TaskTrainReqDTO {
     @NotEmpty
     private String train;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
     private Date startSaleTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull
     private Date endSaleTime;
 

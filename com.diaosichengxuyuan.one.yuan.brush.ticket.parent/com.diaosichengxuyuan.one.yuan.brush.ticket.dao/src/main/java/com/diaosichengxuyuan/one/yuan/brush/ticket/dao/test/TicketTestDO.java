@@ -1,4 +1,4 @@
-package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.entity;
+package com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import javax.persistence.*;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "ticket")
-public class TicketDO {
+@Table(name = "ticket_test")
+public class TicketTestDO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +25,14 @@ public class TicketDO {
     @Column(name = "modify_time")
     private Date modifyTime;
 
-    @Column(name = "account_id")
-    private String accountId;
+    @Column(name = "start_sale_time")
+    private Date startSaleTime;
+
+    @Column(name = "end_sale_time")
+    private Date endSaleTime;
 
     @Column(name = "date")
     private Date date;
-
-    @Column(name = "week")
-    private Byte week;
-
-    @Column(name = "train")
-    private String train;
 
     @Column(name = "start_place")
     private String startPlace;
@@ -43,16 +40,13 @@ public class TicketDO {
     @Column(name = "end_place")
     private String endPlace;
 
-    @Column(name = "start_time")
-    private Date startTime;
+    @Column(name = "train")
+    private String train;
 
-    @Column(name = "end_time")
-    private Date endTime;
+    @Column(name = "price")
+    private String price;
 
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "task_train_id")
-    private Long taskTrainId;
+    @Column(name = "remain")
+    private Integer remain;
 
 }

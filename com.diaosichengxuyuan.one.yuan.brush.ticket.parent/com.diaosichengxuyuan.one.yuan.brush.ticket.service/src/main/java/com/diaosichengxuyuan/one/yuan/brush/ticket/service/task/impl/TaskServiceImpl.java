@@ -14,6 +14,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.TaskTrainMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.MidTaskPassengerDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskTrainDO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.service.core.executor.TaskExecutor;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.data.DataService;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.passenger.PassengerDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskReqDTO;
@@ -57,6 +58,9 @@ public class TaskServiceImpl implements TaskService {
     @Value("${brush.ticket.task.max.count}")
     private int taskMaxCount;
 
+    @Autowired
+    private TaskExecutor taskExecutor;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public BaseDTO insertTask(TaskReqDTO taskReqDTO) {
@@ -71,10 +75,14 @@ public class TaskServiceImpl implements TaskService {
         //插入到数据表
         dataService.increaseTaskNumber();
 
-        return internalInsertTask(taskReqDTO);
+        Long id = internalInsertTask(taskReqDTO);
+        //启动所有相关task_train
+        taskExecutor.start(id);
+
+        return new BaseDTO();
     }
 
-    private BaseDTO internalInsertTask(TaskReqDTO taskReqDTO) {
+    private Long internalInsertTask(TaskReqDTO taskReqDTO) {
         TaskDO taskDO = TaskDO.builder().createTime(new Date()).modifyTime(new Date()).accountId(
             taskReqDTO.getAccountId()).startPlace(taskReqDTO.getStartPlace()).endPlace(taskReqDTO.getEndPlace())
             .startDate(taskReqDTO.getStartDate()).seat(taskReqDTO.getSeat()).phone(taskReqDTO.getPhone()).status(
@@ -95,7 +103,7 @@ public class TaskServiceImpl implements TaskService {
             passengerId -> midTaskPassengerMapper.insertSelective(MidTaskPassengerDO.builder().createTime(new Date())
                 .modifyTime(new Date()).taskId(taskDO.getId()).passengerId(passengerId).build()));
 
-        return new BaseDTO();
+        return taskDO.getId();
     }
 
     @Override
@@ -151,14 +159,12 @@ public class TaskServiceImpl implements TaskService {
             return baseDTO;
         }
 
-        //停止所有相关task_train
-
         internalDeleteTaskById(id);
 
         return new BaseDTO();
     }
 
-    private BaseDTO internalDeleteTaskById(Long id) {
+    private void internalDeleteTaskById(Long id) {
         //删除task_train
         taskTrainMapper.delete(TaskTrainDO.builder().taskId(id).build());
 
@@ -167,8 +173,6 @@ public class TaskServiceImpl implements TaskService {
 
         //删除task
         taskMapper.deleteByPrimaryKey(id);
-
-        return new BaseDTO();
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -183,6 +187,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         //停止所有相关task_train
+        taskExecutor.stop(id);
 
         taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).modifyTime(new Date())
             .status(TaskStatus.STOPPED.getName()).build());
@@ -203,9 +208,10 @@ public class TaskServiceImpl implements TaskService {
 
         internalDeleteTaskById(taskReqDTO.getId());
 
-        internalInsertTask(taskReqDTO);
+        Long id = internalInsertTask(taskReqDTO);
 
         //启动所有相关task_train
+        taskExecutor.start(id);
 
         return new BaseDTO();
     }

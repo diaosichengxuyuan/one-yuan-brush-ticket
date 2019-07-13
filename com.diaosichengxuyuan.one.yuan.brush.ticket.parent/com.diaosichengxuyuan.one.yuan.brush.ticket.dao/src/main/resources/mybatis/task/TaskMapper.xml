@@ -15,5 +15,6 @@
     <result column="seat" jdbcType="VARCHAR" property="seat" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="task_train_id" jdbcType="BIGINT" property="taskTrainId" />
   </resultMap>
 </mapper>

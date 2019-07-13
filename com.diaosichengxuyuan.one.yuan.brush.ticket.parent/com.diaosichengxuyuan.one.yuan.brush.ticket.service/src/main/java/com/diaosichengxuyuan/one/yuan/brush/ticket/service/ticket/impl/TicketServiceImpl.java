@@ -5,6 +5,8 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.common.page.Page;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.DateUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.MapperUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskDO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestDO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.TicketDetailMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.TicketMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.entity.TicketDO;
@@ -13,6 +15,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskResDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.*;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.ticket.TicketService;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,63 +36,27 @@ public class TicketServiceImpl implements TicketService {
     @Autowired
     private TicketDetailMapper ticketDetailMapper;
 
+    @Autowired
+    private TicketTestMapper ticketTestMapper;
+
     @Override
     public TicketResLstDTO queryTicketList(TicketReqDTO ticketReqDTO) {
-        List<TicketResDTO> ticketList = new ArrayList<>();
-        ticketList.add(TicketResDTO.builder().train("G101").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G102").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G103").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G104").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G105").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G106").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G107").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G108").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
-        ticketList.add(TicketResDTO.builder().train("G109").startTime("06:43").endTime("12:40").startStation("北京南")
-            .endStation("上海虹桥").costTime("5小时57分").secondSeatPrice("￥553").secondSeatRemain("21").firstSeatPrice("￥772")
-            .firstSeatRemain("18").businessSeatPrice("￥1500").businessSeatRemain("0").noSeatPrice("￥200").noSeatRemain(
-                "34").hardSeatPrice("￥200").hardSeatRemain("259").hardSleeperSeatPrice("￥5503").hardSleeperSeatRemain(
-                "45").softSleeperSeatPrice("￥800").softSleeperSeatRemain("57").startSaleTime(
-                DateUtil.addDays(new Date(), -1)).endSaleTime(DateUtil.addDays(new Date(), 1)).build());
+        List<TicketTestDO> ticketTestDOList = ticketTestMapper.select(TicketTestDO.builder().date(
+            ticketReqDTO.getStartDate()).startPlace(ticketReqDTO.getStartPlace()).endPlace(ticketReqDTO.getEndPlace())
+            .build());
+        if(CollectionUtils.isEmpty(ticketTestDOList)) {
+            return new TicketResLstDTO();
+        }
+
+        List<TicketResDTO> ticketList = new ArrayList<>(ticketTestDOList.size());
+        ticketTestDOList.forEach(ticketTestDO -> ticketList.add(TicketResDTO.builder().train(ticketTestDO.getTrain())
+            .startTime("06:43").endTime("12:40").startStation(ticketTestDO.getStartPlace()).endStation(
+                ticketTestDO.getEndPlace()).costTime("5小时57分").secondSeatPrice(ticketTestDO.getPrice())
+            .secondSeatRemain("21").firstSeatPrice(ticketTestDO.getPrice()).firstSeatRemain("18").businessSeatPrice(
+                ticketTestDO.getPrice()).businessSeatRemain("0").noSeatPrice(ticketTestDO.getPrice()).noSeatRemain("34")
+            .hardSeatPrice(ticketTestDO.getPrice()).hardSeatRemain("259").hardSleeperSeatPrice(ticketTestDO.getPrice())
+            .hardSleeperSeatRemain("45").softSleeperSeatPrice(ticketTestDO.getPrice()).softSleeperSeatRemain("57")
+            .startSaleTime(ticketTestDO.getStartSaleTime()).endSaleTime(ticketTestDO.getEndSaleTime()).build()));
 
         return TicketResLstDTO.builder().ticketList(ticketList).build();
     }

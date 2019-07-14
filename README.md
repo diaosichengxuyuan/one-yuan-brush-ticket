@@ -1,8 +1,8 @@
 # 简介
 
-目的是做一款抢票软件，暂时只是完成了部分功能，未与12306打通，用户可在ticket_test表中插入测试数据进行抢票测试。
+**目的是做一款抢票软件，暂时只是完成了部分功能，未与12306打通，用户可在ticket_test表中插入测试数据进行抢票测试。**
 
-已完成功能列表：
+**已完成功能列表：**
 
 (1)登录/退出，账号隔离，使用spring security构建
 
@@ -14,7 +14,7 @@
 
 (5)模拟12306票务数据，修改数据使用了乐观锁机制
 
-待做功能列表：
+**待做功能列表：**
 
 (1)查票、订票、乘客等接口与12306打通
 
@@ -24,7 +24,7 @@
 
 # 数据库
 
-建表语句在https://github.com/diaosichengxuyuan/one-yuan-brush-ticket/issues/6中
+建表语句在 https://github.com/diaosichengxuyuan/one-yuan-brush-ticket/issues/6 中
 
 # 后端-spring boot构建
 
@@ -44,4 +44,4 @@ npm run dev启动
 
 # 测试
 
-访问http://localhost:8080地址
+访问 http://localhost:8080 地址

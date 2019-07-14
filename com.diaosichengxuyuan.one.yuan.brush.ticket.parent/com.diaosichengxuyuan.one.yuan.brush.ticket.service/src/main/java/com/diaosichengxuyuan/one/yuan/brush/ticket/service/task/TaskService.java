@@ -24,10 +24,11 @@ public interface TaskService {
     /**
      * 根据id查询抢票任务
      *
-     * @param id 任务id
+     * @param id        任务id
+     * @param accountId 账号
      * @return 抢票任务
      */
-    TaskResDTO queryTaskById(Long id);
+    TaskResDTO queryTaskById(Long id, String accountId);
 
     /**
      * 查询抢票任务列表
@@ -40,18 +41,20 @@ public interface TaskService {
     /**
      * 根据id删除抢票任务
      *
-     * @param id 任务id
+     * @param id        任务id
+     * @param accountId 账号
      * @return 删除结果
      */
-    BaseDTO deleteTaskById(Long id);
+    BaseDTO deleteTaskById(Long id, String accountId);
 
     /**
      * 根据id停止抢票任务
      *
-     * @param id 任务id
+     * @param id        任务id
+     * @param accountId 账号
      * @return 停止结果
      */
-    BaseDTO stopTaskById(Long id);
+    BaseDTO stopTaskById(Long id, String accountId);
 
     /**
      * 启动抢票任务，先根据id更新任务，然后启动

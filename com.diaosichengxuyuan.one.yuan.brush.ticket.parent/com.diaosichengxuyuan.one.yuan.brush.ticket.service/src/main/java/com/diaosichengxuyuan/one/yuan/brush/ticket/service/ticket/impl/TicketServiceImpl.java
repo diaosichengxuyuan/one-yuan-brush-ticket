@@ -73,8 +73,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public AcquiredTicketResDTO queryAcquiredTicketById(Long id) {
-        TicketDO ticketDO = ticketMapper.selectByPrimaryKey(id);
+    public AcquiredTicketResDTO queryAcquiredTicketById(Long id, String accountId) {
+        TicketDO ticketDO = ticketMapper.selectOne(TicketDO.builder().id(id).accountId(accountId).build());
         if(ticketDO == null) {
             AcquiredTicketResDTO acquiredTicketResDTO = new AcquiredTicketResDTO();
             acquiredTicketResDTO.setStatusCode(StatusCode.FAILURE.getCode());
@@ -99,8 +99,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public AcquiredTicketResDTO queryAcquiredTicketByTaskId(Long taskId) {
-        TicketDO ticketDO = ticketMapper.selectOne(TicketDO.builder().taskId(taskId).build());
+    public AcquiredTicketResDTO queryAcquiredTicketByTaskId(Long taskId, String accountId) {
+        TicketDO ticketDO = ticketMapper.selectOne(TicketDO.builder().accountId(accountId).taskId(taskId).build());
         if(ticketDO == null) {
             AcquiredTicketResDTO acquiredTicketResDTO = new AcquiredTicketResDTO();
             acquiredTicketResDTO.setStatusCode(StatusCode.FAILURE.getCode());

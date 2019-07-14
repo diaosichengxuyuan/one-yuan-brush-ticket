@@ -49,7 +49,8 @@ public class TicketRemoteImpl implements TicketRemote {
             throw new IllegalArgumentException("参数id不合法");
         }
 
-        return ticketService.queryAcquiredTicketById(id);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ticketService.queryAcquiredTicketById(id, user.getUsername());
     }
 
     @RequestMapping(value = "/queryAcquiredTicketByTaskId", method = RequestMethod.GET)
@@ -59,7 +60,8 @@ public class TicketRemoteImpl implements TicketRemote {
             throw new IllegalArgumentException("参数taskTrainId不合法");
         }
 
-        return ticketService.queryAcquiredTicketByTaskId(taskId);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ticketService.queryAcquiredTicketByTaskId(taskId, user.getUsername());
     }
 
 }

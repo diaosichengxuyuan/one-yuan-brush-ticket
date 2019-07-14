@@ -53,7 +53,8 @@ public class TaskRemoteImpl implements TaskRemote {
             throw new IllegalArgumentException("参数id不合法");
         }
 
-        return taskService.queryTaskById(id);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return taskService.queryTaskById(id, user.getUsername());
     }
 
     @RequestMapping(value = "/queryTaskList", method = RequestMethod.GET)
@@ -70,8 +71,9 @@ public class TaskRemoteImpl implements TaskRemote {
             throw new IllegalArgumentException("参数id不合法");
         }
 
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
-            return taskService.deleteTaskById(id);
+            return taskService.deleteTaskById(id, user.getUsername());
         } catch(Exception e) {
             log.error(String.format("删除抢票任务失败，参数：%s", id), e);
             BaseDTO baseDTO = new BaseDTO();
@@ -88,8 +90,9 @@ public class TaskRemoteImpl implements TaskRemote {
             throw new IllegalArgumentException("参数id不合法");
         }
 
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
-            return taskService.stopTaskById(id);
+            return taskService.stopTaskById(id, user.getUsername());
         } catch(Exception e) {
             log.error(String.format("停止抢票任务失败，参数：%s", id), e);
             BaseDTO baseDTO = new BaseDTO();

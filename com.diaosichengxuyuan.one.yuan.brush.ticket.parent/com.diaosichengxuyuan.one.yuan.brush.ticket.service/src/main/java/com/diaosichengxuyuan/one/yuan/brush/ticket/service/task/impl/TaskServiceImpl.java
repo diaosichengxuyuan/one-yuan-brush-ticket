@@ -108,8 +108,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResDTO queryTaskById(Long id) {
-        TaskDO taskDO = taskMapper.selectByPrimaryKey(id);
+    public TaskResDTO queryTaskById(Long id, String accountId) {
+        TaskDO taskDO = taskMapper.selectOne(TaskDO.builder().id(id).accountId(accountId).build());
         if(taskDO == null) {
             TaskResDTO taskResDTO = new TaskResDTO();
             taskResDTO.setStatusCode(StatusCode.FAILURE.getCode());
@@ -151,9 +151,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public BaseDTO deleteTaskById(Long id) {
-        TaskDO taskDO = taskMapper.selectByPrimaryKey(id);
-        if(taskDO == null || TaskStatus.STARTED.getName().equals(taskDO.getStatus())) {
+    public BaseDTO deleteTaskById(Long id, String accountId) {
+        TaskDO taskDO = taskMapper.selectOne(TaskDO.builder().id(id).accountId(accountId).build());
+        if(taskDO == null) {
+            BaseDTO baseDTO = new BaseDTO();
+            baseDTO.setStatusCode(StatusCode.FAILURE.getCode());
+            baseDTO.setMessage("查询失败");
+            return baseDTO;
+        }
+
+        if(TaskStatus.STARTED.getName().equals(taskDO.getStatus())) {
             BaseDTO baseDTO = new BaseDTO();
             baseDTO.setStatusCode(StatusCode.FAILURE.getCode());
             baseDTO.setMessage("请先停止该任务！");
@@ -178,9 +185,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public BaseDTO stopTaskById(Long id) {
-        TaskDO taskDO = taskMapper.selectByPrimaryKey(id);
-        if(taskDO == null || !TaskStatus.STARTED.getName().equals(taskDO.getStatus())) {
+    public BaseDTO stopTaskById(Long id, String accountId) {
+        TaskDO taskDO = taskMapper.selectOne(TaskDO.builder().id(id).accountId(accountId).build());
+        if(taskDO == null) {
+            BaseDTO baseDTO = new BaseDTO();
+            baseDTO.setStatusCode(StatusCode.FAILURE.getCode());
+            baseDTO.setMessage("查询失败");
+            return baseDTO;
+        }
+
+        if(!TaskStatus.STARTED.getName().equals(taskDO.getStatus())) {
             BaseDTO baseDTO = new BaseDTO();
             baseDTO.setStatusCode(StatusCode.FAILURE.getCode());
             baseDTO.setMessage("不能停止该任务！");
@@ -199,8 +213,16 @@ public class TaskServiceImpl implements TaskService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public BaseDTO startTask(TaskReqDTO taskReqDTO) {
-        TaskDO taskDO = taskMapper.selectByPrimaryKey(taskReqDTO.getId());
-        if(taskDO == null || !TaskStatus.STOPPED.getName().equals(taskDO.getStatus())) {
+        TaskDO taskDO = taskMapper.selectOne(TaskDO.builder().id(taskReqDTO.getId())
+            .accountId(taskReqDTO.getAccountId()).build());
+        if(taskDO == null) {
+            BaseDTO baseDTO = new BaseDTO();
+            baseDTO.setStatusCode(StatusCode.FAILURE.getCode());
+            baseDTO.setMessage("查询失败");
+            return baseDTO;
+        }
+
+        if(!TaskStatus.STOPPED.getName().equals(taskDO.getStatus())) {
             BaseDTO baseDTO = new BaseDTO();
             baseDTO.setStatusCode(StatusCode.FAILURE.getCode());
             baseDTO.setMessage("不能启动该任务！");

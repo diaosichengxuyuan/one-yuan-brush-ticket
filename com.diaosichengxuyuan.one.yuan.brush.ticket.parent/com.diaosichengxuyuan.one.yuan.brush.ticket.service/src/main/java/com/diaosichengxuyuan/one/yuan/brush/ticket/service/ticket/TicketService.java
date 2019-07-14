@@ -25,7 +25,8 @@ public interface TicketService {
     /**
      * 分页查询已抢到票列表
      *
-     * @param page 分页对象
+     * @param page      分页对象
+     * @param accountId 账号
      * @return 已抢到票列表
      */
     AcquiredTicketResListDTO queryAcquiredTicketList(Page page, String accountId);
@@ -33,17 +34,19 @@ public interface TicketService {
     /**
      * 根据id查询已抢到的票
      *
-     * @param id 票id
+     * @param id        票id
+     * @param accountId 账号
      * @return 已抢到的票
      */
-    AcquiredTicketResDTO queryAcquiredTicketById(Long id);
+    AcquiredTicketResDTO queryAcquiredTicketById(Long id, String accountId);
 
     /**
      * 根据主任务id查询已抢到的票
      *
-     * @param taskId 主任务id
+     * @param taskId    主任务id
+     * @param accountId 账号
      * @return 已抢到的票
      */
-    AcquiredTicketResDTO queryAcquiredTicketByTaskId(Long taskId);
+    AcquiredTicketResDTO queryAcquiredTicketByTaskId(Long taskId, String accountId);
 
 }

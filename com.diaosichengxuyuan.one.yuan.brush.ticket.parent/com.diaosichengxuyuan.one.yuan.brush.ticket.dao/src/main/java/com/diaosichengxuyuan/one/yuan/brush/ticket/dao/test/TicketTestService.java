@@ -50,7 +50,7 @@ public class TicketTestService {
         }
 
         try {
-            TimeUnit.SECONDS.sleep(30);
+            TimeUnit.SECONDS.sleep(120);
         } catch(Exception e) {
         }
 

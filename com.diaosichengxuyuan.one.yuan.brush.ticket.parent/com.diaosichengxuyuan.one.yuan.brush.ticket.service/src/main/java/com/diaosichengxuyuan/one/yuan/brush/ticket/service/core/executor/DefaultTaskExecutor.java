@@ -56,7 +56,7 @@ public class DefaultTaskExecutor implements TaskExecutor {
     @Autowired
     private TicketDetailMapper ticketDetailMapper;
 
-    private final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(10,
+    private final ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(100,
         TaskThreadFactory.getInstance());
 
     private final AtomicInteger threadIdIncreaseNumber = new AtomicInteger(1);
@@ -75,25 +75,31 @@ public class DefaultTaskExecutor implements TaskExecutor {
 
         taskTrainDOList.forEach(taskTrainDO -> {
             if(now.after(taskTrainDO.getEndSaleTime())) {
-                taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainDO.getId())
-                    .status(TaskTrainStatus.STOPPED.getName()).build());
+                taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainDO.getId()).modifyTime(
+                    new Date()).status(TaskTrainStatus.STOPPED.getName()).build());
                 return;
             }
 
             Runnable taskJob = new TaskJob(taskTrainDO.getId(), taskTrainDO.getStartSaleTime().getTime(), this,
                 ticketTestService, taskTrainMapper, taskMapper, ticketMapper, midTaskPassengerMapper, passengerMapper,
                 ticketDetailMapper);
-            Future<?> future = scheduledExecutorService.schedule(taskJob,
-                taskTrainDO.getStartSaleTime().getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+            long diffTime = taskTrainDO.getStartSaleTime().getTime() - System.currentTimeMillis();
+            Future<?> future = scheduledExecutorService.schedule(taskJob, diffTime, TimeUnit.MILLISECONDS);
 
             int threadId = threadIdIncreaseNumber.getAndIncrement();
             idToFutureMap.put(String.valueOf(threadId), future);
 
             log.info(String.format("提交抢票子任务，子任务：%s，threadId：%s", JSON.toJSONString(taskTrainDO), threadId));
 
-            //这一步保证其他子任务线程必须等该主线程提交之后再执行，因为子线程中第一步也是根据主键更新task_train表
-            taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainDO.getId()).status(
-                TaskTrainStatus.NOT_SALE.getName()).threadId(String.valueOf(threadId)).build());
+            taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainDO.getId()).modifyTime(
+                new Date()).threadId(String.valueOf(threadId)).build());
+
+            //对于需要延迟等待超过5秒的子任务，将状态改为未开售，对于小于5秒的就不管了，因为线程开始执行时立即设置状态为抢票中
+            if(diffTime > 5000) {
+                taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainDO.getId()).modifyTime(
+                    new Date()).status(TaskTrainStatus.NOT_SALE.getName()).build());
+            }
         });
     }
 
@@ -188,8 +194,8 @@ public class DefaultTaskExecutor implements TaskExecutor {
                         //如果没有子任务(理论上不会出现)
                         if(CollectionUtils.isEmpty(trainDOList)) {
                             //将主任务状态改为已结束
-                            taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId())
-                                .status(TaskStatus.FINISHED.getName()).build());
+                            taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).modifyTime(
+                                new Date()).status(TaskStatus.FINISHED.getName()).build());
                             return;
                         }
 
@@ -201,8 +207,8 @@ public class DefaultTaskExecutor implements TaskExecutor {
                         //如果过滤掉的都是超期任务
                         if(CollectionUtils.isEmpty(trainList)) {
                             //将主任务状态改为已结束
-                            taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId())
-                                .status(TaskStatus.FINISHED.getName()).build());
+                            taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).modifyTime(
+                                new Date()).status(TaskStatus.FINISHED.getName()).build());
                             //对于某些子任务上thread_id为清理的，再次清理一下
                             trainDOList.forEach(taskTrainDO -> taskTrainMapper
                                 .updateStatusByPrimaryKey(taskTrainDO.getId(), TaskTrainStatus.STOPPED.getName()));

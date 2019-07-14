@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketResLstDTO extends BaseDTO {
+public class TicketResListDTO extends BaseDTO {
 
     private List<TicketResDTO> ticketList;
 

@@ -5,7 +5,7 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.ValidationUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.AcquiredTicketResDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.AcquiredTicketResListDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.TicketReqDTO;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.TicketResLstDTO;
+import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.TicketResListDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.ticket.TicketService;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.web.remote.ticket.TicketRemote;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class TicketRemoteImpl implements TicketRemote {
 
     @RequestMapping(value = "/queryTicketList", method = RequestMethod.POST)
     @Override
-    public TicketResLstDTO queryTicketList(TicketReqDTO ticketReqDTO) {
+    public TicketResListDTO queryTicketList(TicketReqDTO ticketReqDTO) {
         ValidationUtil.validate(ticketReqDTO);
         return ticketService.queryTicketList(ticketReqDTO);
     }
@@ -44,12 +44,22 @@ public class TicketRemoteImpl implements TicketRemote {
 
     @RequestMapping(value = "/queryAcquiredTicketById", method = RequestMethod.GET)
     @Override
-    public AcquiredTicketResDTO queryAcquiredTicketById(@RequestParam String id) {
+    public AcquiredTicketResDTO queryAcquiredTicketById(@RequestParam Long id) {
         if(id == null) {
             throw new IllegalArgumentException("参数id不合法");
         }
 
         return ticketService.queryAcquiredTicketById(id);
+    }
+
+    @RequestMapping(value = "/queryAcquiredTicketByTaskId", method = RequestMethod.GET)
+    @Override
+    public AcquiredTicketResDTO queryAcquiredTicketByTaskId(Long taskId) {
+        if(taskId == null) {
+            throw new IllegalArgumentException("参数taskTrainId不合法");
+        }
+
+        return ticketService.queryAcquiredTicketByTaskId(taskId);
     }
 
 }

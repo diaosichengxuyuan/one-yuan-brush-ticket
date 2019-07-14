@@ -77,7 +77,7 @@ public class TaskJob implements Runnable, Delayed {
     public void run() {
         try {
             //设置状态为抢票中
-            taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainId)
+            taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainId).modifyTime(new Date())
                 .status(TaskTrainStatus.ON_SALE.getName()).build());
 
             TaskTrainDO taskTrainDO = taskTrainMapper.selectByPrimaryKey(taskTrainId);
@@ -148,8 +148,8 @@ public class TaskJob implements Runnable, Delayed {
         TicketDO ticketDO = TicketDO.builder().createTime(new Date()).modifyTime(new Date()).accountId(
             taskDO.getAccountId()).date(taskDO.getStartDate()).week((byte)1).train(taskTrainDO.getTrain()).startPlace(
             taskDO.getStartPlace()).endPlace(taskDO.getEndPlace()).startTime(new Date()).endTime(new Date()).endPayTime(
-            DateUtil.addDays(new Date(), 0, 0, 30)).status(TicketStatus.NOT_PAY.getName()).taskTrainId(
-            taskTrainDO.getId()).build();
+            DateUtil.addDays(new Date(), 0, 0, 30)).status(TicketStatus.NOT_PAY.getName()).taskId(taskDO.getId())
+            .build();
         ticketMapper.insert(ticketDO);
 
         List<MidTaskPassengerDO> midTaskPassengerDOList = midTaskPassengerMapper.select(
@@ -175,13 +175,13 @@ public class TaskJob implements Runnable, Delayed {
         taskExecutor.stop(taskDO.getId());
 
         //将主任务更新为停止
-        taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).status(TaskStatus.FINISHED.getName())
-            .build());
+        taskMapper.updateByPrimaryKeySelective(TaskDO.builder().id(taskDO.getId()).modifyTime(new Date())
+            .status(TaskStatus.FINISHED.getName()).build());
     }
 
     private void waitUntilHasTicket(Date date, String train) {
         //设置状态为余票监控中
-        taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainId)
+        taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainId).modifyTime(new Date())
             .status(TaskTrainStatus.ON_MONITOR.getName()).build());
 
         //不停的查询余票
@@ -207,7 +207,7 @@ public class TaskJob implements Runnable, Delayed {
         }
 
         //设置状态为抢票中
-        taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainId)
+        taskTrainMapper.updateByPrimaryKeySelective(TaskTrainDO.builder().id(taskTrainId).modifyTime(new Date())
             .status(TaskTrainStatus.ON_SALE.getName()).build());
     }
 

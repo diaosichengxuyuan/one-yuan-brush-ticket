@@ -4,6 +4,9 @@
 #启动
 配置JVM参数：jasypt.encryptor.password=数据库密钥
 配置JVM参数：encrypt.algorithm.key=前端密码密钥
+前端utils.js中getSecretKey方法中配置密钥
+
+
 
 ##测试
 com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test包是用来测试的

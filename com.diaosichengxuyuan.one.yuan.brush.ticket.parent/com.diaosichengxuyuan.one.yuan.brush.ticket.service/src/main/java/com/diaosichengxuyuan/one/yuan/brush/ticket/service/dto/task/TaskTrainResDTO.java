@@ -22,4 +22,6 @@ public class TaskTrainResDTO {
 
     private Date endSaleTime;
 
+    private String status;
+
 }

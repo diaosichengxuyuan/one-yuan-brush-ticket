@@ -8,6 +8,8 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.data.DataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author liuhaipeng
  * @date 2019/7/6
@@ -32,7 +34,8 @@ public class DataServiceImpl implements DataService {
             return;
         }
 
-        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).taskNum(dataDO.getTaskNum() + 1).build());
+        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).modifyTime(new Date())
+            .taskNum(dataDO.getTaskNum() + 1).build());
     }
 
     @Override
@@ -42,7 +45,8 @@ public class DataServiceImpl implements DataService {
             return;
         }
 
-        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).userNum(dataDO.getUserNum() + 1).build());
+        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).modifyTime(new Date())
+            .userNum(dataDO.getUserNum() + 1).build());
     }
 
     @Override
@@ -52,7 +56,8 @@ public class DataServiceImpl implements DataService {
             return;
         }
 
-        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).memberNum(dataDO.getMemberNum() + 1).build());
+        dataMapper.updateByPrimaryKeySelective(DataDO.builder().id(1L).modifyTime(new Date())
+            .memberNum(dataDO.getMemberNum() + 1).build());
     }
 
 }

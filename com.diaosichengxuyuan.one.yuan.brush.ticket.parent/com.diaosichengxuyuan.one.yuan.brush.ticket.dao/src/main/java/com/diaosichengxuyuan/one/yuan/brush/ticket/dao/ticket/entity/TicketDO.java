@@ -55,7 +55,7 @@ public class TicketDO {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "task_train_id")
-    private Long taskTrainId;
+    @Column(name = "task_id")
+    private Long taskId;
 
 }

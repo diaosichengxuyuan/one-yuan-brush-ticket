@@ -4,14 +4,12 @@ import com.diaosichengxuyuan.one.yuan.brush.ticket.common.constant.StatusCode;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.page.Page;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.DateUtil;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.common.util.MapperUtil;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.task.entity.TaskDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.test.TicketTestMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.TicketDetailMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.TicketMapper;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.entity.TicketDO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.dao.ticket.entity.TicketDetailDO;
-import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.task.TaskResDTO;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.dto.ticket.*;
 import com.diaosichengxuyuan.one.yuan.brush.ticket.service.ticket.TicketService;
 import com.github.pagehelper.PageHelper;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,12 +37,12 @@ public class TicketServiceImpl implements TicketService {
     private TicketTestMapper ticketTestMapper;
 
     @Override
-    public TicketResLstDTO queryTicketList(TicketReqDTO ticketReqDTO) {
+    public TicketResListDTO queryTicketList(TicketReqDTO ticketReqDTO) {
         List<TicketTestDO> ticketTestDOList = ticketTestMapper.select(TicketTestDO.builder().date(
             ticketReqDTO.getStartDate()).startPlace(ticketReqDTO.getStartPlace()).endPlace(ticketReqDTO.getEndPlace())
             .build());
         if(CollectionUtils.isEmpty(ticketTestDOList)) {
-            return new TicketResLstDTO();
+            return new TicketResListDTO();
         }
 
         List<TicketResDTO> ticketList = new ArrayList<>(ticketTestDOList.size());
@@ -58,12 +55,12 @@ public class TicketServiceImpl implements TicketService {
             .hardSleeperSeatRemain("45").softSleeperSeatPrice(ticketTestDO.getPrice()).softSleeperSeatRemain("57")
             .startSaleTime(ticketTestDO.getStartSaleTime()).endSaleTime(ticketTestDO.getEndSaleTime()).build()));
 
-        return TicketResLstDTO.builder().ticketList(ticketList).build();
+        return TicketResListDTO.builder().ticketList(ticketList).build();
     }
 
     @Override
     public AcquiredTicketResListDTO queryAcquiredTicketList(Page page, String accountId) {
-        PageHelper.startPage(page.getNum(), page.getSize(),"modify_time desc");
+        PageHelper.startPage(page.getNum(), page.getSize(), "modify_time desc");
         List<TicketDO> ticketDOList = ticketMapper.select(TicketDO.builder().accountId(accountId).build());
         List<AcquiredTicketResDTO> acquiredTicketResDTOList = new ArrayList<>(ticketDOList.size());
         ticketDOList.forEach(ticketDO -> acquiredTicketResDTOList.add(AcquiredTicketResDTO.builder().id(
@@ -76,8 +73,34 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public AcquiredTicketResDTO queryAcquiredTicketById(String id) {
+    public AcquiredTicketResDTO queryAcquiredTicketById(Long id) {
         TicketDO ticketDO = ticketMapper.selectByPrimaryKey(id);
+        if(ticketDO == null) {
+            AcquiredTicketResDTO acquiredTicketResDTO = new AcquiredTicketResDTO();
+            acquiredTicketResDTO.setStatusCode(StatusCode.FAILURE.getCode());
+            acquiredTicketResDTO.setMessage("查询失败");
+            return acquiredTicketResDTO;
+        }
+
+        List<TicketDetailDO> ticketDetailDOList = ticketDetailMapper.select(
+            TicketDetailDO.builder().ticketId(ticketDO.getId()).build());
+
+        AcquiredTicketResDTO acquiredTicketResDTO = AcquiredTicketResDTO.builder().id(ticketDO.getId()).date(
+            DateUtil.formatDate(ticketDO.getDate(), "yyyy-MM-dd")).week(DateUtil.toWeek(ticketDO.getWeek())).train(
+            ticketDO.getTrain()).startPlace(ticketDO.getStartPlace()).endPlace(ticketDO.getEndPlace()).startTime(
+            DateUtil.formatDate(ticketDO.getStartTime(), "HH:mm")).endTime(
+            DateUtil.formatDate(ticketDO.getEndTime(), "HH:mm")).endPayTime(ticketDO.getEndPayTime()).status(
+            ticketDO.getStatus()).build();
+        List<AcquiredTicketDetailResDTO> acquiredTicketDetailResDTOList = MapperUtil.mapAsList(ticketDetailDOList,
+            TicketDetailDO.class, AcquiredTicketDetailResDTO.class);
+        acquiredTicketResDTO.setAcquiredTicketDetailResDTOList(acquiredTicketDetailResDTOList);
+
+        return acquiredTicketResDTO;
+    }
+
+    @Override
+    public AcquiredTicketResDTO queryAcquiredTicketByTaskId(Long taskId) {
+        TicketDO ticketDO = ticketMapper.selectOne(TicketDO.builder().taskId(taskId).build());
         if(ticketDO == null) {
             AcquiredTicketResDTO acquiredTicketResDTO = new AcquiredTicketResDTO();
             acquiredTicketResDTO.setStatusCode(StatusCode.FAILURE.getCode());

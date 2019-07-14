@@ -36,7 +36,7 @@ export default {
   },
   created() {
     this.remoteQueryData();
-    setInterval(this.remoteQueryData, 20000);
+    setInterval(this.remoteQueryData, 30000);
   },
   methods: {
     remoteQueryData() {

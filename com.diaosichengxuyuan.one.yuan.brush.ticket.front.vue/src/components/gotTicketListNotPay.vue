@@ -37,7 +37,7 @@
     <div
       class="payDetail"
       v-show="mainContentAreaShow"
-    >剩余支付时间:29分21秒 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已抢到票，请自行到12306后台支付！！！</div>
+    >剩余支付时间:{{endPayTime}}分钟 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 已抢到票，请自行到12306后台支付！！！</div>
     <div class="errMsg">{{errMsg}}</div>
   </div>
 </template>
@@ -51,42 +51,93 @@ export default {
     return {
       errMsg: "",
       ticketDetail: {},
-      mainContentAreaShow: false
+      mainContentAreaShow: false,
+      endPayTime: 30,
+      interval: 0
     };
   },
   created() {
-    this.$http
-      .get(
-        Utils.getRemoteQueryAcquiredTicketByIdPath() +
-          "?id=" +
-          this.$route.query.id
-      )
-      .then(
-        res => {
-          const response = res.body;
-          if (!response) {
-            this.errMsg = "查询失败";
-            return;
-          }
+    this.remoteQueryTicket();
+    this.interval = setInterval(this.remoteQueryTikcetRemainTime, 20000);
+  },
+  methods: {
+    remoteQueryTicket: function() {
+      this.$http
+        .get(
+          Utils.getRemoteQueryAcquiredTicketByIdPath() +
+            "?id=" +
+            this.$route.query.id
+        )
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "查询失败";
+              return;
+            }
 
-          const statusCode = response.statusCode;
-          if (statusCode == "200") {
-            this.ticketDetail = response;
-            this.mainContentAreaShow = true;
-          } else if (response.message) {
-            this.errMsg = response.message;
-          } else {
-            this.errMsg = "查询失败";
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.ticketDetail = response;
+              this.mainContentAreaShow = true;
+              this.endPayTime = response.endPayTime;
+              const diff = this.endPayTime - new Date();
+              if (diff < 0) {
+                this.endPayTime = 0;
+              } else {
+                this.endPayTime = (diff / 1000 / 60).toFixed(2);
+              }
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "查询失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
           }
-        },
-        res => {
-          if (res && res.message) {
-            this.errMsg = res.message;
-          } else {
-            this.errMsg = "登录失效，请重新登录！";
+        );
+    },
+    remoteQueryTikcetRemainTime: function() {
+      if (!this.$route.query.id) {
+        clearInterval(this.interval);
+        return;
+      }
+
+      this.$http
+        .get(
+          Utils.getRemoteQueryAcquiredTicketByIdPath() +
+            "?id=" +
+            this.$route.query.id
+        )
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              const endPayTime = response.endPayTime;
+              const diff = endPayTime - new Date();
+              if (diff < 0) {
+                this.endPayTime = 0;
+                clearInterval(this.interval);
+              } else {
+                this.endPayTime = (diff / 1000 / 60).toFixed(2);
+              }
+            }
+          },
+          res => {
+            clearInterval(this.interval);
           }
-        }
-      );
+        );
+    }
   }
 };
 </script>

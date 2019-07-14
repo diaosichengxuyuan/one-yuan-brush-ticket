@@ -119,60 +119,149 @@ export default {
       seatsVal: "",
       passengersVal: [],
       phoneVal: "",
-      nosaleData: "G101",
-      brushingData: "G102",
-      remainingData: "G103",
-      nosaleShow: true,
-      brushingShow: true,
-      remainingShow: true
+      nosaleData: "",
+      brushingData: "",
+      remainingData: "",
+      nosaleShow: false,
+      brushingShow: false,
+      remainingShow: false,
+      taskInterval: 0,
+      ticketInterval: 0
     };
   },
   created() {
-    this.$http
-      .get(Utils.getRemoteQueryTaskByIdPath() + "?id=" + this.$route.query.id)
-      .then(
-        res => {
-          const response = res.body;
-          if (!response) {
-            this.errMsg = "查询失败";
-            return;
-          }
-
-          const statusCode = response.statusCode;
-          if (statusCode == "200") {
-            this.startPlaceVal = response.startPlace;
-            this.endPlaceVal = response.endPlace;
-            this.startDateVal = response.startDate;
-            this.seatsVal = response.seat;
-            this.phoneVal = response.phone;
-
-            if (response.taskTrainResDTOList) {
-              for (let index in response.taskTrainResDTOList) {
-                this.trainsVal.push(response.taskTrainResDTOList[index].train);
-              }
-            }
-
-            if (response.passengerDTOList) {
-              for (let index in response.passengerDTOList) {
-                this.passengersVal.push(response.passengerDTOList[index].name);
-              }
-            }
-          } else if (response.message) {
-            this.errMsg = response.message;
-          } else {
-            this.errMsg = "查询失败";
-          }
-        },
-        res => {
-          if (res && res.message) {
-            this.errMsg = res.message;
-          } else {
-            this.errMsg = "登录失效，请重新登录！";
-          }
-        }
-      );
+    this.remoteQueryTaskContent();
+    this.taskInterval = setInterval(this.remoteQueryTaskTrain, 5000);
+    this.ticketInterval = setInterval(this.remoteQueryTicket, 5000);
   },
   methods: {
+    remoteQueryTaskContent: function() {
+      this.$http
+        .get(Utils.getRemoteQueryTaskByIdPath() + "?id=" + this.$route.query.id)
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "查询失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              this.startPlaceVal = response.startPlace;
+              this.endPlaceVal = response.endPlace;
+              this.startDateVal = response.startDate;
+              this.seatsVal = response.seat;
+              this.phoneVal = response.phone;
+
+              if (response.taskTrainResDTOList) {
+                for (let index in response.taskTrainResDTOList) {
+                  const train = response.taskTrainResDTOList[index].train;
+                  this.trainsVal.push(train);
+                  const status = response.taskTrainResDTOList[index].status;
+                  if (status == "未开售") {
+                    this.nosaleData = this.nosaleData + " " + train;
+                  } else if (status == "抢票中") {
+                    this.brushingData = this.brushingData + " " + train;
+                  } else if (status == "余票监控中") {
+                    this.remainingData = this.remainingData + " " + train;
+                  }
+                  if (this.nosaleData) {
+                    this.nosaleShow = true;
+                  }
+                  if (this.brushingData) {
+                    this.brushingShow = true;
+                  }
+                  if (this.remainingData) {
+                    this.remainingShow = true;
+                  }
+                }
+              }
+
+              if (response.passengerDTOList) {
+                for (let index in response.passengerDTOList) {
+                  this.passengersVal.push(
+                    response.passengerDTOList[index].name
+                  );
+                }
+              }
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "查询失败";
+            }
+          },
+          res => {
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
+          }
+        );
+    },
+    remoteQueryTaskTrain: function() {
+      if (!this.$route.query.id) {
+        clearInterval(this.taskInterval);
+        return;
+      }
+
+      this.$http
+        .get(Utils.getRemoteQueryTaskByIdPath() + "?id=" + this.$route.query.id)
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              this.errMsg = "查询失败";
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              if (response.taskTrainResDTOList) {
+                this.nosaleData = "";
+                this.brushingData = "";
+                this.remainingData = "";
+                this.nosaleShow = false;
+                this.brushingShow = false;
+                this.remainingShow = false;
+                for (let index in response.taskTrainResDTOList) {
+                  const train = response.taskTrainResDTOList[index].train;
+                  const status = response.taskTrainResDTOList[index].status;
+                  if (status == "未开售") {
+                    this.nosaleData = this.nosaleData + " " + train;
+                  } else if (status == "抢票中") {
+                    this.brushingData = this.brushingData + " " + train;
+                  } else if (status == "余票监控中") {
+                    this.remainingData = this.remainingData + " " + train;
+                  }
+                  if (this.nosaleData) {
+                    this.nosaleShow = true;
+                  }
+                  if (this.brushingData) {
+                    this.brushingShow = true;
+                  }
+                  if (this.remainingData) {
+                    this.remainingShow = true;
+                  }
+                }
+              }
+            } else if (response.message) {
+              this.errMsg = response.message;
+            } else {
+              this.errMsg = "查询失败";
+            }
+          },
+          res => {
+            clearInterval(this.taskInterval);
+            if (res && res.message) {
+              this.errMsg = res.message;
+            } else {
+              this.errMsg = "登录失效，请重新登录！";
+            }
+          }
+        );
+    },
     remoteStop: function() {
       this.$http
         .post(Utils.getRemoteStopTaskPath(), {
@@ -204,9 +293,48 @@ export default {
           }
         );
     },
+    remoteQueryTicket: function() {
+      if (!this.$route.query.id) {
+        clearInterval(this.ticketInterval);
+        return;
+      }
+
+      this.$http
+        .get(
+          Utils.getRemoteQueryAcquiredTicketByTaskIdPath() +
+            "?taskId=" +
+            this.$route.query.id
+        )
+        .then(
+          res => {
+            const response = res.body;
+            if (!response) {
+              return;
+            }
+
+            const statusCode = response.statusCode;
+            if (statusCode == "200") {
+              clearInterval(this.taskInterval);
+              clearInterval(this.ticketInterval);
+              this.gotoGotTicketListNotPay(response.id);
+            }
+          },
+          res => {
+            clearInterval(this.ticketInterval);
+          }
+        );
+    },
     gotoBrushTicketTaskList: function() {
       this.$router.push({
         name: "BrushTicketTaskList"
+      });
+    },
+    gotoGotTicketListNotPay: function(taskId) {
+      this.$router.push({
+        name: "GotTicketListNotPay",
+        query: {
+          id: taskId
+        }
       });
     }
   }
